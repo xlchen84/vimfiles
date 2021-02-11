@@ -10,48 +10,129 @@ endfunction
 " 初始化{{{
 let g:vimfiles_windows = expand('$VIM/vimfiles')
 let $MYVIMRC = expand('$VIM/vimrc')
+
 function config#init()
 	 call config#message('initalizing')
-	 let vimfiles = g:vimfiles_{config#os()}
-	 let manager = expand(vimfiles . '/autoload/plug.vim')
-	 let manager_url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+	 let manager = expand(g:vimfiles_{config#os()} . '/autoload/plug.vim')
 	 if empty(glob(manager))
-		  call config#download(manager, manager_url)
-		  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+		  call config#message('please install plug')
+		  " let manager_url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+		  " call config#download(manager, manager_url)
+		  " autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 	 endif
-	 let bundle = vimfiles . '/bundle'
-	 call plug#begin(bundle)
-	 Plug 'w0rp/ale'
-	 Plug 'vim-scripts/AutoComplPop'
-	 Plug 'bling/vim-airline'
-	 Plug 'jlanzarotta/bufexplorer'
-	 Plug 'eugeii/consolas-powerline-vim'
-	 Plug 'morhetz/gruvbox'
-	 Plug 'archerc/gvimfullscreen'
-	 Plug 'hecal3/vim-leader-guide'
-	 Plug 'kien/ctrlp.vim'
-	 Plug 'skywind3000/asyncrun.vim'
-	 Plug 'skywind3000/vim-terminal-help' " https://github.com/skywind3000/vim-terminal-help
-	 Plug 'wsdjeg/dein-ui.vim'
-	 Plug 'haya14busa/dein-command.vim'
-	 Plug 'Shougo/context_filetype.vim'
-	 Plug 'Shougo/denite.nvim'
-	 Plug 'Shougo/echodoc.vim'
-	 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-	 Plug 'Shougo/unite.vim'
-	 Plug 'Shougo/vimfiler.vim'
-	 Plug 'Shougo/unite-outline'
-	 Plug 'Shougo/neomru.vim' " https://github.com/Shougo/neomru.vim
-	 Plug 'tpope/vim-sensible' 
-	 Plug 'tpope/vim-commentary' 
-	 Plug 'vim-airline/vim-airline-themes'
-	 call plug#end()
+	 call config#plug()
 	 call config#keybindings()
+	 call config#airline()
+	 call config#leader_guide()
+	 call config#context_filetype()
+	 call config#bufferline()
 endfunction
 "}}}
 
-" 按键{{{
+" plug{{{
+function config#plug()
+	 call config#message('initalizing plug')
+	 let vimfiles = g:vimfiles_{config#os()}
+	 let g:plug_home = vimfiles . '/bundle'
+	 call plug#begin()
+	 " 外观
+	 Plug 'bling/vim-airline'
+	 Plug 'vim-airline/vim-airline-themes'
+	 Plug 'bling/vim-bufferline'
+	 Plug 'morhetz/gruvbox'
+	 Plug 'eugeii/consolas-powerline-vim'
+	 " 插件管理
+	 Plug 'junegunn/vim-plug'
+	 Plug 'Shougo/dein.vim'
+	 Plug 'wsdjeg/dein-ui.vim'
+	 Plug 'haya14busa/dein-command.vim'
+	 Plug 'altercation/vim-colors-solarized'
+	 " key
+	 Plug 'liuchengxu/vim-which-key'
+	 Plug 'hecal3/vim-leader-guide'
+	 Plug 'skywind3000/vim-quickui'
+	 " Plug 'skywind3000/quickmenu'
+	 " unite
+	 Plug 'Shougo/unite.vim'
+	 Plug 'thinca/vim-unite-history'
+	 Plug 'Shougo/unite-outline'
+	 Plug 'Shougo/unite-help'
+	 Plug 'tsukkee/unite-tag'
+	 Plug 'osyo-manga/unite-quickfix'
+	 " Plug 'thinca/unite-bibtex'
+	 Plug 'chemzqm/unite-git-log'
+	 Plug 'hewes/unite-gtags'
+	 Plug 'Shougo/neoyank.vim'
+	 Plug 'Shougo/neomru.vim' " https://github.com/Shougo/neomru.vim
+	 "Denite
+	 Plug 'Shougo/denite.nvim'
+	 " search
+	 Plug 'Yggdroot/LeaderF'
+	 Plug 'liuchengxu/vim-clap'
+	 Plug 'junegunn/fzf.vim'
+	 " language server
+	 Plug 'neoclide/coc.nvim'
+	 Plug 'prabirshrestha/vim-lsp'
+	 Plug 'w0rp/ale'
+	 " 补全框架
+	 Plug 'Shougo/deoplete.nvim'
+	 Plug 'prabirshrestha/asyncomplete.vim'
+	 Plug 'vim-scripts/AutoComplPop'
+	 Plug 'Valloric/YouCompleteMe'
+	 Plug 'neoclide/coc-tabnine'
+	 Plug 'tbodt/deoplete-tabnine'
+	 " snippets
+	 Plug 'SirVer/ultisnips'
+	 Plug 'Shougo/neosnippet.vim'
+	 Plug 'neoclide/coc-snippets'
+	 Plug 'honza/vim-snippets'
+	 " lint
+	 Plug 'jlanzarotta/bufexplorer'
+	 Plug 'archerc/gvimfullscreen'
+	 Plug 'kien/ctrlp.vim'
+	 Plug 'skywind3000/asyncrun.vim'
+	 Plug 'skywind3000/vim-terminal-help' " https://github.com/skywind3000/vim-terminal-help
+	 " file types
+	 Plug 'python-mode/python-mode'
+	 Plug 'tpope/vim-markdown'
+	 Plug 'JamshedVesuna/vim-markdown-preview'
+	 Plug 'daeyun/vim-matlab'
+	 Plug 'djoshea/vim-matlab-fold'
+	 Plug 'jceb/vim-orgmode'
+	 Plug 'vim-pandoc/vim-pandoc'
+	 Plug 'vim-pandoc/vim-pandoc-syntax'
+	 " comments
+	 Plug 'tpope/vim-sensible' 
+	 Plug 'tpope/vim-commentary'
+	 Plug 'tpope/vim-unimpaired'
+	 Plug 'tpope/vim-surround'
+	 Plug 'preservim/nerdcommenter'
+	 Plug 'preservim/nerdtree'
+	 Plug 'mattn/libcallex-vim'
+	 Plug 'junegunn/limelight.vim'
+	 Plug 'easymotion/vim-easymotion'
+	 Plug 'mhinz/vim-startify'
+	 Plug 'skywind3000/vim-terminal-help'
+	 Plug 'kana/vim-textobj-function'
+	 Plug 'kana/vim-textobj-indent'
+	 Plug 'sgur/vim-textobj-parameter'
+	 Plug 'kana/vim-textobj-syntax'
+	 Plug 'kana/vim-textobj-user'
+	 Plug 'geratheon/vim-translate'
+	 Plug 'jreybert/vimagit'                    
+	 Plug 'yianwillis/vimcdoc'
+	 Plug 'lervag/vimtex'
+	 Plug 'Shougo/context_filetype.vim'
+	 Plug 'Shougo/echodoc.vim'
+	 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+	 Plug 'Shougo/vimfiler.vim'
+	 call plug#end()
+endfunction
+"}}}
+
+" keybindings{{{
 function! config#keybindings()
+	 call config#message('initalizing keybindings')
 	 inoremap 	<C-s> 						<Esc>:w<CR>
 	 nnoremap 	<C-s> 						:w<CR>jk
 	 nnoremap 	]b 							:bnext<CR>
@@ -59,7 +140,9 @@ function! config#keybindings()
 	 nnoremap  	<M-b> 						:Unite buffer<CR>
 	 nnoremap  	<M-c> 						:Unite -start-insert command<CR>
 	 nnoremap  	<M-d> 						:Unite -start-insert neomru/directory directory_rec<CR>
-	 nnoremap  	<M-f> 						:Unite -start-insert neomru/file file_rec file/new<CR>
+	 nnoremap  	<M-e> 						:VimFilerBufferDir<CR>
+	 nnoremap  	<M-f> 						:Unite -start-insert file_rec file/new<CR>
+	 nnoremap  	<M-h> 						:Unite -start-insert help<CR>
 	 nnoremap  	<M-j> 						:Unite -start-insert jump<CR>
 	 nnoremap  	<M-l> 						:Unite -start-insert line<CR>
 	 nnoremap  	<M-m> 						:Unite bookmark menu<CR>
@@ -67,6 +150,7 @@ function! config#keybindings()
 	 nnoremap  	<M-o> 						:Unite outline<CR>
 	 nnoremap  	<M-q> 						:bd<CR>
 	 tnoremap 	<M-q> 						<C-\><C-n>
+	 nnoremap  	<M-r> 						:Unite -start-insert neomru/file<CR>
 	 nnoremap  	<M-u> 						:Unite -start-insert<CR>
 	 nnoremap  	<M-w> 						:Unite window<CR>
 	 nnoremap 	<M-=> 						:terminal<CR>
@@ -88,8 +172,9 @@ endfunction
 
 "}}}
 
-" LeaderGuide {{{2
+" leader_guide {{{
 function config#leader_guide()
+	 call config#message('initalizing leader_guide')
 	 " Define prefix dictionary
 	 let g:lmap =  {}
 
@@ -167,31 +252,58 @@ function config#leader_guide()
 	 vnoremap <localleader> :<c-u>LeaderGuideVisual  ','<CR>
 	 map <localleader>. <Plug>leaderguide-buffer
 endfunction
-"2}}}
+"}}}
 
-" 插件配置{{{1
+" airline {{{
+function config#airline()
+	 call config#message('initalizing airline')
+	 let g:airline_extensions = ['branch', 'tabline', 'ale', 'bufferline']
+	 let g:airline_theme="dark" 
+	 " let g:airline_theme="solarized" 
+	 let g:airline_powerline_fonts = 1  
+	 let g:airline#extensions#ale#enabled = 1
+	 let g:airline#extensions#tabline#enabled = 1
+	 let g:airline#extensions#tabline#buffer_nr_show = 1
+endfunction
+"}}}
 
-" airline {{{2
-let g:airline_extensions = ['branch', 'tabline', 'ale']
-let g:airline_theme="dark" 
-" let g:airline_theme="solarized" 
-let g:airline_powerline_fonts = 1  
-let g:airline#extensions#ale#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
-"2}}}
+" bufferline{{{
+function config#bufferline()
+	 let g:airline#extensions#bufferline#enabled = 1
+	 let g:bufferline_echo = 0
+	 let g:bufferline_active_highlight = 'StatusLine'
+	 let g:bufferline_inactive_highlight = 'StatusLineNC'
+	 let g:bufferline_show_bufnr = 1
+	 autocmd VimEnter * let &statusline='%{bufferline#refresh_status()}'.bufferline#get_status_string()
+endfunction
+"}}}
 
-"1}}}
+" context_filetype{{{
+function config#context_filetype()
+	 call config#message('initalizing context_filetype')
+	 if !exists('g:context_filetype#filetypes')
+		  let g:context_filetype#filetypes = {}
+	 endif
+	 let g:context_filetype#filetypes.perl6 =
+					 \ [{'filetype' : 'pir', 'start' : 'Q:PIR\s*{', 'end' : '}'}]
+	 let g:context_filetype#filetypes.vim =
+					 \ [{'filetype' : 'python',
+					 \   'start' : '^\s*execute py_exe "<<\s*\(\h\w*\)"', 'end' : '^\1'}]
+endfunction
+"}}}
 
+" message{{{
 function config#message(template, ...)
 	 python3 <<EOF
 import vim
 print(vim.eval('a:template').format(*vim.eval('a:000')))
 EOF
 endfunction
+"}}}
 
+" download{{{
 function config#download(location, url)
 	 call config#message('downloading to {} from {}', a:location, a:url)
 endfunction
-
+"}}}
 

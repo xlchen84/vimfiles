@@ -5,7 +5,8 @@ if (g:vimrc_loaded == 0)
 
 	 " 外观 {{{
 	 set go=egrLv
-	 set guifont=Inziu_IosevkaCC_SC:h14
+	 " set guifont=Inziu_IosevkaCC_SC:h14
+	 set guifont=Inziu_IosevkaCC_SC:h18
 	 set rnu
 	 set cmdheight=1
 	 set laststatus=2
