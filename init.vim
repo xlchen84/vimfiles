@@ -22,6 +22,7 @@ set helplang=cn
 set noswapfile
 set ambiwidth=double
 set visualbell
+set pyxversion=3
 syntax on
 language messages zh_CN.utf-8
 "}}}
@@ -46,6 +47,8 @@ augroup filetype_matlab
 	 autocmd FileType matlab  setlocal cms=%%s
 augroup END
 "}}}
+
+let g:pymode_python = 'python3'
 
 " plugins{{{
 let g:plugins = [ 'bling/vim-airline'
@@ -140,6 +143,7 @@ let g:modules = [ 'plug'
  				\ 	 , 'quickmenu'
 				\   , 'startify'
  				\ 	 , 'gvimfullscreen'
+ 				\ 	 , 'python'
 				\ ]
 
 let g:plugins_disabled = [ 'SirVer/ultisnips'

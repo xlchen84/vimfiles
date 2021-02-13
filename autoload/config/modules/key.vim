@@ -21,6 +21,7 @@ function! s:which_key()
 					 \ 				'name' 	: '+buffer' ,
 					 \ 				'1' 		: ['b1'        			, 'buffer 1']        ,
 					 \ 				'2' 		: ['b2'        			, 'buffer 2']        ,
+					 \ 				'c' 		: ['<Plug>(chdir)'      , 'chdir']   ,
 					 \ 				'd' 		: ['bd'        			, 'delete-buffer']   ,
 					 \ 				'e' 		: ['ToggleBufExplorer'  , 'explore-buffer']    ,
 					 \ 				'f' 		: ['bfirst'    			, 'first-buffer']    ,
@@ -128,6 +129,7 @@ function! config#modules#key#init()
 	 nnoremap  	<M-q> 						:bd<CR>
 	 tnoremap 	<M-q> 						<C-\><C-n>
 	 nnoremap  	<M-r> 						:Unite -start-insert neomru/file<CR>
+	 nnoremap  	<M-t> 						:NERDTreeToggle<CR>
 	 nnoremap  	<M-u> 						:Unite -start-insert<CR>
 	 nnoremap  	<M-w> 						:Unite window<CR>
 	 nnoremap 	<M-=> 						:terminal<CR>
