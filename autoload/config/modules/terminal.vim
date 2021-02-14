@@ -18,6 +18,7 @@ function! config#modules#terminal#init()
 	 let g:terminal_cwd = 1
 	 let g:terminal_height = 10
 	 let g:terminal_pos = 'rightbelow'
+	 set shell=powershell
 	 let g:terminal_shell = 'powershell'
 	 let g:terminal_edit = 'tab drop'
 	 let g:terminal_kill = 'term'
@@ -25,7 +26,7 @@ function! config#modules#terminal#init()
 	 let g:terminal_fixheight = 1
 	 let g:terminal_close = 1
 	 let g:slime_target = "vimterminal"
-	 let g:slime_vimterminal_cmd = "powershell.exe"
+	 let g:slime_vimterminal_cmd = "d:/Programs/Python/3.9.1/Scripts/ipython.exe"
 	 let g:slime_vimterminal_config = {"term_finish": "close"}
 endfunction
 
