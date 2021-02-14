@@ -1,22 +1,6 @@
 
-function! s:which_key()
-	 " default 1000
-	 set timeoutlen=500
-	 let g:mapleader = "\<Space>"
-	 let g:maplocalleader = ','
-	 let g:which_key_map = {}
-	 call which_key#register('<Space>', "g:which_key_map")
-	 nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
-	 vnoremap <silent> <leader>      :<c-u>WhichKeyVisual '<Space>'<CR>
-	 nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
-	 " Hide statusline
-	 autocmd! FileType which_key
-	 autocmd  FileType which_key set laststatus=0 noshowmode noruler
-					 \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-
-	 " define keymap
-
-	 " Buffer:
+" Buffer:
+function! s:which_key_buffer()
 	 let g:which_key_map.b = {
 					 \ 				'name' 	: '+buffer' ,
 					 \ 				'1' 		: ['b1'        			, 'buffer 1']        ,
@@ -31,15 +15,22 @@ function! s:which_key()
 					 \ 				'p' 		: ['bprevious' 			, 'previous-buffer'] ,
 					 \ 				'?' 		: ['Buffers'   			, 'fzf-buffer']      ,
 					 \ }
+endfunction
 
-	 " Config:
+" Config:
+function! s:which_key_config()
 	 let g:which_key_map.c = { 'name' 	: '+config' 
-					 \ , 				'i' 		: ['config#init()'	, 'init'] 
-					 \ , 				'k' 		: ['config#modules#key#init()' 	, 'key' ]
-					 \ , 				'p' 		: ['config#modules#plug#init()' 	, 'plug' ]
+					 \ , 				'a' 		: ['config#modules#airline#init()' 	, 'airline' ]
+					 \ , 				'i' 		: ['config#init()'						, 'init'] 
+					 \ , 				'k' 		: ['config#modules#key#init()' 		, 'key' ]
+					 \ , 				'p' 		: ['config#modules#plug#init()' 		, 'plug' ]
+					 \ , 				'P' 		: ['config#modules#python#init()' 	, 'Python' ]
+					 \ , 				't' 		: ['config#modules#terminal#init()' , 'terminal' ]
 					 \ }
+endfunction
 
-	 " File:
+" File:
+function! s:which_key_file()
 	 nmap <silent> <Plug>(recent-files) :Unite -start-insert neomru/file<CR>
 	 nmap <silent> <Plug>(open-files)  	:Unite -start-insert file_rec<CR>
 	 nmap <silent> <Plug>(edit-vimrc)  	:e $MYVIMRC<CR>
@@ -56,21 +47,44 @@ function! s:which_key()
 	 " Jump:
 	 let g:which_key_map.j = { 'name' : '+jump',
 					 \ }
+endfunction
 
-	 " Open:
+" Open:
+function! s:which_key_open()
 	 let g:which_key_map.o = { 'name' : '+open',
 					 \ 				'q' : ['copen', 'quickfix']    ,
 					 \ 				'l' : ['lopen', 'locationlist'],
 					 \ }
+endfunction
 
-	 " Plugin:
+" Slime:
+function! s:which_key_slime()
+	 let g:which_key_map.s = { 'name' : '+slime'
+					 \,				'0' : ['SlimeSend0'						, 'unquoted']
+					 \,				'1' : ['SlimeSend1'						, 'quoted']
+					 \,				'c' : ['<Plug>SlimeConfig'				, 'config']
+					 \,				'l' : ['<Plug>SlimeLineSend'			, 'line']
+					 \,				'm' : ['<Plug>SlimeMotionSend'		, 'move']
+					 \,				'n' : ['<Plug>SlimeSendCell'			, 'move']
+					 \,				'p' : ['<Plug>SlimeParagraphSend'	, 'paragraph']
+					 \,				'r' : ['<Plug>SlimeRegionSend'		, 'region']
+					 \,				's' : ['SlimeSend'  						, 'send']
+					 \ }
+endfunction
+
+
+" Plugin:
+function! s:which_key_plugin()
 	 let g:which_key_map.p = { 'name': '+plugin',
 					 \ 				'd':  ['config#dein()', 'dein'],
 					 \ 			   'p':  ['config#plug()', 'plug'],
 					 \ 			   'i':  ['dein#install()', 'install'],
 					 \ 			   'u':  ['PlugUpdate', 'update'],
 					 \ }
-	 " Toggle:
+endfunction
+
+" Toggle:
+function! s:which_key_toggle()
 	 let g:which_key_map.t = { 'name': '+toggle'
 					 \,				'a'   : ['AirlineToggle'    			, 'airline' ]
 					 \,	 			'f'   : ['<Plug>(toggle-fullscreen)', 'fullscreen']
@@ -80,8 +94,10 @@ function! s:which_key()
 					 \, 				'+'	: ['<Plug>(vim-increase-alpha)', 'increase-alpha']
 					 \, 				'-'	: ['<Plug>(vim-decrease-alpha)', 'decrease-alpha']
 					 \ }
+endfunction
 
-	 " Window:
+" Window:
+function! s:which_key_window()
 	 let g:which_key_map.w = {
 					 \ 'name' : '+windows' ,
 					 \ 'w' : ['<C-W>w'     , 'other-window']          ,
@@ -105,6 +121,32 @@ function! s:which_key()
 	 " 1:
 	 nnoremap <leader>1 :1wincmd w<CR>
 	 let g:which_key_map.1 = 'which_key_ignore'
+endfunction
+
+function! s:which_key()
+	 " default 1000
+	 set timeoutlen=500
+	 let g:mapleader = "\<Space>"
+	 let g:maplocalleader = ','
+	 let g:which_key_map = {}
+	 call which_key#register('<Space>', "g:which_key_map")
+	 nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+	 vnoremap <silent> <leader>      :<c-u>WhichKeyVisual '<Space>'<CR>
+	 nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
+	 " Hide statusline
+	 autocmd! FileType which_key
+	 autocmd  FileType which_key set laststatus=0 noshowmode noruler
+					 \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
+	 " define keymap
+	 call s:which_key_buffer()
+	 call s:which_key_config()
+	 call s:which_key_file()
+	 call s:which_key_open()
+	 call s:which_key_plugin()
+	 call s:which_key_slime()
+	 call s:which_key_toggle()
+	 call s:which_key_window()
 endfunction
 
 function! s:meta_keys()
@@ -156,6 +198,11 @@ function! s:function_keys()
 	 noremap 	<Plug>(chdir) 				<Esc>:cd %:p:h<CR>
 	 nmap 		<F4> 							<Plug>(chdir)
 	 nmap 		<F11> 						<Plug>(toggle-fullscreen)
+	 nmap 		<F5> 							<Plug>SlimeParagraphSend
+	 nmap 		<F9> 							<Plug>SlimeRegionSend
+	 nmap 		<S-F9> 						<Plug>SlimeSendCell
+	 nmap 		<F10> 						<Plug>SlimeLineSend
+	 nmap 		<F12> 						<Plug>SlimeConfig
 endfunction
 
 function! s:ascii_keys()
@@ -177,4 +224,4 @@ function! config#modules#key#init()
 	 endtry
 endfunction
 
-"vim: fdm=indent
+"vim: set ft=vim fdm=indent
