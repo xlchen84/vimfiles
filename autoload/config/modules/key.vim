@@ -107,19 +107,13 @@ function! s:which_key()
 	 let g:which_key_map.1 = 'which_key_ignore'
 endfunction
 
-
-function! config#modules#key#init()
-	 nnoremap 	<C-h> 						<C-w>h
-	 nnoremap 	<C-l> 						<C-w>l
-	 inoremap 	<C-s> 						<Esc>:w<CR>
-	 nnoremap 	<C-s> 						:w<CR>
-	 nnoremap 	]b 							:bnext<CR>
-	 nnoremap 	[b 							:bprev<CR>
+function! s:meta_keys()
 	 nnoremap  	<M-b> 						:ToggleBufExplorer<CR>
 	 nnoremap  	<M-c> 						:Unite -start-insert command<CR>
 	 nnoremap  	<M-d> 						:Unite -start-insert neomru/directory directory_rec<CR>
 	 nnoremap  	<M-e> 						:VimFilerBufferDir<CR>
 	 nnoremap  	<M-f> 						:Unite -start-insert file_rec file/new<CR>
+	 nnoremap  	<M-g> 						:MagitOnly<CR>
 	 nnoremap  	<M-h> 						:Unite -start-insert help<CR>
 	 nnoremap  	<M-j> 						:Unite -start-insert jump<CR>
 	 nnoremap  	<M-l> 						:Unite -start-insert line<CR>
@@ -135,6 +129,24 @@ function! config#modules#key#init()
 	 nnoremap 	<M-=> 						:terminal<CR>
 	 nnoremap  	<M-;> 						:Commentary<CR>
 	 vnoremap  	<M-;> 						:Commentary<CR>
+endfunction
+
+function! s:shift_meta_keys()
+	 nnoremap  	<M-S-h> 						<C-w>h
+	 nnoremap  	<M-S-l> 						<C-w>l
+	 nnoremap  	<M-S-j> 						<C-w>j
+	 nnoremap  	<M-S-k> 						<C-w>k
+	 nnoremap  	<M-S-o> 						<C-w>o
+endfunction
+
+function! s:control_keys()
+	 nnoremap 	<C-h> 						<C-w>h
+	 nnoremap 	<C-l> 						<C-w>l
+	 inoremap 	<C-s> 						<Esc>:w<CR>
+	 nnoremap 	<C-s> 						:w<CR>
+endfunction
+
+function! s:function_keys()
 	 noremap 	<Plug>(init)  		:call config#init()<CR>
 	 nmap 		<F5> 							<Plug>(init)
 	 noremap 	<Plug>(edit-vimrc) 		<Esc>:edit $VIM/vimrc<CR>
@@ -144,7 +156,20 @@ function! config#modules#key#init()
 	 noremap 	<Plug>(chdir) 				<Esc>:cd %:p:h<CR>
 	 nmap 		<F4> 							<Plug>(chdir)
 	 nmap 		<F11> 						<Plug>(toggle-fullscreen)
+endfunction
+
+function! s:ascii_keys()
+	 nnoremap 	]b 							:bnext<CR>
+	 nnoremap 	[b 							:bprev<CR>
+endfunction
+
+function! config#modules#key#init()
 	 try
+		  call s:ascii_keys()
+		  call s:meta_keys()
+		  call s:control_keys()
+		  call s:function_keys()
+		  call s:shift_meta_keys()
 		  call s:which_key()
 		  call gvimfullscreen#init()
 	 catch

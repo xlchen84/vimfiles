@@ -2,6 +2,9 @@
 let g:coc_disable_startup_warning = 1
 let g:vimfiles_windows = expand('$VIM/vimfiles')
 
+" \ 		'prabirshrestha/asyncomplete.vim',
+" \ 		'vim-scripts/AutoComplPop',
+" \ 		'Valloric/YouCompleteMe',
 let s:plugins = [
 				\ 		'bling/vim-airline',
 				\ 		'vim-airline/vim-airline-themes',
@@ -41,9 +44,6 @@ let s:plugins = [
 				\ 		'prabirshrestha/vim-lsp',
 				\ 		'w0rp/ale',
 				\ 		'Shougo/deoplete.nvim',
-				\ 		'prabirshrestha/asyncomplete.vim',
-				\ 		'vim-scripts/AutoComplPop',
-				\ 		'Valloric/YouCompleteMe',
 				\ 		'neoclide/coc-tabnine',
 				\ 		'tbodt/deoplete-tabnine',
 				\ 		'SirVer/ultisnips',

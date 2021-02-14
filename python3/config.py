@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-
 import vim
-
-
-print(vim)
+import sys
+print(sys.version)

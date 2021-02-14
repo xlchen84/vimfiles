@@ -24,5 +24,8 @@ function! config#modules#terminal#init()
 	 let g:terminal_list = 1
 	 let g:terminal_fixheight = 1
 	 let g:terminal_close = 1
+	 let g:slime_target = "vimterminal"
+	 let g:slime_vimterminal_cmd = "ipython.exe"
+	 let g:slime_vimterminal_config = {"term_finish": "close"}
 endfunction
 
