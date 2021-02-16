@@ -21,11 +21,12 @@ endfunction
 function! s:which_key_config()
 	 let g:which_key_map.c = { 'name' 	: '+config' 
 					 \ , 				'a' 		: ['config#modules#airline#init()' 	, 'airline' ]
-					 \ , 				'i' 		: ['config#init()'						, 'init'] 
-					 \ , 				'k' 		: ['config#modules#key#init()' 		, 'key' ]
-					 \ , 				'p' 		: ['config#modules#plug#init()' 		, 'plug' ]
-					 \ , 				'P' 		: ['config#modules#python#init()' 	, 'Python' ]
-					 \ , 				't' 		: ['config#modules#terminal#init()' , 'terminal' ]
+					 \ , 				'i' 		: ['config#init()'						, 'init'    ] 
+					 \ , 				'k' 		: ['config#modules#key#init()' 		, 'key'     ]
+					 \ , 				'p' 		: ['config#modules#plug#init()' 		, 'plug'    ]
+					 \ , 				'P' 		: ['config#modules#python#init()' 	, 'Python'  ]
+					 \ , 				's' 		: ['config#modules#snippet#init()'  , 'snippet' ]
+					 \ , 				't' 		: ['config#modules#terminal#init()' , 'terminal']
 					 \ }
 endfunction
 
@@ -58,10 +59,8 @@ function! s:which_key_open()
 endfunction
 
 " Slime:
-function! s:which_key_slime()
-	 let g:which_key_map.s = { 'name' : '+slime'
-					 \,				'0' : ['SlimeSend0'						, 'unquoted']
-					 \,				'1' : ['SlimeSend1'						, 'quoted']
+function! s:which_key_run()
+	 let g:which_key_map.r = { 'name' : '+run'
 					 \,				'c' : ['<Plug>SlimeConfig'				, 'config']
 					 \,				'l' : ['<Plug>SlimeLineSend'			, 'line']
 					 \,				'm' : ['<Plug>SlimeMotionSend'		, 'move']
@@ -144,7 +143,7 @@ function! s:which_key()
 	 call s:which_key_file()
 	 call s:which_key_open()
 	 call s:which_key_plugin()
-	 call s:which_key_slime()
+	 call s:which_key_run()
 	 call s:which_key_toggle()
 	 call s:which_key_window()
 endfunction
@@ -168,9 +167,10 @@ function! s:meta_keys()
 	 nnoremap  	<M-t> 						:NERDTreeToggle<CR>
 	 nnoremap  	<M-u> 						:Unite -start-insert<CR>
 	 nnoremap  	<M-w> 						:Unite window<CR>
-	 nnoremap 	<M-=> 						:terminal<CR>
+	 nnoremap 	<M-=> 						:cd %:p:h<CR>:terminal powershell<CR>
 	 nnoremap  	<M-;> 						:Commentary<CR>
 	 vnoremap  	<M-;> 						:Commentary<CR>
+	 nnoremap  	<M-`> 						:cd %:p:h<CR>:terminal cmd<CR>
 endfunction
 
 function! s:shift_meta_keys()

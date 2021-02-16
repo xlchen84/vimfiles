@@ -7,9 +7,10 @@ set go=egrLv
 set guifont=Inziu_IosevkaCC_SC:h18
 set rnu
 set nu
-set cmdheight=1
+set cmdheight=3
 set laststatus=2
 set cursorline
+set rulerformat=%55(%{strftime('%a\ %b\ %e\ %I:%M\ %p')}\ %5l,%-6(%c%V%)\ %P%)
 colorscheme desert
 "}}}
 
@@ -133,9 +134,9 @@ let g:plugins = [ 'bling/vim-airline'
 				\ 	, 'Shougo/vimproc.vim'           
 				\ 	, 'Shougo/vimfiler.vim'
 				\  , 'JuliaEditorSupport/julia-vim'
-				\  , 'jpalardy/vim-slime'
 				\  , 'hanschen/vim-ipython-cell'
 				\ ]
+" \  , 'jpalardy/vim-slime'
 " \ 	, 'prabirshrestha/asyncomplete.vim'
 " \ 	, 'vim-scripts/AutoComplPop'
 "}}}
@@ -147,6 +148,7 @@ let g:modules = [ 'plug'
 				\   , 'startify'
  				\ 	 , 'gvimfullscreen'
  				\ 	 , 'python'
+				\   , 'snippet'
  				\ 	 , 'terminal'
 				\ ]
 

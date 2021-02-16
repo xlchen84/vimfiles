@@ -140,23 +140,21 @@ function! config#modules#python#init()
 
 	 augroup filetype_python 
 		  autocmd!
-		  " autocmd BufNew,BufRead *.py 
-						  " \ setlocal tabstop=4
-						  " \ setlocal softtabstop=4
-						  " \ setlocal shiftwidth=4
-						  " \ setlocal textwidth=79
-						  " \ setlocal colorcolumn=79
-						  " \ setlocal expandtab
-						  " \ setlocal autoindent
-						  " \ setlocal fileformat=unix
-						  " \ setlocal fenc=utf-8
-		  " autocmd BufRead,BufNewFile *.py,*.pyw,*.c,*.h
-						  " \ match BadWhitespace /\s\+$/
+		  autocmd BufNew,BufRead *.py setlocal
+						  \ tabstop=4
+						  \ softtabstop=4
+						  \ shiftwidth=4
+						  \ textwidth=79
+						  \ colorcolumn=79
+						  \ expandtab
+						  \ autoindent
+		  " autocmd BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 	 augroup END
 	 " command! -nargs=1 PymodePython python3 <args>
 	 call config#modules#python#virthenv()
 
-	 call s:ipython()
+	 call run_command#init()
+	 " call s:ipython()
 endfunction
 
 function! config#modules#python#virthenv()
