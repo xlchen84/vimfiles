@@ -31,10 +31,22 @@ class MatlabInterface:
             self.cls_str = 'clear'
         self.clear()
         if not import_fail:
-            print("Starting Matlab...")
-            self.eng = matlab.engine.start_matlab()
+            engine_names = matlab.engine.find_matlab()
+            if len(engine_names) == 0:
+                print("Starting MATLAB...")
+                self.eng = matlab.engine.start_matlab()
+                print("Started.\n")
+            else:
+                for name in engine_names:
+                    try:
+                        print("Connecting to MATLAB {} ...".format(name))
+                        self.eng = matlab.engine.connect_matlab(name)
+                        print("Connected.\n")
+                        break;
+                    except:
+                        print("Failed connecting to MATLAB {} ...".format(name))
         else:
-            print("Could not start Matlab")
+            print("Could not import matlab.engine")
 
     def clear(self):
         os.system(self.cls_str)

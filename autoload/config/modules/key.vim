@@ -170,7 +170,7 @@ function! s:meta_keys()
 	 nnoremap 	<M-=> 						:cd %:p:h<CR>:terminal powershell<CR>
 	 nnoremap  	<M-;> 						:Commentary<CR>
 	 vnoremap  	<M-;> 						:Commentary<CR>
-	 nnoremap  	<M-`> 						:cd %:p:h<CR>:terminal cmd<CR>
+	 nnoremap  	<M-`> 						:call term_start(&shell, { 'cwd': expand('%:p:h')})<CR>
 endfunction
 
 function! s:shift_meta_keys()
@@ -198,11 +198,6 @@ function! s:function_keys()
 	 noremap 	<Plug>(chdir) 				<Esc>:cd %:p:h<CR>
 	 nmap 		<F4> 							<Plug>(chdir)
 	 nmap 		<F11> 						<Plug>(toggle-fullscreen)
-	 nmap 		<F5> 							<Plug>SlimeParagraphSend
-	 nmap 		<F9> 							<Plug>SlimeRegionSend
-	 nmap 		<S-F9> 						<Plug>SlimeSendCell
-	 nmap 		<F10> 						<Plug>SlimeLineSend
-	 nmap 		<F12> 						<Plug>SlimeConfig
 endfunction
 
 function! s:ascii_keys()
