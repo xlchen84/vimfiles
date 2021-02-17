@@ -1,4 +1,4 @@
-function! config#modules#load(module)
+function! config#modules#load(module) abort
 	try
 		let result = config#modules#{a:module}#init()
 	catch /^Vim\%((\a\+)\)\=:E/	 " catch all Vim errors
@@ -13,8 +13,10 @@ function! config#modules#load(module)
 	endtry
 endfunction
 
-function! config#modules#gvimfullscreen()
-	call gvimfullscreen#init()
+function! config#modules#gvimfullscreen() abort
+	if has("win32") && exists("g:did_gvimfullscreen") && g:did_gvimfullscreen
+		call gvimfullscreen#init()
+	endif
 endfunction
 
 " vim: ft=vim fdm=indent ts=2 sw=2

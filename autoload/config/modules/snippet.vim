@@ -30,5 +30,5 @@ function! config#modules#snippet#init()
 					 \ i<C-r>=neosnippet#expand('date_english')<CR>
 	 nnoremap <silent><expr> test
 					 \ neosnippet#expand('date_english')
-	 return config#message("snippet module loaded.")
+	 " return config#message("snippet module loaded.")
 endfunction

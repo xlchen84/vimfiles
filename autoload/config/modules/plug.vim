@@ -1,7 +1,7 @@
 
 let g:coc_disable_startup_warning = 1
 let g:vimfiles_windows = expand('$VIM/vimfiles')
-let g:vimfiles_mac = fnamemodify('<sfile>', ':p:h:h:h')
+let g:vimfiles_mac = fnamemodify(expand('<sfile>'), ':p:h:h:h:h')
 
 " \ 		'prabirshrestha/asyncomplete.vim',
 " \ 		'vim-scripts/AutoComplPop',
@@ -20,7 +20,6 @@ let s:plugins = [
 				\ 		'liuchengxu/vim-which-key',
 				\ 		'hecal3/vim-leader-guide',
 				\ 		'skywind3000/vim-quickui',
-				\ 		'skywind3000/quickmenu',
 				\ 		'skywind3000/asyncrun.vim',
 				\ 		'skywind3000/asynctasks.vim',
 				\ 		'skywind3000/vim-terminal-help', 
@@ -30,7 +29,7 @@ let s:plugins = [
 				\ 		'Shougo/unite-help',
 				\ 		'tsukkee/unite-tag',
 				\ 		'osyo-manga/unite-quickfix',
-				\ 		'thinca/unite-bibtex',
+				\ 		'msprev/unite-bibtex',
 				\ 		'chemzqm/unite-git-log',
 				\ 		'hewes/unite-gtags',
 				\ 		'Shougo/neoyank.vim',
@@ -98,7 +97,11 @@ function! config#modules#plug#init()
 	 call filter(plugins, 'index(disabled, v:val) < 0')
 	 call plug#begin(plug_home)
 	 for p in plugins
-		  call plug#(p)
+		  try
+				call plug#(p)
+		  catch
+				call config#message("init plugin {} failed.", p)
+		  endtry
 	 endfor
 	 call plug#end()
 endfunction

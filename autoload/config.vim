@@ -17,7 +17,7 @@ function! config#init() abort
 	 let modules = uniq(modules)
 	 " call config#message('modules to be loaded: {}', modules)
 	 for module in modules
-		  " call config#message('loading module {}', module)
+		  "call config#message('loading module {}', module)
 		  call config#modules#load(module)
 	 endfor
 endfunction
