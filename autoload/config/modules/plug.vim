@@ -1,6 +1,7 @@
 
 let g:coc_disable_startup_warning = 1
 let g:vimfiles_windows = expand('$VIM/vimfiles')
+let g:vimfiles_mac = fnamemodify('<sfile>', ':p:h:h:h')
 
 " \ 		'prabirshrestha/asyncomplete.vim',
 " \ 		'vim-scripts/AutoComplPop',

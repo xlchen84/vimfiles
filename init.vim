@@ -1,10 +1,8 @@
-" vim: ft=vim fdm=marker 
+" vim: ft=vim fdm=marker  ts=2 sw=2
 
 
 " 外观 {{{
 set go=egrLv
-" set guifont=Inziu_IosevkaCC_SC:h14
-set guifont=Inziu_IosevkaCC_SC:h18
 set rnu
 set nu
 set cmdheight=3
@@ -17,7 +15,6 @@ colorscheme desert
 " 设置 {{{
 set nocompatible
 set encoding=utf-8
-set termencoding=cp936
 set fencs=utf-8,ucs-bom,cp936
 set helplang=cn
 set noswapfile
@@ -25,7 +22,16 @@ set ambiwidth=double
 set visualbell
 set pyxversion=3
 syntax on
-language messages zh_CN.utf-8
+language messages zh_CN.UTF-8
+
+if has('win32')
+	language messages zh_CN.utf-8
+	set termencoding=cp936
+" set guifont=Inziu_IosevkaCC_SC:h14
+	set guifont=Inziu_IosevkaCC_SC:h18
+elseif has('mac')
+	set guifont=Monaco:h18
+endif
 "}}}
 
 " 规则{{{
@@ -143,17 +149,17 @@ let g:plugins = [ 'bling/vim-airline'
 
 let g:modules = [ 'plug'
 				\   , 'key'
- 				\ 	 , 'airline'
- 				\ 	 , 'quickmenu'
-				\   , 'startify'
- 				\ 	 , 'gvimfullscreen'
- 				\ 	 , 'python'
+ 				\ 	, 'airline'
+ 				\ 	, 'quickmenu'
+ 				\ 	, 'gvimfullscreen'
 				\   , 'snippet'
- 				\ 	 , 'terminal'
+ 				\ 	, 'terminal'
 				\ ]
+"				\ 	, 'python'
+"				\   , 'startify'
 
 let g:plugins_disabled = [ 'SirVer/ultisnips'
-				\ ,	'Valloric/YouCompleteMe'
-				\ , 	'Shougo/deoplete.nvim'
+				\ 	,	'Valloric/YouCompleteMe'
+				\ 	, 'Shougo/deoplete.nvim'
 				\ ]
 
