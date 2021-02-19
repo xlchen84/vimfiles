@@ -213,7 +213,6 @@ function! config#modules#key#init()
 		  call s:function_keys()
 		  call s:shift_meta_keys()
 		  call s:which_key()
-		  call gvimfullscreen#init()
 	 catch
 		  call config#message('error: {}', v:exception)
 	 endtry

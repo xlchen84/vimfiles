@@ -1,5 +1,5 @@
 
-let s:matlab_engine_python_executable = 'd:/Programs/Python/3.6.8.amd64/python.exe'
+let s:matlab_engine_python_executable = 'd:/Programs/Python/3.6.8-amd64/python.exe'
 let s:project_root = fnamemodify(expand('<sfile>'), ':p:h:h:h')
 
 
@@ -18,6 +18,6 @@ function! run_command#matlab#init() abort
 				echoerr "Python script " . script_path . "not found. "
 		  endif
 	 else
-		  echoerr "Python not found. Please check g:matlab_engine_python_executable exists."
+		  call config#message("Python {} not found. Please set g:matlab_engine_python_executable.", python_executable)
 	 endif
 endfunction

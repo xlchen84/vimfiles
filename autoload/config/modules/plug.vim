@@ -89,16 +89,24 @@ let s:plugins = [
 
 function! config#modules#plug#init()
 	 let vimfiles = g:vimfiles_{config#os()}
-	 let plug_home = get(g:, 'plug_home', vimfiles . '/bundle')
+	 let plug_home = fnamemodify(vimfiles . '\bundle', ':p')
+	 let plug_home = get(g:, 'plug_home', plug_home)
 	 let plugins = get(g:, 'plugins', [])
 	 call extend(plugins, s:plugins)
 	 let plugins = uniq(plugins)
 	 let disabled = uniq(g:plugins_disabled)
 	 call filter(plugins, 'index(disabled, v:val) < 0')
-	 call plug#begin(plug_home)
-	 for p in plugins
-		  call plug#(p)
-	 endfor
-	 call plug#end()
+	 try
+		  call plug#begin(plug_home)
+		  for p in plugins
+				call plug#(p)
+		  endfor
+		  call plug#end()
+	 catch
+		  call config#message('error: {}', v:exception)
+		  if exists("p")
+				call config#message('loading plugin {} failed: {}', p, v:exception)
+		  endif
+	 endtry
 endfunction
 

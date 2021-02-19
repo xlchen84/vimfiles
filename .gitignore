@@ -1,2 +1,4 @@
 bundle/
 __pycache__
+*.un~
+*~

@@ -49,7 +49,13 @@ augroup filetype_matlab
 augroup END
 "}}}
 
-let g:pymode_python = 'python3'
+if has('python')
+	 python print 'python enabled'
+endif
+
+if has('python3')
+	 python3 print('python3 enabled')
+endif
 
 " plugins{{{
 let g:plugins = [ 'bling/vim-airline'
