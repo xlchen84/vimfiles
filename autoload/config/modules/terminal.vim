@@ -18,8 +18,10 @@ function! config#modules#terminal#init()
 	 let g:terminal_cwd = 1
 	 let g:terminal_height = 10
 	 let g:terminal_pos = 'rightbelow'
-	 set shell=powershell
-	 let g:terminal_shell = 'powershell'
+	 if has('win32')
+		  set shell=powershell
+		  let g:terminal_shell = 'powershell'
+	 endif
 	 let g:terminal_edit = 'tab drop'
 	 let g:terminal_kill = 'term'
 	 let g:terminal_list = 1

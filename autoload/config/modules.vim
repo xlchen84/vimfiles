@@ -1,10 +1,10 @@
-function! config#modules#load(module)
+function! config#modules#load(module) abort
 	try
 		let result = config#modules#{a:module}#init()
 	catch /^Vim\%((\a\+)\)\=:E/	 " catch all Vim errors
-		" if v:exception !~? "E117"
+		if v:exception !~? "E117"
 			call config#message('error catched: {}', v:exception)
-		" endif
+		endif
 		try
 			let result = config#modules#{a:module}()
 		catch /^Vim\%((\a\+)\)\=:E/	 " catch all Vim errors

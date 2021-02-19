@@ -4,17 +4,20 @@ function! config#os()
 	 if has('win32')
 		  return 'windows'
 	 endif
+	 if has('mac')
+		  return 'mac'
+	 endif
 endfunction
 
 let s:modules = []
 
-function! config#init()
+function! config#init() abort
 	 let modules = get(g:, 'modules', [])
 	 call extend(modules, s:modules)
 	 let modules = uniq(modules)
 	 " call config#message('modules to be loaded: {}', modules)
 	 for module in modules
-		  " call config#message('loading module {}', module)
+		  "call config#message('loading module {}', module)
 		  call config#modules#load(module)
 	 endfor
 endfunction
