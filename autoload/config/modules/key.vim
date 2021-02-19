@@ -28,6 +28,14 @@ function! s:which_key_config()
 					 \ , 				's' 		: ['config#modules#snippet#init()'  , 'snippet' ]
 					 \ , 				't' 		: ['config#modules#terminal#init()' , 'terminal']
 					 \ }
+	 nmap <silent> 	<Plug>(edit-init) :edit $VIM/vimfiles/init.vim<CR>
+	 nmap <silent> 	<Plug>(edit-config) :edit $VIM/vimfiles/autoload/config.vim<CR>
+	 nmap <silent> 	<Plug>(edit-config-key) :edit $VIM/vimfiles/autoload/config/modules/key.vim<CR>
+	 let g:which_key_map.c.e = { 'name' 	: '+edit' 
+					 \ , 				'i': ['<Plug>(edit-init)',  'init']
+					 \ , 				'c': ['<Plug>(edit-config)',  'config']
+					 \ , 				'k': ['<Plug>(edit-config-key)',  'key']
+					 \ }
 endfunction
 
 " File:
@@ -86,7 +94,8 @@ endfunction
 function! s:which_key_toggle()
 	 let g:which_key_map.t = { 'name': '+toggle'
 					 \,				'a'   : ['AirlineToggle'    			, 'airline' ]
-					 \,	 			'f'   : ['<Plug>(toggle-fullscreen)', 'fullscreen']
+					 \,				'b'   : ['BookmarkToggle'    			, 'bookmark' ]
+					 \,	 			'f'   : ['ToggleFullscreen', 'fullscreen']
 					 \,	 			'n'   : ['NERDTree'  					, 'nerdtree']
 					 \,	 			't'   : ['<Plug>(toogle-top-most)'  , 'topmost']
 					 \,				'v'   : ['VimFilerExplorer'			, 'vimfiler']
