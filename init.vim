@@ -25,7 +25,7 @@ set fencs=utf-8,ucs-bom,cp936
 set helplang=cn
 set ambiwidth=double
 set pyxversion=3
-set backupdir=$TEMP
+" set backupdir=$TEMP
 syntax on
 language messages zh_CN.UTF-8
 
@@ -71,6 +71,8 @@ endif
 if filereadable('d:/Programs/global/bin/ctags.exe')
 	let $PATH = $PATH . ';' . 'd:/Programs/global/bin'
 endif
+
+let g:verbose = v:true
 
 " plugins{{{
 " <https://github.com/lambdalisue/battery.vim>
@@ -217,11 +219,9 @@ let g:plugins = [ 'bling/vim-airline'
 				\  	, 'JuliaEditorSupport/julia-vim'
 				\  	, 'hanschen/vim-ipython-cell'
 				\	  , 'chrisbra/NrrwRgn'
-				\		, 'petobens/poet-v'
 				\		, 'edkolev/promptline.vim'
 				\		, 'vim-syntastic/syntastic'
 				\		, 'gcmt/taboo.vim'
-				\		, 's1341/vim-tabws'
 				\		, 'majutsushi/tagbar'
 				\		, 'mbbill/undotree'
 				\		, 'chrisbra/unicode.vim'
@@ -231,6 +231,8 @@ let g:plugins = [ 'bling/vim-airline'
 				\ ]
 " \  , 'jpalardy/vim-slime'
 " \ 	, 'prabirshrestha/asyncomplete.vim'
+" \		, 's1341/vim-tabws'
+" \		, 'petobens/poet-v'
 " \ 	, 'vim-scripts/AutoComplPop'
 "}}}
 

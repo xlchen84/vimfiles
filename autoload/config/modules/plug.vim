@@ -97,18 +97,28 @@ function! config#modules#plug#init()
 	 let disabled = uniq(g:plugins_disabled)
 	 call filter(plugins, 'index(disabled, v:val) < 0')
 	 try
+		  let verbose = get(g:, 'verbose', v:false)
 		  call plug#begin(plug_home)
-		  call config#message('initialize plugins.')
+		  if verbose
+				call config#message('initialize plugins.')
+		  endif
 		  for p in plugins
 				try
+					 if verbose
+						  call config#message('load plugin {}.', p)
+					 endif
 					 call plug#(p)
 				catch
 					 call config#message('loading plugin {} failed: {}', p, v:exception)
 				endtry
 		  endfor
-		  call config#message('plugins initialized.')
+		  if verbose
+				call config#message('plugins initialized.')
+		  endif
 		  call plug#end()
-		  call config#message('plugins initialize sucessfullly.')
+		  if verbose
+				call config#message('plugins initialize sucessfullly.')
+		  endif
 	 catch
 		  call config#message('error: {}', v:exception)
 	 endtry

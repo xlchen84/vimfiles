@@ -21,37 +21,41 @@ endfunction
 
 let s:outline_info = {
       \ 'heading'  : '^function\s\+',
-      \ 'heading+1': '^[-=]\+$',
-      \ 'skip': {'block': ['^\s*```.*$', '^\s*```$']},
       \ }
 
 function! s:outline_info.create_heading(which, heading_line, matched_line, context) abort
-  let heading = {
-        \ 'word' : a:heading_line,
-        \ 'level': 0,
-        \ 'type' : 'generic',
-        \ }
+	try
+		" call config#message('outline_info.create_heading({}, {}, {}, {})', a:which, a:heading_line, a:matched_line, a:context)
+		let heading = {
+					\ 'word' : a:heading_line,
+					\ 'level': 0,
+					\ 'type' : 'generic',
+					\ }
+		return heading
+	catch
+		echo v:exception
+	endtry
 
-  if a:which ==# 'heading'
-    let heading.level = strlen(matchstr(a:heading_line, '^#\+'))
-    let heading.word = substitute(heading.word, '^#\+\s*', '', '')
-    let heading.word = substitute(heading.word, '\s*#\+\s*$', '', '')
-  elseif a:which ==# 'heading+1'
-    if a:matched_line =~ '^='
-      let heading.level = 1
-    else
-      let heading.level = 2
-    endif
-  endif
+  "if a:which ==# 'heading'
+  "  let heading.level = strlen(matchstr(a:heading_line, '^#\+'))
+  "  let heading.word = substitute(heading.word, '^#\+\s*', '', '')
+  "  let heading.word = substitute(heading.word, '\s*#\+\s*$', '', '')
+  "elseif a:which ==# 'heading+1'
+  "  if a:matched_line =~ '^='
+  "    let heading.level = 1
+  "  else
+  "    let heading.level = 2
+  "  endif
+  "endif
 
-	"call config#message('outline matlab heading: {}', heading)
+	""call config#message('outline matlab heading: {}', heading)
 
-  if heading.level > 0
-    let heading.word = substitute(heading.word, '\s*<a[^>]*>\s*\%(</a>\s*\)\=$', '', '')
-    return heading
-  else
-    return {}
-  endif
+  "if heading.level > 0
+  "  let heading.word = substitute(heading.word, '\s*<a[^>]*>\s*\%(</a>\s*\)\=$', '', '')
+  "  return heading
+  "else
+  "  return {}
+  "endif
 endfunction
 
 " vim: ts=2 sw=2

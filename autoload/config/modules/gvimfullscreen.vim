@@ -1,7 +1,9 @@
 
 function! config#modules#gvimfullscreen#init() abort
-	if has("win32") && exists("g:did_gvimfullscreen") && g:did_gvimfullscreen
-		call gvimfullscreen#init()
-	endif
+	 try
+		  call gvimfullscreen#init()
+	 catch
+		  call config#message('initialize gvimfullscreen failed because {}', v:exception)
+	 endtry
 endfunction
 
