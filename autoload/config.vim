@@ -23,8 +23,10 @@ function! config#init() abort
 endfunction
 
 " message{{{
+let g:config#verbose = v:false
+
 function! config#message(template, ...)
-	 let verbose = get(g:, 'verbose', v:true)
+	 let verbose = get(g:, 'config#verbose', v:true)
 	 if has('python3') && verbose
 		  py3 <<EOF
 import vim

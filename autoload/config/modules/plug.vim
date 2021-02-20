@@ -103,14 +103,7 @@ function! config#modules#plug#init()
 				call config#message('initialize plugins.')
 		  endif
 		  for p in plugins
-				try
-					 if verbose
-						  call config#message('load plugin {}.', p)
-					 endif
-					 call plug#(p)
-				catch
-					 call config#message('loading plugin {} failed: {}', p, v:exception)
-				endtry
+				call plug#(p)
 		  endfor
 		  if verbose
 				call config#message('plugins initialized.')
