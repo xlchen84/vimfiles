@@ -61,11 +61,15 @@ augroup END
 "}}}
 
 if has('python')
-	 python print 'python enabled'
+	python print 'python enabled'
 endif
 
 if has('python3')
-	 python3 print('python3 enabled')
+	python3 print('python3 enabled')
+endif
+
+if filereadable('d:/Programs/global/bin/ctags.exe')
+	let $PATH = $PATH . ';' . 'd:/Programs/global/bin'
 endif
 
 " plugins{{{
