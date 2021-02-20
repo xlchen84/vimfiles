@@ -98,15 +98,19 @@ function! config#modules#plug#init()
 	 call filter(plugins, 'index(disabled, v:val) < 0')
 	 try
 		  call plug#begin(plug_home)
+		  call config#message('initialize plugins.')
 		  for p in plugins
-				call plug#(p)
+				try
+					 call plug#(p)
+				catch
+					 call config#message('loading plugin {} failed: {}', p, v:exception)
+				endtry
 		  endfor
+		  call config#message('plugins initialized.')
 		  call plug#end()
+		  call config#message('plugins initialize sucessfullly.')
 	 catch
 		  call config#message('error: {}', v:exception)
-		  if exists("p")
-				call config#message('loading plugin {} failed: {}', p, v:exception)
-		  endif
 	 endtry
 endfunction
 
