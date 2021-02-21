@@ -9,7 +9,7 @@ function! config#os()
 	 endif
 endfunction
 
-let s:modules = []
+let s:modules = config#modules#list_modules()
 
 function! config#init() abort
 	 if has('python')

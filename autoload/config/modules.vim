@@ -1,3 +1,9 @@
+let s:file = expand('<sfile>')
+
+function! config#modules#list_modules() abort
+	let module
+endfunction
+
 function! config#modules#load(module) abort
 	try
 		let verbose = get(g:, 'verbose', v:false)
