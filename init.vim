@@ -60,14 +60,6 @@ augroup filetype_matlab
 augroup END
 "}}}
 
-if has('python')
-	python print 'python enabled'
-endif
-
-if has('python3')
-	python3 print('python3 enabled')
-endif
-
 if filereadable('d:/Programs/global/bin/ctags.exe')
 	let $PATH = $PATH . ';' . 'd:/Programs/global/bin'
 endif
@@ -114,7 +106,8 @@ let g:verbose = v:true
 " vista.vim <https://github.com/liuchengxu/vista.vim>
 " vim-windowswap <https://github.com/wesQ3/vim-windowswap>
 " zoomwintab <https://github.com/troydm/zoomwintab.vim>
-
+" DeXP/xkb-switch-win
+  
 let g:plugins = [ 'bling/vim-airline'
 				\ 	, 'vim-airline/vim-airline-themes'
 				\ 	, 'w0rp/ale'
@@ -228,6 +221,7 @@ let g:plugins = [ 'bling/vim-airline'
 				\		, 'liuchengxu/vista.vim'
 				\		, 'wesQ3/vim-windowswap'
 				\		, 'troydm/zoomwintab.vim'
+				\		, 'DeXP/xkb-switch-win'
 				\ ]
 " \  , 'jpalardy/vim-slime'
 " \ 	, 'prabirshrestha/asyncomplete.vim'

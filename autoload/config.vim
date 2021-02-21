@@ -12,6 +12,14 @@ endfunction
 let s:modules = []
 
 function! config#init() abort
+	 if has('python')
+		  echom 'python enabled'
+	 endif
+
+	 if has('python3')
+		  echom 'python3 enabled'
+	 endif
+
 	 let modules = get(g:, 'modules', [])
 	 call extend(modules, s:modules)
 	 let modules = uniq(modules)
