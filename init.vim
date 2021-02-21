@@ -31,7 +31,7 @@ language messages zh_CN.UTF-8
 
 if has('win32')
 	language messages zh_CN.utf-8
-	set termencoding=cp936
+	set termencoding=utf-8
 	set guifont=Inziu_IosevkaCC_SC:h12
 	"set guifont=Inziu_IosevkaCC_SC:h18
 elseif has('mac')

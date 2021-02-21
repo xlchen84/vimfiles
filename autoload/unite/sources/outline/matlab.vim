@@ -20,12 +20,11 @@ endfunction
 " Outline Info
 
 let s:outline_info = {
-      \ 'heading'  : '^function\s\+',
+      \ 'heading'  : '^function\s\+\S\+',
       \ }
 
 function! s:outline_info.create_heading(which, heading_line, matched_line, context) abort
 	try
-		" call config#message('outline_info.create_heading({}, {}, {}, {})', a:which, a:heading_line, a:matched_line, a:context)
 		let heading = {
 					\ 'word' : a:heading_line,
 					\ 'level': 0,

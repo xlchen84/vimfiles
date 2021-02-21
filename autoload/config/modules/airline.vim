@@ -1,3 +1,4 @@
+" vim: ft=vim fdm=marker
 function! s:update_highlights()
 	 hi CursorLine ctermbg=none guibg=none
 	 hi VertSplit ctermbg=none guibg=none
@@ -122,10 +123,9 @@ endfunction
 function! config#modules#airline#extensions()
 	 let g:airline_extensions = ['ale', 'branch', 'bufferline', 'default', 'tabline'] 
 	 call config#modules#airline#ale()
-	 let g:airline#extensions#tabline#enabled = 1
-	 let g:airline#extensions#tabline#buffer_nr_show = 1
 	 call config#modules#airline#bufferline()
 	 call config#modules#airline#default()
+	 call config#modules#airline#tabline()
 endfunction
 
 function! config#modules#airline#ale()
@@ -140,11 +140,20 @@ endfunction
 " bufferline{{{
 function! config#modules#airline#bufferline()
 	 let g:airline#extensions#bufferline#enabled = 1
-	 let g:bufferline_echo = 0
+	 let g:bufferline_echo = 1
 	 let g:bufferline_active_highlight = 'StatusLine'
 	 let g:bufferline_inactive_highlight = 'StatusLineNC'
 	 let g:bufferline_show_bufnr = 1
 	 autocmd VimEnter * let &statusline='%{bufferline#refresh_status()}'.bufferline#get_status_string()
+endfunction
+"}}}
+
+" tabline{{{
+function! config#modules#airline#tabline()
+	 let g:airline#extensions#tabline#enabled = 1
+	 let g:airline#extensions#tabline#show_tabs = 1
+	 let g:airline#extensions#tabline#show_buffers = 1
+	 let g:airline#extensions#tabline#buffer_nr_show = 1
 endfunction
 "}}}
 
