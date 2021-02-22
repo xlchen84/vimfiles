@@ -1,67 +1,40 @@
 " vim: ft=vim fdm=marker
-function! s:update_highlights()
-	 hi CursorLine ctermbg=none guibg=none
-	 hi VertSplit ctermbg=none guibg=none
+
+"load airline extension {{{
+let s:ext = {}
+let s:ext._theme_funcrefs = []
+
+function! s:ext.add_statusline_func(name) dict
+  call airline#add_statusline_func(a:name)
 endfunction
 
-  if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-  endif
-
-  " unicode symbols
-function! config#modules#airline#unicode_symbols()
-  let g:airline_left_sep = '»'
-  let g:airline_right_sep = '«'
-  let g:airline_symbols.crypt = '🔒'
-  let g:airline_symbols.linenr = '☰'
-  let g:airline_symbols.maxlinenr = ''
-  let g:airline_symbols.branch = '⎇'
-  let g:airline_symbols.paste = 'ρ'
-  let g:airline_symbols.spell = 'Ꞩ'
-  let g:airline_symbols.notexists = 'Ɇ'
-  let g:airline_symbols.whitespace = 'Ξ'
+function! s:ext.add_statusline_funcref(function) dict
+  call airline#add_statusline_funcref(a:function)
 endfunction
 
-function! config#modules#airline#unicode_symbols_alternative()
-  let g:airline_left_sep = '▶'
-  let g:airline_right_sep = '◀'
-  let g:airline_symbols.linenr = '␊'
-  let g:airline_symbols.linenr = '␤'
-  let g:airline_symbols.linenr = '¶'
-  let g:airline_symbols.maxlinenr = '㏑'
-  let g:airline_symbols.paste = 'Þ'
-  let g:airline_symbols.paste = '∥'
+function! s:ext.add_inactive_statusline_func(name) dict
+  call airline#add_inactive_statusline_func(a:name)
 endfunction
 
-  " powerline symbols
-function! config#modules#airline#powerline_symbols()
-  let g:airline_left_sep = ''
-  let g:airline_left_alt_sep = ''
-  let g:airline_right_sep = ''
-  let g:airline_right_alt_sep = ''
-  let g:airline_symbols.branch = ''
-  let g:airline_symbols.readonly = ''
-  let g:airline_symbols.linenr = '☰'
-  let g:airline_symbols.maxlinenr = ''
-  let g:airline_symbols.dirty='⚡'
+function! s:ext.add_theme_func(name) dict
+  call add(self._theme_funcrefs, function(a:name))
 endfunction
 
-  " old vim-powerline symbols
-function! config#modules#airline#old_powerline_symbols()
-  let g:airline_left_sep = '⮀'
-  let g:airline_left_alt_sep = '⮁'
-  let g:airline_right_sep = '⮂'
-  let g:airline_right_alt_sep = '⮃'
-  let g:airline_symbols.branch = '⭠'
-  let g:airline_symbols.readonly = '⭤'
-  let g:airline_symbols.linenr = '⭡'
+function! s:load_airline_extension(ext) abort
+	 return airline#extensions#{a:ext}#init(s:ext)
 endfunction
+"}}}
 
-
-" airline {{{
+" init airline {{{
 function! config#modules#airline#init()
-	 call config#modules#load('plug')
 	 " call config#message('initalizing airline')
+	 autocmd User AirlineAfterTheme call s:update_highlights()
+	 call config#modules#airline#extensions()
+endfunction
+"}}}
+
+"airline variables{{{
+function! s:init_variables()
 	 let g:airline_left_sep='>'
 	 let g:airline_right_sep='<'
 	 let g:airline_detect_modified=1
@@ -73,7 +46,6 @@ function! config#modules#airline#init()
 	 let g:airline_inactive_collapse=1
 	 let g:airline_inactive_alt_sep=1
 	 let g:airline_theme='dark'
-	 autocmd User AirlineAfterTheme call s:update_highlights()
 	 let g:airline_powerline_fonts = 1
 	 let g:airline_symbols_ascii = 1
 	 let g:airline_mode_map = {
@@ -117,18 +89,84 @@ function! config#modules#airline#init()
 	 let g:airline_stl_path_style = 'short'
 	 " let g:airline_theme="solarized" 
 	 let g:airline_powerline_fonts = 1  
-	 call config#modules#airline#extensions()
+	 if !exists('g:airline_symbols')
+		  let g:airline_symbols = {}
+	 endif
+endfunction
+"}}}
+
+function! s:update_highlights()
+	 hi CursorLine ctermbg=none guibg=none
+	 hi VertSplit ctermbg=none guibg=none
+endfunction
+
+" unicode symbols{{{
+function! config#modules#airline#unicode_symbols()
+  let g:airline_left_sep = '»'
+  let g:airline_right_sep = '«'
+  let g:airline_symbols.crypt = '🔒'
+  let g:airline_symbols.linenr = '☰'
+  let g:airline_symbols.maxlinenr = ''
+  let g:airline_symbols.branch = '⎇'
+  let g:airline_symbols.paste = 'ρ'
+  let g:airline_symbols.spell = 'Ꞩ'
+  let g:airline_symbols.notexists = 'Ɇ'
+  let g:airline_symbols.whitespace = 'Ξ'
+endfunction
+"}}}
+
+" unicode_symbols_alternative{{{
+function! config#modules#airline#unicode_symbols_alternative()
+  let g:airline_left_sep = '▶'
+  let g:airline_right_sep = '◀'
+  let g:airline_symbols.linenr = '␊'
+  let g:airline_symbols.linenr = '␤'
+  let g:airline_symbols.linenr = '¶'
+  let g:airline_symbols.maxlinenr = '㏑'
+  let g:airline_symbols.paste = 'Þ'
+  let g:airline_symbols.paste = '∥'
+endfunction
+"}}}
+
+" powerline symbols{{{
+function! config#modules#airline#powerline_symbols()
+  let g:airline_left_sep = ''
+  let g:airline_left_alt_sep = ''
+  let g:airline_right_sep = ''
+  let g:airline_right_alt_sep = ''
+  let g:airline_symbols.branch = ''
+  let g:airline_symbols.readonly = ''
+  let g:airline_symbols.linenr = '☰'
+  let g:airline_symbols.maxlinenr = ''
+  let g:airline_symbols.dirty='⚡'
+endfunction
+"}}}
+
+" old vim-powerline symbols{{{
+function! config#modules#airline#old_powerline_symbols()
+  let g:airline_left_sep = '⮀'
+  let g:airline_left_alt_sep = '⮁'
+  let g:airline_right_sep = '⮂'
+  let g:airline_right_alt_sep = '⮃'
+  let g:airline_symbols.branch = '⭠'
+  let g:airline_symbols.readonly = '⭤'
+  let g:airline_symbols.linenr = '⭡'
 endfunction
 "}}}
 
 function! config#modules#airline#extensions()
-	 let g:airline_extensions = ['ale', 'branch', 'bufferline', 'default', 'tabline'] 
 	 call config#modules#airline#ale()
 	 call config#modules#airline#bufferline()
 	 call config#modules#airline#default()
 	 call config#modules#airline#tabline()
+	 call config#modules#airline#timer()
+	 let g:airline_extensions = ['ale', 'branch', 'bufferline', 'tabline'] 
+	 for ext in g:airline_extensions
+		  call s:load_airline_extension(ext)
+	 endfor
 endfunction
 
+" ale{{{
 function! config#modules#airline#ale()
 	 let g:airline#extensions#ale#enabled = 1
 	 let g:airline#extensions#ale#error_symbol = 'E:'
@@ -137,6 +175,7 @@ function! config#modules#airline#ale()
 	 let g:airline#extensions#ale#open_lnum_symbol = '(L'
 	 let g:airline#extensions#ale#close_lnum_symbol = ')'
 endfunction
+"}}}
 
 " bufferline{{{
 function! config#modules#airline#bufferline()
@@ -158,6 +197,7 @@ function! config#modules#airline#tabline()
 endfunction
 "}}}
 
+" default{{{
 function! config#modules#airline#default() abort
   " Note: set to an empty dictionary to disable truncation.
   " let g:airline#extensions#default#section_truncate_width = {}
@@ -174,8 +214,15 @@ function! config#modules#airline#default() abort
 				  \ [ 'x', 'y', 'z', 'error', 'warning' ]
 				  \ ]
 endfunction
+"}}}
 
-let timer = timer_start(4000, 'UpdateStatusBar',{'repeat':-1})
-function! UpdateStatusBar(timer)
+" timer{{{
+function! config#modules#airline#update_status_bar(timer)
 	execute 'let &ro = &ro'
 endfunction
+
+function! config#modules#airline#timer() abort
+	 let timer = timer_start(4000, function('config#modules#airline#update_status_bar'), {'repeat':-1})
+	 return timer
+endfunction
+"}}}
