@@ -11,27 +11,14 @@ endfunction
 
 
 function! config#init() abort
-	 if has('python')
-		  echom 'python enabled'
-	 endif
-
-	 if has('python3')
-		  echom 'python3 enabled'
-	 endif
-
-	 let modules = get(g:, 'modules', [])
-	 let s:modules = config#modules#list_modules()
-	 call extend(modules, s:modules)
-	 let modules = uniq(modules)
-	 " call config#message('modules to be loaded: {}', modules)
+	 let modules = uniq(get(g:, 'modules', []))
 	 for module in modules
-		  "call config#message('loading module {}', module)
 		  call config#modules#load(module)
 	 endfor
 endfunction
 
 " message{{{
-let g:config#verbose = v:false
+let g:config#verbose = v:true
 
 function! config#message(template, ...)
 	 let verbose = get(g:, 'config#verbose', v:true)

@@ -1,7 +1,7 @@
 
 " context_filetype{{{
 function! config#modules#context_filetype#init()
-	 call config#message('initalizing context_filetype')
+	 " call config#message('initalizing context_filetype')
 	 if !exists('g:context_filetype#filetypes')
 		  let g:context_filetype#filetypes = {}
 	 endif

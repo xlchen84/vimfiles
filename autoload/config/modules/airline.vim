@@ -60,6 +60,7 @@ endfunction
 
 " airline {{{
 function! config#modules#airline#init()
+	 call config#modules#load('plug')
 	 " call config#message('initalizing airline')
 	 let g:airline_left_sep='>'
 	 let g:airline_right_sep='<'
