@@ -28,8 +28,9 @@ endfunction
 " init airline {{{
 function! config#modules#airline#init()
 	 " call config#message('initalizing airline')
-	 autocmd User AirlineAfterTheme call s:update_highlights()
+	 call s:init_variables()
 	 call config#modules#airline#extensions()
+	 autocmd User AirlineAfterTheme call s:update_highlights()
 endfunction
 "}}}
 
@@ -155,12 +156,13 @@ endfunction
 "}}}
 
 function! config#modules#airline#extensions()
+	 let g:airline_extensions = ['ale', 'branch', 'tabline'] 
+	 call airline#extensions#load()
 	 call config#modules#airline#ale()
 	 call config#modules#airline#bufferline()
 	 call config#modules#airline#default()
 	 call config#modules#airline#tabline()
 	 call config#modules#airline#timer()
-	 let g:airline_extensions = ['ale', 'branch', 'bufferline', 'tabline'] 
 	 for ext in g:airline_extensions
 		  call s:load_airline_extension(ext)
 	 endfor
