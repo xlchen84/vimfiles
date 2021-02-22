@@ -1,7 +1,8 @@
 let s:file = expand('<sfile>')
 
 function! config#modules#list_modules() abort
-	let module
+	let modules = glob(fnamemodify(s:file, ':p:h') . '/modules/*.vim', v:true, v:true)
+	return modules->map({_, val -> fnamemodify(val, ':p:t:r')})
 endfunction
 
 function! config#modules#load(module) abort
