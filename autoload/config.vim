@@ -9,7 +9,6 @@ function! config#os()
 	 endif
 endfunction
 
-let s:modules = config#modules#list_modules()
 
 function! config#init() abort
 	 if has('python')
@@ -21,6 +20,7 @@ function! config#init() abort
 	 endif
 
 	 let modules = get(g:, 'modules', [])
+	 let s:modules = config#modules#list_modules()
 	 call extend(modules, s:modules)
 	 let modules = uniq(modules)
 	 " call config#message('modules to be loaded: {}', modules)
