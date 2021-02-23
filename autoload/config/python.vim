@@ -70,7 +70,7 @@ function! s:ipython()
 	 endif
 endfunction
 
-function! config#modules#python#init()
+function! config#python#init()
 	 let g:pymode = 1
 	 let g:pymode_warnings = 1
 	 let g:pymode_paths = []
@@ -151,13 +151,13 @@ function! config#modules#python#init()
 		  " autocmd BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 	 augroup END
 	 " command! -nargs=1 PymodePython python3 <args>
-	 call config#modules#python#virthenv()
+	 call config#python#virthenv()
 
 	 call run_command#init()
 	 " call s:ipython()
 endfunction
 
-function! config#modules#python#virthenv()
+function! config#python#virthenv()
 	 pyx << EOF
 import os
 import sys

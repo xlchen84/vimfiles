@@ -20,13 +20,13 @@ endfunction
 " Config:
 function! s:which_key_config()
 	 let g:which_key_map.c = { 'name' 	: '+config' 
-					 \ , 				'a' 		: ['config#modules#airline#init()' 	, 'airline' ]
+					 \ , 				'a' 		: ['config#airline#init()' 	, 'airline' ]
 					 \ , 				'i' 		: ['config#init()'						, 'init'    ] 
-					 \ , 				'k' 		: ['config#modules#key#init()' 		, 'key'     ]
-					 \ , 				'p' 		: ['config#modules#plug#init()' 		, 'plug'    ]
-					 \ , 				'P' 		: ['config#modules#python#init()' 	, 'Python'  ]
-					 \ , 				's' 		: ['config#modules#snippet#init()'  , 'snippet' ]
-					 \ , 				't' 		: ['config#modules#terminal#init()' , 'terminal']
+					 \ , 				'k' 		: ['config#key#init()' 		, 'key'     ]
+					 \ , 				'p' 		: ['config#plug#init()' 		, 'plug'    ]
+					 \ , 				'P' 		: ['config#python#init()' 	, 'Python'  ]
+					 \ , 				's' 		: ['config#snippet#init()'  , 'snippet' ]
+					 \ , 				't' 		: ['config#terminal#init()' , 'terminal']
 					 \ }
 	 nmap <silent> 	<Plug>(edit-init) :edit $VIM/vimfiles/init.vim<CR>
 	 nmap <silent> 	<Plug>(edit-config) :edit $VIM/vimfiles/autoload/config.vim<CR>
@@ -199,14 +199,13 @@ endfunction
 
 function! s:function_keys()
 	 noremap 	<Plug>(init)  		:call config#init()<CR>
-	 nmap 		<F5> 							<Plug>(init)
-	 noremap 	<Plug>(edit-vimrc) 		<Esc>:edit $VIM/vimrc<CR>
-	 nmap 		<F2> 							<Plug>(edit-vimrc)
 	 noremap 	<Plug>(reload-keymap) 	<Esc>:call config#keybindings()<CR>
-	 nmap 		<F3> 							<Plug>(reload-keymap)
 	 noremap 	<Plug>(chdir) 				<Esc>:cd %:p:h<CR>
-	 nmap 		<F4> 							<Plug>(chdir)
-	 nmap 		<F11> 						<Plug>(toggle-fullscreen)
+	 nmap 					<F5> 				<Plug>(init)
+	 nmap 		<silent> <F2> 				<Esc>:call config#show_debug()<CR>
+	 nmap 					<F3> 				<Plug>(reload-keymap)
+	 nmap 					<F4> 				<Plug>(chdir)
+	 nmap 					<F11> 			<Plug>(toggle-fullscreen)
 endfunction
 
 function! s:ascii_keys()
@@ -214,7 +213,7 @@ function! s:ascii_keys()
 	 nnoremap 	[b 							:bprev<CR>
 endfunction
 
-function! config#modules#key#init()
+function! config#key#init()
 	 try
 		  call s:ascii_keys()
 		  call s:meta_keys()
@@ -223,7 +222,7 @@ function! config#modules#key#init()
 		  call s:shift_meta_keys()
 		  call s:which_key()
 	 catch
-		  call config#message('error: {}', v:exception)
+		  call config#debug('error: {}', v:exception)
 	 endtry
 endfunction
 

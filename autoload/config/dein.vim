@@ -1,6 +1,6 @@
 
 " dein{{{
-function! config#modules#dein#init()
+function! config#dein#init()
 	 if dein#load_state($VIM)
 		  call dein#begin($VIM)
 		  call dein#add('Shougo/deoplete.nvim')

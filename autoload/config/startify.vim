@@ -1,5 +1,5 @@
 
-function! config#modules#startify#init()
+function! config#startify#init()
 	 if v:vim_did_enter
 		  Startify
 	 else

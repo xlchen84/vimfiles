@@ -26,10 +26,10 @@ endfunction
 "}}}
 
 " init airline {{{
-function! config#modules#airline#init()
+function! config#airline#init()
 	 " call config#message('initalizing airline')
 	 call s:init_variables()
-	 call config#modules#airline#extensions()
+	 call config#airline#extensions()
 	 autocmd User AirlineAfterTheme call s:update_highlights()
 endfunction
 "}}}
@@ -102,7 +102,7 @@ function! s:update_highlights()
 endfunction
 
 " unicode symbols{{{
-function! config#modules#airline#unicode_symbols()
+function! config#airline#unicode_symbols()
   let g:airline_left_sep = '»'
   let g:airline_right_sep = '«'
   let g:airline_symbols.crypt = '🔒'
@@ -117,7 +117,7 @@ endfunction
 "}}}
 
 " unicode_symbols_alternative{{{
-function! config#modules#airline#unicode_symbols_alternative()
+function! config#airline#unicode_symbols_alternative()
   let g:airline_left_sep = '▶'
   let g:airline_right_sep = '◀'
   let g:airline_symbols.linenr = '␊'
@@ -130,7 +130,7 @@ endfunction
 "}}}
 
 " powerline symbols{{{
-function! config#modules#airline#powerline_symbols()
+function! config#airline#powerline_symbols()
   let g:airline_left_sep = ''
   let g:airline_left_alt_sep = ''
   let g:airline_right_sep = ''
@@ -144,7 +144,7 @@ endfunction
 "}}}
 
 " old vim-powerline symbols{{{
-function! config#modules#airline#old_powerline_symbols()
+function! config#airline#old_powerline_symbols()
   let g:airline_left_sep = '⮀'
   let g:airline_left_alt_sep = '⮁'
   let g:airline_right_sep = '⮂'
@@ -155,21 +155,21 @@ function! config#modules#airline#old_powerline_symbols()
 endfunction
 "}}}
 
-function! config#modules#airline#extensions()
-	 let g:airline_extensions = ['ale', 'branch', 'tabline'] 
+function! config#airline#extensions()
+	 let g:airline_extensions = ['branch', 'tabline'] 
 	 call airline#extensions#load()
-	 call config#modules#airline#ale()
-	 call config#modules#airline#bufferline()
-	 call config#modules#airline#default()
-	 call config#modules#airline#tabline()
-	 call config#modules#airline#timer()
+	 call config#airline#ale()
+	 call config#airline#bufferline()
+	 call config#airline#default()
+	 call config#airline#tabline()
+	 call config#airline#timer()
 	 for ext in g:airline_extensions
 		  call s:load_airline_extension(ext)
 	 endfor
 endfunction
 
 " ale{{{
-function! config#modules#airline#ale()
+function! config#airline#ale()
 	 let g:airline#extensions#ale#enabled = 1
 	 let g:airline#extensions#ale#error_symbol = 'E:'
 	 let g:airline#extensions#ale#warning_symbol = 'W:'
@@ -180,7 +180,7 @@ endfunction
 "}}}
 
 " bufferline{{{
-function! config#modules#airline#bufferline()
+function! config#airline#bufferline()
 	 let g:airline#extensions#bufferline#enabled = 1
 	 let g:bufferline_echo = 1
 	 let g:bufferline_active_highlight = 'StatusLine'
@@ -191,7 +191,7 @@ endfunction
 "}}}
 
 " tabline{{{
-function! config#modules#airline#tabline()
+function! config#airline#tabline()
 	 let g:airline#extensions#tabline#enabled = 1
 	 let g:airline#extensions#tabline#show_tabs = 1
 	 let g:airline#extensions#tabline#show_buffers = 1
@@ -200,7 +200,7 @@ endfunction
 "}}}
 
 " default{{{
-function! config#modules#airline#default() abort
+function! config#airline#default() abort
   " Note: set to an empty dictionary to disable truncation.
   " let g:airline#extensions#default#section_truncate_width = {}
   let g:airline#extensions#default#section_truncate_width = {
@@ -219,12 +219,12 @@ endfunction
 "}}}
 
 " timer{{{
-function! config#modules#airline#update_status_bar(timer)
+function! config#airline#update_status_bar(timer)
 	execute 'let &ro = &ro'
 endfunction
 
-function! config#modules#airline#timer() abort
-	 let timer = timer_start(4000, function('config#modules#airline#update_status_bar'), {'repeat':-1})
+function! config#airline#timer() abort
+	 let timer = timer_start(4000, function('config#airline#update_status_bar'), {'repeat':-1})
 	 return timer
 endfunction
 "}}}

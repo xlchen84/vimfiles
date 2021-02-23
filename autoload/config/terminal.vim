@@ -13,7 +13,7 @@
 "   window.
 " - 'g:terminal_close': set to 1 to close window if process finished.
 
-function! config#modules#terminal#init()
+function! config#terminal#init()
 	 let g:terminal_key = '<m-=>'
 	 let g:terminal_cwd = 1
 	 let g:terminal_height = 10

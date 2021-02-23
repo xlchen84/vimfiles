@@ -3,7 +3,7 @@
 " :NeoSnippetSource [filename]
 " :NeoSnippetClearMarkers
 
-function! config#modules#snippet#init()
+function! config#snippet#init()
 	 let g:neosnippet#snippets_directory = expand("$VIM/vimfiles/snippets")
 	 let g:which_key_map.s = { 'name': '+snippets'
 					 \ ,				'c'   : { 'name': '+commands'

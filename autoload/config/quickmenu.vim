@@ -1,6 +1,6 @@
 
 " quickmenu{{{
-function! config#modules#quickmenu#init()
+function! config#quickmenu#init()
 	 call quickui#menu#reset()
 	 call quickui#menu#install("&File", [
 					 \ [ "&Open\t(:w)", 'call feedkeys(":tabe ")'],

@@ -64,9 +64,124 @@ if filereadable('d:/Programs/global/bin/ctags.exe')
 	let $PATH = $PATH . ';' . 'd:/Programs/global/bin'
 endif
 
-let g:verbose = v:true
+let g:plugins = [
+			\ 'vim-plug', 
+			\ 'vim-which-key', 
+			\ 'vimproc.vim', 
+			\ 'vimfiler.vim', 
+			\ 'dein.vim', 
+			\ 'dein-command.vim', 
+			\ 'dein-ui.vim', 
+			\ 'unite.vim', 
+			\ 'unite-help', 
+			\ 'unite-outline', 
+			\ 'unite-quickfix', 
+			\ 'unite-git-log', 
+			\ 'unite-tag', 
+			\ 'vim-unite-history', 
+			\ 'unite-gtags', 
+			\ 'unite-bibtex', 
+			\ 'denite.nvim', 
+			\ 'denite-git', 
+			\ 'neomru.vim', 
+			\ 'neoyank.vim', 
+			\ 'neosnippet.vim', 
+			\ 'neosnippet-snippets', 
+			\ 'echodoc.vim', 
+			\ 'gvimfullscreen', 
+			\ 'bufexplorer', 
+			\ 'gruvbox', 
+			\ 'vim-textobj-function', 
+			\ 'vim-textobj-indent', 
+			\ 'vim-textobj-parameter', 
+			\ 'vim-textobj-syntax', 
+			\ 'vim-textobj-user', 
+			\ 'vim-airline', 
+			\ 'vim-airline-themes', 
+			\ ]
 
-" plugins{{{
+" 				\ 'deoplete.nvim', 
+" 				\ 'context_filetype.vim', 
+" 				\ 'ale', 
+" 				\ 'asyncomplete.vim', 
+" 				\ 'asyncrun.vim', 
+" 				\ 'asynctasks.vim', 
+" 				\ 'AutoComplPop', 
+" 				\ 'coc-git', 
+" 				\ 'coc-snippets', 
+" 				\ 'coc-tabnine', 
+" 				\ 'coc.nvim', 
+" 				\ 'consolas-powerline-vim', 
+" 				\ 'csv.vim', 
+" 				\ 'deoplete-tabnine', 
+" 				\ 'fern.vim', 
+" 				\ 'fzf.vim', 
+" 				\ 'gina.vim', 
+" 				\ 'indentpython.vim', 
+" 				\ 'LeaderF', 
+" 				\ 'libcallex-vim', 
+" 				\ 'limelight.vim', 
+" 				\ 'neomake', 
+" 				\ 'nerdcommenter', 
+" 				\ 'nerdtree', 
+" 				\ 'NrrwRgn', 
+" 				\ 'nvim-yarp', 
+" 				\ 'poet-v', 
+" 				\ 'promptline.vim', 
+" 				\ 'python-mode', 
+" 				\ 'syntastic', 
+" 				\ 'taboo.vim', 
+" 				\ 'tagbar', 
+" 				\ 'ultisnips', 
+" 				\ 'undotree', 
+" 				\ 'unicode.vim', 
+" 				\ 'vim-battery', 
+" 				\ 'vim-bookmarks', 
+" 				\ 'vim-bufferline', 
+" 				\ 'vim-capslock', 
+" 				\ 'vim-clap', 
+" 				\ 'vim-colors-solarized', 
+" 				\ 'vim-cursormode', 
+" 				\ 'vim-dirvish', 
+" 				\ 'vim-easymotion', 
+" 				\ 'vim-fugitive', 
+" 				\ 'vim-gitgutter', 
+" 				\ 'vim-gutentags', 
+" 				\ 'vim-hug-neovim-rpc', 
+" 				\ 'vim-localsearch', 
+" 				\ 'vim-lsp', 
+" 				\ 'vim-markdown', 
+" 				\ 'vim-markdown-preview', 
+" 				\ 'vim-matlab', 
+" 				\ 'vim-matlab-fold', 
+" 				\ 'vim-obsession', 
+" 				\ 'vim-orgmode', 
+" 				\ 'vim-pandoc', 
+" 				\ 'vim-pandoc-syntax', 
+" 				\ 'vim-quickui', 
+" 				\ 'vim-sensible', 
+" 				\ 'vim-snippets', 
+" 				\ 'vim-startify', 
+" 				\ 'vim-surround', 
+" 				\ 'vim-tabws', 
+" 				\ 'vim-translate', 
+" 				\ 'vim-unimpaired', 
+" 				\ 'vim-windowswap', 
+" 				\ 'vimagit', 
+" 				\ 'vimcdoc', 
+" 				\ 'vimtex', 
+" 				\ 'vista.vim', 
+" 				\ 'YouCompleteMe', 
+" 				\ 'zoomwintab.vim', 
+" 				\ 'vim-commentary', 
+" 				\ 'vim-terminal-help', 
+" 				\ 'vim-slime', 
+" 				\ 'vim-ipython', 
+" 				\ 'vim-ipython-cell', 
+" 				\ 'vim-leader-guide', 
+" 				\ 'pynvim', 
+" 				\ 'ctrlp.vim', 
+" 				\ 'julia-vim', 
 " <https://github.com/lambdalisue/battery.vim>
 " <https://github.com/MattesGroeger/vim-bookmarks>
 " fugitive.vim <https://github.com/tpope/vim-fugitive>
@@ -223,9 +338,13 @@ let g:verbose = v:true
 " 				\		, 'troydm/zoomwintab.vim'
 " 				\		, 'DeXP/xkb-switch-win'
 " 				\ ]
-"}}}
+"			\ 'nvim-lsp', 
 
 let g:plugins_disabled = [ 'SirVer/ultisnips'
+ 				\		, 'neovim/nvim-lsp'
+ 				\ 	, 'w0rp/ale'
+ 				\ 	, 'Shougo/neoyank.vim'
+ 				\ 	, 'neomake/neomake'
 				\ 	,	'Valloric/YouCompleteMe'
 				\ 	, 'Shougo/deoplete.nvim'
 				\		, 'jsfaint/gen_tags.vim'
@@ -244,12 +363,15 @@ let g:plugins_disabled = [ 'SirVer/ultisnips'
 				\ ]
 
 let g:modules = [ 'plug'
- 			\	, 'airline'
 			\	, 'key'
-			\	, 'context_filetype'
+			\	, 'gvimfullscreen'
+ 			\	, 'airline'
+			\	]
+
+let g:modules_disabled = [
+			\	  'context_filetype'
 			\	, 'dein'
 			\	, 'denite'
-			\	, 'gvimfullscreen'
 			\	, 'julia'
 			\	, 'python'
 			\	, 'quickmenu'
@@ -257,8 +379,5 @@ let g:modules = [ 'plug'
 			\	, 'startify'
 			\	, 'terminal'
 			\	, 'vimfiler'
-			\	]
-
-let g:modules_disabled = [
 			\ ]
 
