@@ -166,6 +166,7 @@ function! s:meta_keys()
 	 nnoremap  	<M-g> 						:MagitOnly<CR>
 	 nnoremap  	<M-h> 						:Unite -start-insert help<CR>
 	 nnoremap  	<M-j> 						:Unite -start-insert jump<CR>
+	 nnoremap  	<M-k> 						:Unite -start-insert mapping<CR>
 	 nnoremap  	<M-l> 						:Unite -start-insert line<CR>
 	 nnoremap  	<M-m> 						:Unite bookmark menu<CR>
 	 nnoremap  	<M-n> 						:Unite -start-insert file/new<CR>
@@ -175,6 +176,7 @@ function! s:meta_keys()
 	 nnoremap  	<M-r> 						:Unite -start-insert neomru/file<CR>
 	 nnoremap  	<M-t> 						:NERDTreeToggle<CR>
 	 nnoremap  	<M-u> 						:Unite -start-insert<CR>
+	 nnoremap  	<M-v> 						:VimFilerExplorer<CR>
 	 nnoremap  	<M-w> 						:Unite window<CR>
 	 nnoremap 	<M-=> 						:cd %:p:h<CR>:terminal powershell<CR>
 	 nnoremap  	<M-;> 						:Commentary<CR>

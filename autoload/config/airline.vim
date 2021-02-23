@@ -156,7 +156,7 @@ endfunction
 "}}}
 
 function! config#airline#extensions()
-	 let g:airline_extensions = ['branch', 'tabline'] 
+	 let g:airline_extensions = ['branch', 'tabline', 'bufferline'] 
 	 call airline#extensions#load()
 	 call config#airline#ale()
 	 call config#airline#bufferline()
