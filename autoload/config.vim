@@ -4,8 +4,8 @@ let s:file = expand('<sfile>')
 let s:logging_conf = expand(fnamemodify(s:file, ':p:h:h') . '/logging.conf')
 
 function! config#logging() abort
-	if exists('s:logging_enabled') && s:logging_enabled 
-		return v:true
+	if exists('g:logging_logfile') 
+		return g:logging_logfile
 	endif
 	try
 		let logging_conf = get(g:, 'logging_conf', s:logging_conf)
@@ -16,20 +16,18 @@ function! config#logging() abort
 import vim
 import logging.config
 logging.config.fileConfig(vim.eval('logging_conf'))
+logger = logging.getLogger('root')
+vim.vars['logging_logfile'] = logger.handlers[0].stream.name
 EOF
 		exe 'cd ' . current
-		let s:logging_enabled = v:true
 	catch
-		let s:logging_enabled = v:false
 		echoerr 'logging failed due to ' . v:exception
 	endtry
-	return s:logging_enabled
+	return g:logging_logfile
 endfunction
 
 function! config#show_debug() abort
 	call config#logging()
-	py3 logger = logging.getLogger('root')
-	py3 vim.vars['logFile'] = logger.handlers[0].stream.name
 	exe 'edit ' . g:logFile 
 endfunction
 
@@ -100,10 +98,9 @@ endfunction
 " info{{{
 function! config#info(template, ...)
 	call config#logging()
-	if exists('s:logging_enabled') && s:logging_enabled 
-	 if has('python3')
-		  py3 logging.info(vim.eval('a:template').format(*vim.eval('a:000')))
-	 endif
+	if has('python3')
+		py3 logging.info(vim.eval('a:template').format(*vim.eval('a:000')))
+	endif
 endfunction
 "}}}
 

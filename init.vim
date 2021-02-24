@@ -194,6 +194,7 @@ let g:plugins = [
 			\ 'vim-terminal-help', 
 			\ 'vim-unimpaired', 
 			\ 'vim-table-mode',
+			\ 'vimagit'
 			\ ]
 
 " <https://github.com/lambdalisue/battery.vim>

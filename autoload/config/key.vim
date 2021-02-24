@@ -176,7 +176,7 @@ function! s:meta_keys()
 	 nnoremap  	<M-r> 						:Unite -start-insert neomru/file<CR>
 	 nnoremap  	<M-t> 						:NERDTreeToggle<CR>
 	 nnoremap  	<M-u> 						:Unite -start-insert<CR>
-	 nnoremap  	<M-v> 						:VimFilerExplorer<CR>
+	 nnoremap  	<M-v> 						:VimFilerExplorer -auto-cd -force-quit<CR>
 	 nnoremap  	<M-w> 						:Unite window<CR>
 	 nnoremap 	<M-=> 						:cd %:p:h<CR>:terminal powershell<CR>
 	 nnoremap  	<M-;> 						:Commentary<CR>

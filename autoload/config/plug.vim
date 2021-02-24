@@ -12,7 +12,9 @@ function! s:get_url(directory)
 	 let lines = readfile(file)
 	 let origin_section = match(lines, '\[remote "origin"\]')
 	 let url = lines[origin_section + 1][7:]
+	 call config#debug('url = {}', url)
 	 let short = substitute(url, '.*github.com/\(\S\+/\S\+\)\(.git\)\?', '\1', '')
+	 call config#debug('short = {}', short)
 	 return {'url': url, 'short': short}
 endfunction
 
