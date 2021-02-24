@@ -1,34 +1,27 @@
 " vim: ft=vim fdm=marker sw=2 ts=2
 
 let s:file = expand('<sfile>')
-let s:logging_conf = expand(fnamemodify(s:file, ':p:h:h') . '/logging.conf')
+let s:directory = fnamemodify(s:file, ':p:h:h')
+let g:logging_conf = expand(s:directory . '/logging.conf')
+let g:logging_logfile = expand(s:directory . '/debug.log')
 
 function! config#logging() abort
-	if exists('g:logging_logfile') 
-		return g:logging_logfile
+	if exists('g:logging_conf') && filereadable(g:logging_conf)
+		try
+			py3 import vim
+			py3 import logging.config
+			py3 logging.config.fileConfig(vim.vars['logging_conf'])
+		catch
+			py3 import config
+		endtry
 	endif
-	try
-		let logging_conf = get(g:, 'logging_conf', s:logging_conf)
-		let dir = fnamemodify(logging_conf, ':p:h')
-		let current = getcwd()
-		exe 'cd ' . dir
-		py3 <<EOF
-import vim
-import logging.config
-logging.config.fileConfig(vim.eval('logging_conf'))
-logger = logging.getLogger('root')
-vim.vars['logging_logfile'] = logger.handlers[0].stream.name
-EOF
-		exe 'cd ' . current
-	catch
-		echoerr 'logging failed due to ' . v:exception
-	endtry
-	return g:logging_logfile
+	return g:logging_root_logger_has_handlers
 endfunction
 
 function! config#show_debug() abort
-	call config#logging()
-	exe 'edit ' . g:logFile 
+	if config#logging()
+		exe 'edit ' . g:logging_logfile 
+	endif
 endfunction
 
 function! config#edit_logging_config() abort
@@ -94,6 +87,15 @@ function! config#os()
 	endif
 endfunction
 
+function! s:message(template, ...)
+	if has('python3')
+		py3 import vim
+		py3 vim.vars['msg'] = vim.eval('a:template').format(*vim.eval('a:000'))
+		return g:msg
+	else
+		echoerr 'python3 not enabled'
+	endif
+endfunction
 
 " info{{{
 function! config#info(template, ...)
@@ -121,10 +123,10 @@ function! config#error(template, ...)
 endfunction
 "}}}
 " download{{{
-	function! config#download(location, url)
-		call config#message('downloading to {} from {}', a:location, a:url)
-	endfunction
-	"}}}
+function! config#download(location, url)
+	call config#message('downloading to {} from {}', a:location, a:url)
+endfunction
+"}}}
 
 
 
