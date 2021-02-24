@@ -369,6 +369,12 @@ let g:modules = [ 'plug'
 			\	, 'gvimfullscreen'
  			\	, 'airline'
  			\	, 'table'
+			\	, 'vimfiler'
+			\	, 'quickmenu'
+			\	, 'startify'
+			\	, 'terminal'
+			\	, 'snippet'
+			\	, 'python'
 			\	]
 
 let g:modules_disabled = [
@@ -376,11 +382,5 @@ let g:modules_disabled = [
 			\	, 'dein'
 			\	, 'denite'
 			\	, 'julia'
-			\	, 'python'
-			\	, 'quickmenu'
-			\	, 'snippet'
-			\	, 'startify'
-			\	, 'terminal'
-			\	, 'vimfiler'
 			\ ]
 

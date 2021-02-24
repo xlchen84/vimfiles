@@ -1,5 +1,4 @@
 function! config#vimfiler#init() abort
-	 let g:vimfiler_as_default_explorer = 1
 	 call vimfiler#set_execute_file('txt', 'gvim --remote-tab-silent')
 	 call vimfiler#set_execute_file('c', ['gvim --remote-tab-silent', 'notepad'])
 	 call vimfiler#set_execute_file('m', 'gvim --remote-tab-silent')
