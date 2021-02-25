@@ -4,6 +4,10 @@
 " :NeoSnippetClearMarkers
 
 function! config#snippet#init()
+	 call config#snippet#ultisnips()
+endfunction
+
+function! config#snippet#neosnippet()
 	 let g:neosnippet#snippets_directory = expand("$VIM/vimfiles/snippets")
 	 let g:which_key_map.s = { 'name': '+snippets'
 					 \ ,				'c'   : { 'name': '+commands'
@@ -31,4 +35,23 @@ function! config#snippet#init()
 	 nnoremap <silent><expr> test
 					 \ neosnippet#expand('date_english')
 	 " return config#message("snippet module loaded.")
+endfunction
+
+
+function! config#snippet#ultisnips()
+	 if exists('did_plugin_ultisnips')
+		  let g:UltiSnipsEditSplit = 'normal'
+		  let g:UltiSnipsSnippetStorageDirectoryForUltiSnipsEdit = expand($VIM . '/vimfiles/UltiSnips')
+		  let g:UltiSnipsSnippetDirectories = ['UltiSnips']
+		  let g:UltiSnipsEnableSnipMate = 1
+
+		  let g:UltiSnipsExpandTrigger = '<tab>'
+		  let g:UltiSnipsListSnippets = '<c-tab>'
+		  let g:UltiSnipsJumpForwardTrigger = '<c-j>'
+		  let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
+		  inoremap <c-x><c-k> <c-x><c-k>
+		  call config#debug('ultisnips enabled');
+		  return v:true
+	 endif
+	 return v:false
 endfunction

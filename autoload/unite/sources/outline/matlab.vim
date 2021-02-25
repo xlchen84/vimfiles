@@ -20,7 +20,9 @@ endfunction
 " Outline Info
 
 let s:outline_info = {
-      \ 'heading'  : '^function\s\+\S\+\|^%%\s\S\+',
+			\ 'heading-1': '^classdef\|.*',
+      \ 'heading'  : '^\s*%\|^function\s\+\S\+\|^\s*%%\s\S\+\|.*',
+			\ 'heading+1': '^\s*properties\|^\s*function\|^\s*methods\|.*',
       \ 'highlight_rules': [
       \   { 'name'     : 'comment',
       \     'pattern'  : '/%.*/' },
@@ -36,6 +38,9 @@ let s:outline_info = {
 
 function! s:outline_info.create_heading(which, heading_line, matched_line, context) abort
 	call config#debug('call outline_info.create_heading')
+	call config#debug('which = {}', a:which)
+	call config#debug('heading_line = {}', a:heading_line)
+	call config#debug('matched_line = {}', a:matched_line)
 	try
 		let heading = {
 					\ 'word' : a:heading_line,
@@ -50,7 +55,7 @@ function! s:outline_info.create_heading(which, heading_line, matched_line, conte
 				call config#debug('matching {} with expression {} gives {}', a:heading_line, function_expression, heading.word)
 				let heading.level = 2
 			else
-				let heading.word = matchstr(a:heading_line, '^%%\s\S\+')
+				let heading.word = matchstr(a:heading_line, '^\s*%%\s\S\+.*')
 				let heading.level = 1
 			endif
 		elseif a:which ==# 'heading+1'

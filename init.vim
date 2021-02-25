@@ -186,7 +186,6 @@ let g:plugins = [
 			\ 'vim-pandoc-syntax', 
 			\ 'vim-quickui', 
 			\ 'vim-sensible', 
-			\ 'vim-snippets', 
 			\ 'vim-startify', 
 			\ 'vim-surround', 
 			\ 'vimcdoc', 
@@ -199,7 +198,8 @@ let g:plugins = [
 			\ 'neosnippet.vim', 
 			\ 'neosnippet-snippets', 
 			\ 'coc-snippets', 
-			\ 'vim-snippets' 
+			\ 'vim-snippets',
+			\ 'ctrlp.vim' 
 			\ ]
 
 " <https://github.com/lambdalisue/battery.vim>
