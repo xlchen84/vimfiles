@@ -10,8 +10,12 @@ function! config#python() abort
 endfunction
 
 function! config#logging() abort
+	return v:false
 	if !(exists('g:logging_conf') && filereadable(g:logging_conf))
 		let g:logging_conf = s:logging_conf
+	endif
+	if !(exists('g:logging_logfile') && filereadable(g:logging_logfile))
+		let g:logging_logfile = s:logging_logfile
 	endif
 	if config#python()
 		try
@@ -64,6 +68,19 @@ function! config#list_modules() abort
 					\ 'path': val,
 					\ 'load': function('config#load_module')
 					\}})
+endfunction
+
+function! config#find_module(name) abort
+	let path = glob(config#home() . '/autoload/config/' . a:name . '.vim', v:true, v:true)
+	return path->map({_, val -> config#new_module(val)})
+endfunction
+
+function! config#new_module(path) abort
+	return {
+				\ 'name': fnamemodify(a:path, ':p:t:r'),
+				\ 'path': a:path,
+				\ 'load': function('config#load_module')
+				\}
 endfunction
 
 function! config#load_module() dict
@@ -121,9 +138,9 @@ endfunction
 function! config#debug(template, ...)
 	let msg = config#message(a:template, a:000)
 	if config#logging()
-		pyx config.rootLogger.debug(vim.eval('msg'))
+		pyx config.debug(vim.eval('msg'))
 	else
-		echoerr msg
+		echom msg
 	endif
 endfunction
 

@@ -1,5 +1,9 @@
+" vim: ft=vim ts=2 sw=2 et
 
+let g:coc_disable_startup_warning = 1
 let s:file = expand('<sfile>')
+let s:plugins_disabled = uniq(get(g:, 'plugins_disabled', []))
+let s:plugins_loaded = []
 
 function! config#plug#home() abort
 	 let vimfiles = fnamemodify(s:file, ':p:h:h:h')
@@ -7,40 +11,20 @@ function! config#plug#home() abort
 	 return get(g:, 'plug_home', plug_home)
 endfunction
 
-function! s:get_url(directory)
-	 let file = glob(a:directory . '\config')
-	 let lines = readfile(file)
-	 let origin_section = match(lines, '\[remote "origin"\]')
-	 let url = lines[origin_section + 1][7:]
-	 let short = substitute(url, '.*github.com/\(\S\+/[^.]\+\)\(\.git\)\?', '\1', '')
-	 return {'url': url, 'short': short}
-endfunction
-
-let s:plugins_disabled = uniq(get(g:, 'plugins_disabled', []))
-
-function! s:load_plugin() dict
-	 call plug#(self.short)
-	 let self.loaded = v:true
-endfunction
-
-function! s:new_plugin(repo) abort
+function! config#plug#new_plugin(repo)
 	 let path = fnamemodify(a:repo, ':p:h')
-	 let config = path . '/config'
+	 let config = expand(path . '/config')
 	 if filereadable(config)
 		  let gitdir = fnamemodify(path, ':t')
 		  if gitdir ==? '.git'
-				let plugin = s:get_url(path)
+				let lines = readfile(config)
+				let origin_section = match(lines, '\[remote "origin"\]')
+				let plugin = {}
 				let plugin.name = fnamemodify(path, ':h:t')
-				if index(s:plugins_disabled, plugin.name) >= 0 || index(s:plugins_disabled, plugin.short) >= 0
-					 let plugin.disabled = v:true
-				endif
-				let plugin.load = function('s:load_plugin')
+				let plugin.url = lines[origin_section + 1][7:]
+				let plugin.short = substitute(plugin.url, '.*github.com/\(\S\+/[^.]\+\)\(\.git\)\?', '\1', '')
 				return plugin
-		  else
-				call config#error('should be git but is {}', gitdir)
 		  endif
-	 else
-		  call config#error('config file {} is not readable', config)
 	 endif
 endfunction
 
@@ -48,64 +32,21 @@ function! config#plug#list_plugins() abort
 	 call config#debug('list_plugins')
 	 let plug_home = config#plug#home()
 	 let repos = glob(plug_home . '\*\.git', v:true, v:true)
-	 let s:plugin_list = repos->map({_, val -> s:new_plugin(val)})
-	 let s:plugin_dict = {}
-	 for p in s:plugin_list
-		  let s:plugin_dict[p.name] = p
-		  " call config#debug('add plugin {} to s:plugin_dict[{}]', p.short, p.name)
-	 endfor
+	 let s:plugin_list = repos->map({_, val -> config#plug#new_plugin(val)})
 	 call config#debug('list_plugins sucess.')
 	 return s:plugin_list
 endfunction
 
-function config#plug#get_plugin(name) abort
-	 return s:plugin_dict[a:name]
+function! config#plug#init() abort
+	let plugins = config#plug#list_plugins() 
+	call plug#begin(config#plug#home())
+	for p in plugins
+		 if index(g:plugins_disabled, p.short) < 0
+       call plug#(p.short)
+     else
+       echom 'plugin ' . p.short . ' is disabled'
+     endif
+	endfor
+	call plug#end()
 endfunction
 
-function! config#plug#load_plugins(plugins) abort
-	 call config#debug('config#plug#load_plugins')
-	 try
-		  call config#debug('load_plugins: plugins = {}', a:plugins)
-		  let bundle = config#plug#home()
-		  call config#debug('begin at bundle {}', bundle)
-		  call plug#begin(bundle)
-		  for p in a:plugins
-				if !has_key(p, 'disabled') || !p.disabled
-					 try
-						  call config#debug('load plugin {} with {}', p.name, p.short)
-						  call plug#(p.short)
-					 catch
-						  call config#debug('load plugin {} error: {}', p.name, v:exception)
-					 endtry
-				else
-					 call config#debug('disable plugin {} ', p.name)
-				endif
-		  endfor
-		  call config#debug('end ')
-		  call plug#end()
-		  call config#debug('load_plugins sucess.')
-	 catch
-		  call config#debug('load_plugins: load_plugins  error: {}', v:exception)
-	 endtry
-endfunction
-
-function! config#plug#init()
-	 call config#debug('config#plug#init started.')
-	 if exists('s:plugins_loaded') && s:plugins_loaded
-		  return v:true
-	 endif
-	 let s:plugins_loaded = v:false
-	 try
-		  let plugin_list = config#plug#list_plugins()
-		  let plugin_names = get(g:, 'plugins', plugin_list->map({_, val -> val.name}))
-		  call config#debug('config#plug#init: plugin_names = {}', plugin_names)
-		  call config#plug#load_plugins(plugin_names->map({_, val -> s:plugin_dict[val]}))
-		  let s:plugins_loaded = v:true
-		  call config#debug('config#plug#init sucess.')
-	 catch
-		  call config#debug('init: load module plug failed: {}.', v:exception)
-		  call config#show_debug()
-	 endtry
-endfunction
-
-let g:coc_disable_startup_warning = 1
