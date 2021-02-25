@@ -2,20 +2,25 @@
 
 let s:file = expand('<sfile>')
 let s:directory = fnamemodify(s:file, ':p:h:h')
-let g:logging_conf = expand(s:directory . '/logging.conf')
-let g:logging_logfile = expand(s:directory . '/debug.log')
+let s:logging_logfile = get(g:, 'logging_logfile', expand(s:directory . '/debug.log'))
+let s:logging_conf = get(g:, 'logging_conf', expand(s:directory . '/logging.conf'))
+
+function! config#python() abort
+	return has('pythonx')
+endfunction
 
 function! config#logging() abort
-	if exists('g:logging_conf') && filereadable(g:logging_conf)
+	if !(exists('g:logging_conf') && filereadable(g:logging_conf))
+		let g:logging_conf = s:logging_conf
+	endif
+	if config#python()
 		try
-			py3 import vim
-			py3 import logging.config
-			py3 logging.config.fileConfig(vim.vars['logging_conf'])
+			pyx import config
+			return filereadable(g:logging_logfile)
 		catch
-			py3 import config
+			echoerr v:exception
 		endtry
 	endif
-	return g:logging_root_logger_has_handlers
 endfunction
 
 function! config#show_debug() abort
@@ -87,11 +92,16 @@ function! config#os()
 	endif
 endfunction
 
-function! config#message(template, ...) abort
-	if has('python3')
-		py3 import vim
-		py3 vim.vars['_msg'] = vim.eval('a:template').format(*vim.eval('a:000'))
-		return g:_msg
+function! config#message(template, args) abort
+	if config#python()
+		try
+			let g:_msg = ''
+			pyx import vim
+			pyx vim.vars['_msg'] = vim.eval('a:template').format(*vim.eval('a:args'))
+			return g:_msg
+		catch
+			echom 'config#message: ' . v:exception
+		endtry
 	else
 		echoerr 'python3 not enabled'
 	endif
@@ -101,7 +111,7 @@ endfunction
 function! config#info(template, ...)
 	let msg = config#message(a:template, a:000)
 	if config#logging()
-		py3 config.rootLogger.info(vim.eval('msg'))
+		pyx config.rootLogger.info(vim.eval('msg'))
 	else
 		echom msg
 	endif
@@ -109,21 +119,29 @@ endfunction
 "}}}
 
 function! config#debug(template, ...)
-	call config#logging()
-	if has('python3') 
-		py3 logging.debug(vim.eval('a:template').format(*vim.eval('a:000')))
+	let msg = config#message(a:template, a:000)
+	if config#logging()
+		pyx config.rootLogger.debug(vim.eval('msg'))
+	else
+		echoerr msg
 	endif
 endfunction
 
+
 " error {{{
 function! config#error(template, ...)
-	call config#logging()
-	echohl ErrorMsg
-	py3 import vim; vim.command("let msg='%s'" % vim.eval('a:template').format(*vim.eval('a:000')))
-	echom msg
-	echohl None
+	let msg = config#message(a:template, a:000)
+	if config#logging()
+		pyx import logging
+		pyx logging.debug(vim.eval('msg'))
+	else
+		echohl ErrorMsg
+		echoerr msg
+		echohl None
+	endif
 endfunction
 "}}}
+
 " download{{{
 function! config#download(location, url)
 	call config#message('downloading to {} from {}', a:location, a:url)

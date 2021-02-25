@@ -12,9 +12,7 @@ function! s:get_url(directory)
 	 let lines = readfile(file)
 	 let origin_section = match(lines, '\[remote "origin"\]')
 	 let url = lines[origin_section + 1][7:]
-	 call config#debug('url = {}', url)
-	 let short = substitute(url, '.*github.com/\(\S\+/\S\+\)\(.git\)\?', '\1', '')
-	 call config#debug('short = {}', short)
+	 let short = substitute(url, '.*github.com/\(\S\+/[^.]\+\)\(\.git\)\?', '\1', '')
 	 return {'url': url, 'short': short}
 endfunction
 
@@ -47,6 +45,7 @@ function! s:new_plugin(repo) abort
 endfunction
 
 function! config#plug#list_plugins() abort
+	 call config#debug('list_plugins')
 	 let plug_home = config#plug#home()
 	 let repos = glob(plug_home . '\*\.git', v:true, v:true)
 	 let s:plugin_list = repos->map({_, val -> s:new_plugin(val)})
@@ -55,6 +54,7 @@ function! config#plug#list_plugins() abort
 		  let s:plugin_dict[p.name] = p
 		  " call config#debug('add plugin {} to s:plugin_dict[{}]', p.short, p.name)
 	 endfor
+	 call config#debug('list_plugins sucess.')
 	 return s:plugin_list
 endfunction
 
@@ -63,7 +63,9 @@ function config#plug#get_plugin(name) abort
 endfunction
 
 function! config#plug#load_plugins(plugins) abort
+	 call config#debug('config#plug#load_plugins')
 	 try
+		  call config#debug('load_plugins: plugins = {}', a:plugins)
 		  let bundle = config#plug#home()
 		  call config#debug('begin at bundle {}', bundle)
 		  call plug#begin(bundle)
@@ -74,7 +76,6 @@ function! config#plug#load_plugins(plugins) abort
 						  call plug#(p.short)
 					 catch
 						  call config#debug('load plugin {} error: {}', p.name, v:exception)
-						  throw v:exception
 					 endtry
 				else
 					 call config#debug('disable plugin {} ', p.name)
@@ -84,12 +85,12 @@ function! config#plug#load_plugins(plugins) abort
 		  call plug#end()
 		  call config#debug('load_plugins sucess.')
 	 catch
-		  call config#debug('load plugin {} error: {}', a:plugins[0].name, v:exception)
-		  throw v:exception
+		  call config#debug('load_plugins: load_plugins  error: {}', v:exception)
 	 endtry
 endfunction
 
 function! config#plug#init()
+	 call config#debug('config#plug#init started.')
 	 if exists('s:plugins_loaded') && s:plugins_loaded
 		  return v:true
 	 endif
@@ -97,10 +98,12 @@ function! config#plug#init()
 	 try
 		  let plugin_list = config#plug#list_plugins()
 		  let plugin_names = get(g:, 'plugins', plugin_list->map({_, val -> val.name}))
+		  call config#debug('config#plug#init: plugin_names = {}', plugin_names)
 		  call config#plug#load_plugins(plugin_names->map({_, val -> s:plugin_dict[val]}))
 		  let s:plugins_loaded = v:true
+		  call config#debug('config#plug#init sucess.')
 	 catch
-		  call config#debug('load module plug failed: {}.', v:exception)
+		  call config#debug('init: load module plug failed: {}.', v:exception)
 		  call config#show_debug()
 	 endtry
 endfunction
