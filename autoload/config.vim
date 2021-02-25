@@ -87,11 +87,11 @@ function! config#os()
 	endif
 endfunction
 
-function! s:message(template, ...)
+function! config#message(template, ...) abort
 	if has('python3')
 		py3 import vim
-		py3 vim.vars['msg'] = vim.eval('a:template').format(*vim.eval('a:000'))
-		return g:msg
+		py3 vim.vars['_msg'] = vim.eval('a:template').format(*vim.eval('a:000'))
+		return g:_msg
 	else
 		echoerr 'python3 not enabled'
 	endif
@@ -99,9 +99,11 @@ endfunction
 
 " info{{{
 function! config#info(template, ...)
-	call config#logging()
-	if has('python3')
-		py3 logging.info(vim.eval('a:template').format(*vim.eval('a:000')))
+	let msg = config#message(a:template, a:000)
+	if config#logging()
+		py3 config.rootLogger.info(vim.eval('msg'))
+	else
+		echom msg
 	endif
 endfunction
 "}}}

@@ -13,6 +13,7 @@ fileHandler.setFormatter(formatter)
 streamHandler = logging.StreamHandler()
 streamHandler.setLevel(log_level)
 rootLogger = logging.getLogger('root')
+rootLogger.setLevel(log_level)
 if not rootLogger.hasHandlers():
     rootLogger.addHandler(fileHandler)
     rootLogger.addHandler(streamHandler)
