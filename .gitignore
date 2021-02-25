@@ -1,6 +1,9 @@
 bundle/
+tags
+tags-cn
 __pycache__
 *.un~
 *~
 *.temp
 *.log
+*.pdf

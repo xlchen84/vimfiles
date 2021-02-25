@@ -25,7 +25,7 @@ set fencs=utf-8,ucs-bom,cp936
 set helplang=cn
 set ambiwidth=double
 set pyxversion=3
-" set backupdir=$TEMP
+set backupdir=$VIM/vimfiles/temp,$TEMP
 syntax on
 language messages zh_CN.UTF-8
 
