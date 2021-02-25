@@ -194,7 +194,12 @@ let g:plugins = [
 			\ 'vim-terminal-help', 
 			\ 'vim-unimpaired', 
 			\ 'vim-table-mode',
-			\ 'vimagit'
+			\ 'vimagit',
+			\ 'ultisnips',
+			\ 'neosnippet.vim', 
+			\ 'neosnippet-snippets', 
+			\ 'coc-snippets', 
+			\ 'vim-snippets' 
 			\ ]
 
 " <https://github.com/lambdalisue/battery.vim>
@@ -343,18 +348,14 @@ let g:plugins = [
 " 				\ ]
 "			\ 'nvim-lsp', 
 
-let g:plugins_disabled = [ 'SirVer/ultisnips'
- 				\		, 'neovim/nvim-lsp'
+let g:plugins_disabled = [ 
+ 				\		  'neovim/nvim-lsp'
  				\ 	, 'w0rp/ale'
- 				\ 	, 'Shougo/neoyank.vim'
- 				\ 	, 'neomake/neomake'
 				\ 	,	'Valloric/YouCompleteMe'
 				\ 	, 'Shougo/deoplete.nvim'
 				\		, 'jsfaint/gen_tags.vim'
-				\ 	, 'neoclide/coc.nvim'
 				\		, 'autozimu/LanguageClient-neovim'
 				\		, 'jmcantrell/vim-virtualenv'
-				\		, 'cdelledonne/vim-cmake'
 				\		, 'tomtom/quickfixsigns_vim'
 				\		, 'chrisbra/changesPlugin'
 				\		, 'mhinz/vim-signify'
@@ -364,6 +365,10 @@ let g:plugins_disabled = [ 'SirVer/ultisnips'
 				\		, 'petobens/poet-v'
 				\ 	, 'vim-scripts/AutoComplPop'
 				\ ]
+ 				" \ 	, 'Shougo/neoyank.vim'
+ 				" \ 	, 'neomake/neomake'
+				" \ 	, 'neoclide/coc.nvim'
+				" \		, 'cdelledonne/vim-cmake'
 
 let g:modules = [ 'plug'
 			\	, 'key'
