@@ -35,7 +35,9 @@ if has('win32')
 elseif has('mac')
 	set guifont=Monaco:h18
 endif
-if !has('nvim')
+if has('nvim')
+	GuiFont! Inziu IosevkaCC SC:h12
+else
 	set guifont=Inziu_IosevkaCC_SC:h12
 	set pyxversion=3
 endif
