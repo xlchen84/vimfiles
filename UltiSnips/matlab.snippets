@@ -1,0 +1,36 @@
+# vim: ft=neosnippet ts=4 sw=4 noet
+snippet if "if ... end %if"
+if ${1:condition}
+    ${0:}
+end %if
+endsnippet
+
+snippet for "for ... end %for"
+for ${1:ii} = ${2:list}
+    ${0}
+end %for
+endsnippet
+
+snippet fun "function [y] = f(x) ... end %function"
+function ${1:[${2:varargout} ${3:, extra}] =} ${4:`!p fn`}(${5:args})
+    ${0}
+end %function
+endsnippet
+
+snippet cls "classdef  ... end %classdef"
+classdef ${1:`!v expand('%:t:r')`} ${2:< ${3:Base}}
+    ${0}
+end %classdef
+endsnippet
+
+snippet prop "properties  ... end %properties"
+properties ${1:(Abstract)}
+    ${0}
+end %properties
+endsnippet
+
+snippet meth "methods  ... end %methods"
+methods ${1:(Abstract)}
+    ${0}
+end %methods
+endsnippet

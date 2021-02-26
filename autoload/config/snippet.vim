@@ -8,7 +8,7 @@ function! config#snippet#init()
 endfunction
 
 function! config#snippet#neosnippet()
-	 let g:neosnippet#snippets_directory = expand("$VIM/vimfiles/snippets")
+	 let g:neosnippet#snippets_directory = expand(g:vimfiles . "/snippets")
 	 let g:which_key_map.s = { 'name': '+snippets'
 					 \ ,				'c'   : { 'name': '+commands'
 					 \ ,							 'c'   : ['NeoSnippetClearMarkers', 'clear marks']
@@ -39,9 +39,9 @@ endfunction
 
 
 function! config#snippet#ultisnips()
-	 if exists('did_plugin_ultisnips')
+	 if exists('g:did_plugin_ultisnips')
 		  let g:UltiSnipsEditSplit = 'normal'
-		  let g:UltiSnipsSnippetStorageDirectoryForUltiSnipsEdit = expand($VIM . '/vimfiles/UltiSnips')
+		  let g:UltiSnipsSnippetStorageDirectoryForUltiSnipsEdit = expand(g:vimfiles . '/UltiSnips')
 		  let g:UltiSnipsSnippetDirectories = ['UltiSnips']
 		  let g:UltiSnipsEnableSnipMate = 1
 
@@ -50,7 +50,7 @@ function! config#snippet#ultisnips()
 		  let g:UltiSnipsJumpForwardTrigger = '<c-j>'
 		  let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
 		  inoremap <c-x><c-k> <c-x><c-k>
-		  call config#debug('ultisnips enabled');
+		  call config#debug('ultisnips enabled')
 		  return v:true
 	 endif
 	 return v:false

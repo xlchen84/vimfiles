@@ -1,7 +1,7 @@
 " vim: ft=vim ts=2 sw=2 fdm=indent
 
 if !exists("*term_start")
-	echomsg "run_command requires vim built with :terminal support"
+	call config#debug("run_command requires vim built with :terminal support")
 	finish
 endif
 

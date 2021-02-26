@@ -127,8 +127,6 @@ function! config#info(template, ...)
 	let msg = config#message(a:template, a:000)
 	if config#logging()
 		py3 config.rootLogger.info(vim.eval('msg'))
-	else
-		echom msg
 	endif
 endfunction
 "}}}

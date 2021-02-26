@@ -35,9 +35,7 @@ if has('win32')
 elseif has('mac')
 	set guifont=Monaco:h18
 endif
-if has('nvim')
-	GuiFont! Inziu IosevkaCC SC:h12
-else
+if !has('nvim')
 	set guifont=Inziu_IosevkaCC_SC:h12
 	set pyxversion=3
 endif
@@ -64,6 +62,7 @@ augroup filetype_matlab
 augroup END
 "}}}
 
+let g:vimfiles = expand('<sfile>:h')
 if filereadable('d:/Programs/global/bin/ctags.exe')
 	let $PATH = $PATH . ';' . 'd:/Programs/global/bin'
 endif
@@ -368,7 +367,7 @@ let g:plugins_disabled = [
  				\  	, 'junegunn/fzf.vim'
  				\   , 'LeaderF'
 				\   , 'ultisnips'
-				\ 	, 'neoclide/coc.nvim'
+				\ 	, 'coc.nvim'
  				\ 	, 'vim-ipython-cell' 
 				\ ] 
  				" \ 	, 'Shougo/neoyank.vim'

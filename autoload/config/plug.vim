@@ -44,7 +44,7 @@ function! config#plug#init() abort
 		 if index(g:plugins_disabled, p.short) < 0
        call plug#(p.short)
      else
-       echom 'plugin ' . p.short . ' is disabled'
+       call config#debug('plugin ' . p.short . ' is disabled')
      endif
 	endfor
 	call plug#end()
