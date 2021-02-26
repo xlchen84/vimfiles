@@ -6,7 +6,7 @@ let s:logging_logfile = get(g:, 'logging_logfile', expand(s:directory . '/debug.
 let s:logging_conf = get(g:, 'logging_conf', expand(s:directory . '/logging.conf'))
 
 function! config#python() abort
-	return has('pythonx')
+	return has('python3')
 endfunction
 
 function! config#logging() abort
@@ -19,7 +19,7 @@ function! config#logging() abort
 	endif
 	if config#python()
 		try
-			pyx import config
+			py3 import config
 			return filereadable(g:logging_logfile)
 		catch
 			echoerr v:exception
@@ -63,7 +63,7 @@ endfunction
 
 function! config#list_modules() abort
 	let modules = glob(config#home() . '/autoload/config/*.vim', v:true, v:true)
-	return modules->map({_, val -> {
+	return map(modules, {_, val -> {
 					\ 'name': fnamemodify(val, ':p:t:r'),
 					\ 'path': val,
 					\ 'load': function('config#load_module')
@@ -113,14 +113,12 @@ function! config#message(template, args) abort
 	if config#python()
 		try
 			let g:_msg = ''
-			pyx import vim
-			pyx vim.vars['_msg'] = vim.eval('a:template').format(*vim.eval('a:args'))
+			py3 import vim
+			py3 vim.vars['_msg'] = vim.eval('a:template').format(*vim.eval('a:args'))
 			return g:_msg
 		catch
 			echom 'config#message: ' . v:exception
 		endtry
-	else
-		echoerr 'python3 not enabled'
 	endif
 endfunction
 
@@ -128,7 +126,7 @@ endfunction
 function! config#info(template, ...)
 	let msg = config#message(a:template, a:000)
 	if config#logging()
-		pyx config.rootLogger.info(vim.eval('msg'))
+		py3 config.rootLogger.info(vim.eval('msg'))
 	else
 		echom msg
 	endif
@@ -138,9 +136,7 @@ endfunction
 function! config#debug(template, ...)
 	let msg = config#message(a:template, a:000)
 	if config#logging()
-		pyx config.debug(vim.eval('msg'))
-	else
-		echom msg
+		py3 config.debug(vim.eval('msg'))
 	endif
 endfunction
 
@@ -149,8 +145,8 @@ endfunction
 function! config#error(template, ...)
 	let msg = config#message(a:template, a:000)
 	if config#logging()
-		pyx import logging
-		pyx logging.debug(vim.eval('msg'))
+		py3 import logging
+		py3 logging.debug(vim.eval('msg'))
 	else
 		echohl ErrorMsg
 		echoerr msg

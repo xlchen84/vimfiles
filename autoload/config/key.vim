@@ -158,11 +158,11 @@ function! s:which_key()
 endfunction
 
 function! s:meta_keys()
-	 nnoremap  	<M-b> 						:ToggleBufExplorer<CR>
+	 nnoremap  	<M-b> 						:Denite buffer<CR>
 	 nnoremap  	<M-c> 						:Unite -start-insert command<CR>
 	 nnoremap  	<M-d> 						:Unite -start-insert neomru/directory directory_rec<CR>
 	 nnoremap  	<M-e> 						:VimFilerBufferDir<CR>
-	 nnoremap  	<M-f> 						:Unite -start-insert file_rec file/new<CR>
+	 nnoremap  	<M-f> 						:Denite file/rec<CR>
 	 nnoremap  	<M-g> 						:MagitOnly<CR>
 	 nnoremap  	<M-h> 						:Unite -start-insert help<CR>
 	 nnoremap  	<M-j> 						:Unite -start-insert jump<CR>
@@ -175,7 +175,7 @@ function! s:meta_keys()
 	 tnoremap 	<M-q> 						<C-\><C-n>
 	 nnoremap  	<M-r> 						:Unite -start-insert neomru/file<CR>
 	 nnoremap  	<M-t> 						:NERDTreeToggle<CR>
-	 nnoremap  	<M-u> 						:Unite -start-insert<CR>
+	 nnoremap  	<M-u> 						:Denite source<CR>
 	 nnoremap  	<M-v> 						:VimFilerExplorer -auto-cd -force-quit<CR>
 	 nnoremap  	<M-w> 						:Unite window<CR>
 	 nnoremap 	<M-=> 						:cd %:p:h<CR>:terminal powershell<CR>

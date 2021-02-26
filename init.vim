@@ -24,7 +24,6 @@ set encoding=utf-8
 set fencs=utf-8,ucs-bom,cp936
 set helplang=cn
 set ambiwidth=double
-set pyxversion=3
 set backupdir=$VIM/vimfiles/temp,$TEMP
 syntax on
 language messages zh_CN.UTF-8
@@ -32,10 +31,13 @@ language messages zh_CN.UTF-8
 if has('win32')
 	language messages zh_CN.utf-8
 	set termencoding=utf-8
-	set guifont=Inziu_IosevkaCC_SC:h12
 	"set guifont=Inziu_IosevkaCC_SC:h18
 elseif has('mac')
 	set guifont=Monaco:h18
+endif
+if !has('nvim')
+	set guifont=Inziu_IosevkaCC_SC:h12
+	set pyxversion=3
 endif
 "}}}
 
@@ -82,11 +84,9 @@ endif
 " 				\ 'fzf.vim', 
 " 				\ 'gina.vim', 
 " 				\ 'indentpython.vim', 
-" 				\ 'LeaderF', 
 " 				\ 'limelight.vim', 
 " 				\ 'nerdtree', 
 " 				\ 'NrrwRgn', 
-" 				\ 'nvim-yarp', 
 " 				\ 'poet-v', 
 " 				\ 'promptline.vim', 
 " 				\ 'python-mode', 
@@ -107,7 +107,6 @@ endif
 " 				\ 'vim-fugitive', 
 " 				\ 'vim-gitgutter', 
 " 				\ 'vim-gutentags', 
-" 				\ 'vim-hug-neovim-rpc', 
 " 				\ 'vim-localsearch', 
 " 				\ 'vim-lsp', 
 " 				\ 'vim-markdown', 
@@ -131,75 +130,75 @@ endif
 " 				\ 'ctrlp.vim', 
 " 				\ 'julia-vim', 
 
-let g:plugins = [
-			\ 'vim-plug', 
-			\ 'vim-which-key', 
-			\ 'vimproc.vim', 
-			\ 'vimfiler.vim', 
-			\ 'dein.vim', 
-			\ 'dein-command.vim', 
-			\ 'dein-ui.vim', 
-			\ 'unite.vim', 
-			\ 'unite-help', 
-			\ 'unite-outline', 
-			\ 'unite-quickfix', 
-			\ 'unite-git-log', 
-			\ 'unite-tag', 
-			\ 'vim-unite-history', 
-			\ 'unite-gtags', 
-			\ 'unite-bibtex', 
-			\ 'denite.nvim', 
-			\ 'denite-git', 
-			\ 'neomru.vim', 
-			\ 'neoyank.vim', 
-			\ 'neosnippet.vim', 
-			\ 'neosnippet-snippets', 
-			\ 'echodoc.vim', 
-			\ 'gvimfullscreen', 
-			\ 'bufexplorer', 
-			\ 'gruvbox', 
-			\ 'vim-textobj-function', 
-			\ 'vim-textobj-indent', 
-			\ 'vim-textobj-parameter', 
-			\ 'vim-textobj-syntax', 
-			\ 'vim-textobj-user', 
-			\ 'vim-airline', 
-			\ 'vim-airline-themes', 
-			\ 'vim-bufferline', 
-			\ 'neomake', 
-			\ 'vim-startify',
-			\ 'libcallex-vim', 
-			\ 'nerdcommenter', 
-			\ 'nerdcommenter',
-			\ 'nerdtree',
-			\ 'libcallex-vim',
-			\ 'limelight.vim',
-			\ 'vim-easymotion',
-			\ 'vim-terminal-help',
-			\ 'vim-textobj-function',
-			\ 'vim-textobj-indent',
-			\ 'vim-textobj-parameter',
-			\ 'vim-textobj-syntax',
-			\ 'vim-textobj-user',
-			\ 'vim-orgmode', 
-			\ 'vim-pandoc', 
-			\ 'vim-pandoc-syntax', 
-			\ 'vim-quickui', 
-			\ 'vim-sensible', 
-			\ 'vim-startify', 
-			\ 'vim-surround', 
-			\ 'vimcdoc', 
-			\ 'vim-commentary', 
-			\ 'vim-terminal-help', 
-			\ 'vim-unimpaired', 
-			\ 'vim-table-mode',
-			\ 'vimagit',
-			\ 'ultisnips',
-			\ 'neosnippet.vim', 
-			\ 'neosnippet-snippets', 
-			\ 'coc-snippets', 
-			\ 'vim-snippets',
-			\ 'ctrlp.vim' 
+let g:plugins = ['vim-plug' 
+			\ , 'vim-which-key' 
+			\ , 'vimproc.vim' 
+			\ , 'vimfiler.vim' 
+			\ , 'dein.vim' 
+			\ , 'dein-command.vim' 
+			\ , 'dein-ui.vim' 
+			\ , 'unite.vim' 
+			\ , 'unite-help' 
+			\ , 'unite-outline' 
+			\ , 'unite-quickfix' 
+			\ , 'unite-git-log' 
+			\ , 'unite-tag' 
+			\ , 'vim-unite-history' 
+			\ , 'unite-gtags' 
+			\ , 'unite-bibtex' 
+			\ , 'nvim-yarp' 
+			\ , 'vim-hug-neovim-rpc' 
+			\ , 'denite.nvim' 
+			\ , 'denite-git' 
+			\ , 'neomru.vim' 
+			\ , 'neoyank.vim' 
+			\ , 'neosnippet.vim' 
+			\ , 'neosnippet-snippets' 
+			\ , 'echodoc.vim' 
+			\ , 'gvimfullscreen' 
+			\ , 'bufexplorer' 
+			\ , 'gruvbox' 
+			\ , 'vim-textobj-function' 
+			\ , 'vim-textobj-indent' 
+			\ , 'vim-textobj-parameter' 
+			\ , 'vim-textobj-syntax' 
+			\ , 'vim-textobj-user' 
+			\ , 'vim-airline' 
+			\ , 'vim-airline-themes' 
+			\ , 'vim-bufferline' 
+			\ , 'neomake' 
+			\ , 'vim-startify'
+			\ , 'libcallex-vim' 
+			\ , 'nerdcommenter' 
+			\ , 'nerdcommenter'
+			\ , 'nerdtree'
+			\ , 'libcallex-vim'
+			\ , 'limelight.vim'
+			\ , 'vim-easymotion'
+			\ , 'vim-terminal-help'
+			\ , 'vim-textobj-function'
+			\ , 'vim-textobj-indent'
+			\ , 'vim-textobj-parameter'
+			\ , 'vim-textobj-syntax'
+			\ , 'vim-textobj-user'
+			\ , 'vim-orgmode' 
+			\ , 'vim-pandoc' 
+			\ , 'vim-pandoc-syntax' 
+			\ , 'vim-quickui' 
+			\ , 'vim-sensible' 
+			\ , 'vim-startify' 
+			\ , 'vim-surround' 
+			\ , 'vimcdoc' 
+			\ , 'vim-commentary' 
+			\ , 'vim-terminal-help' 
+			\ , 'vim-unimpaired' 
+			\ , 'vim-table-mode'
+			\ , 'vimagit'
+			\ , 'neosnippet.vim' 
+			\ , 'neosnippet-snippets' 
+			\ , 'coc-snippets' 
+			\ , 'vim-snippets'
+			\ , 'ctrlp.vim'
 			\ ]
 
 " <https://github.com/lambdalisue/battery.vim>
@@ -364,10 +363,14 @@ let g:plugins_disabled = [
 				\		, 's1341/vim-tabws'
 				\		, 'petobens/poet-v'
 				\ 	, 'vim-scripts/AutoComplPop'
-				\ ]
+ 				\  	, 'junegunn/fzf.vim'
+ 				\   , 'LeaderF'
+				\   , 'ultisnips'
+				\ 	, 'neoclide/coc.nvim'
+ 				\ 	, 'vim-ipython-cell' 
+				\ ] 
  				" \ 	, 'Shougo/neoyank.vim'
  				" \ 	, 'neomake/neomake'
-				" \ 	, 'neoclide/coc.nvim'
 				" \		, 'cdelledonne/vim-cmake'
 
 let g:modules = [ 'plug'
@@ -381,12 +384,12 @@ let g:modules = [ 'plug'
 			\	, 'terminal'
 			\	, 'snippet'
 			\	, 'python'
+			\	, 'denite'
 			\	]
 
 let g:modules_disabled = [
 			\	  'context_filetype'
 			\	, 'dein'
-			\	, 'denite'
 			\	, 'julia'
 			\ ]
 
