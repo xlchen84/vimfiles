@@ -2,6 +2,7 @@ function! config#vimfiler#init() abort
 	 call vimfiler#set_execute_file('txt', 'gvim --remote-tab-silent')
 	 call vimfiler#set_execute_file('c', ['gvim --remote-tab-silent', 'notepad'])
 	 call vimfiler#set_execute_file('m', 'gvim --remote-tab-silent')
+	 call vimfiler#set_execute_file('doc,docx', 'C:\Program Files\Microsoft Office\Office16\WINWORD.EXE')
 
 	 " Enable file operation commands.
 	 " Edit file by tabedit.
@@ -33,12 +34,11 @@ function! config#vimfiler#init() abort
 	 " statusline
 	 let g:vimfiler_force_overwrite_statusline = 1
 
-	 call vimfiler#set_execute_file('doc,docx', 'C:\Program Files\Microsoft Office\Office16\WINWORD.EXE')
-	 let g:vimfiler_execute_file_list = {
-					 \ 'txt': 'gvim --remote-tab-silent',
-					 \ 'c': ['gvim --remote-tab-silent', 'notepad'], 
-					 \ 'm': 'gvim --remote-tab-silent',
-					 \}
+	 " let g:vimfiler_execute_file_list = {
+					 " \ 'txt': 'gvim --remote-tab-silent',
+					 " \ 'c': ['gvim --remote-tab-silent', 'notepad'], 
+					 " \ 'm': 'gvim --remote-tab-silent',
+					 " \}
 
 	 " g:vimfiler_execute_file_list			*g:vimfiler_execute_file_list*
 		" This variable controls vimfiler execute.

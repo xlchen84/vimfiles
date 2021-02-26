@@ -11,7 +11,11 @@ set cursorline
 " set rulerformat=%55(%{strftime('%a\ %b\ %e\ %I:%M\ %p')}\ %5l,%-6(%c%V%)\ %P%)
 set ruler
 set rulerformat=%55(%{strftime('%a\ %b\ %e\ %I:%M\ %p')}\ %5l,%-6(%c%V%)\ %P%)
-colorscheme desert
+if exists('g:gruvbox_bold')
+	colorscheme gruvbox
+else
+	colorscheme desert
+endif
 "}}}
 
 " 设置 {{{
@@ -66,70 +70,6 @@ let g:vimfiles = expand('<sfile>:h')
 if filereadable('d:/Programs/global/bin/ctags.exe')
 	let $PATH = $PATH . ';' . 'd:/Programs/global/bin'
 endif
-
-" 				\ 'deoplete.nvim', 
-" 				\ 'context_filetype.vim', 
-" 				\ 'ale', 
-" 				\ 'asyncomplete.vim', 
-" 				\ 'asyncrun.vim', 
-" 				\ 'asynctasks.vim', 
-" 				\ 'AutoComplPop', 
-" 				\ 'coc-git', 
-" 				\ 'coc-snippets', 
-" 				\ 'coc-tabnine', 
-" 				\ 'coc.nvim', 
-" 				\ 'consolas-powerline-vim', 
-" 				\ 'csv.vim', 
-" 				\ 'deoplete-tabnine', 
-" 				\ 'fern.vim', 
-" 				\ 'fzf.vim', 
-" 				\ 'gina.vim', 
-" 				\ 'indentpython.vim', 
-" 				\ 'limelight.vim', 
-" 				\ 'nerdtree', 
-" 				\ 'NrrwRgn', 
-" 				\ 'poet-v', 
-" 				\ 'promptline.vim', 
-" 				\ 'python-mode', 
-" 				\ 'syntastic', 
-" 				\ 'taboo.vim', 
-" 				\ 'tagbar', 
-" 				\ 'ultisnips', 
-" 				\ 'undotree', 
-" 				\ 'unicode.vim', 
-" 				\ 'vim-battery', 
-" 				\ 'vim-bookmarks', 
-" 				\ 'vim-capslock', 
-" 				\ 'vim-clap', 
-" 				\ 'vim-colors-solarized', 
-" 				\ 'vim-cursormode', 
-" 				\ 'vim-dirvish', 
-" 				\ 'vim-easymotion', 
-" 				\ 'vim-fugitive', 
-" 				\ 'vim-gitgutter', 
-" 				\ 'vim-gutentags', 
-" 				\ 'vim-localsearch', 
-" 				\ 'vim-lsp', 
-" 				\ 'vim-markdown', 
-" 				\ 'vim-markdown-preview', 
-" 				\ 'vim-matlab', 
-" 				\ 'vim-matlab-fold', 
-" 				\ 'vim-obsession', 
-" 				\ 'vim-tabws', 
-" 				\ 'vim-translate', 
-" 				\ 'vim-windowswap', 
-" 				\ 'vimagit', 
-" 				\ 'vimtex', 
-" 				\ 'vista.vim', 
-" 				\ 'YouCompleteMe', 
-" 				\ 'zoomwintab.vim', 
-" 				\ 'vim-slime', 
-" 				\ 'vim-ipython', 
-" 				\ 'vim-ipython-cell', 
-" 				\ 'vim-leader-guide', 
-" 				\ 'pynvim', 
-" 				\ 'ctrlp.vim', 
-" 				\ 'julia-vim', 
 
 let g:plugins = ['vim-plug' 
 			\ , 'vim-which-key' 
@@ -197,11 +137,75 @@ let g:plugins = ['vim-plug'
 			\ , 'vimagit'
 			\ , 'neosnippet.vim' 
 			\ , 'neosnippet-snippets' 
-			\ , 'coc-snippets' 
 			\ , 'vim-snippets'
 			\ , 'ctrlp.vim'
+			\ , 'vim-templates'
 			\ ]
 
+" 				\ 'deoplete.nvim', 
+" 				\ 'context_filetype.vim', 
+" 				\ 'ale', 
+" 				\ 'asyncomplete.vim', 
+" 				\ 'asyncrun.vim', 
+" 				\ 'asynctasks.vim', 
+" 				\ 'AutoComplPop', 
+" 				\ 'coc-git', 
+" 				\ 'coc-snippets', 
+" 				\ 'coc-tabnine', 
+" 				\ 'coc.nvim', 
+" 				\ 'consolas-powerline-vim', 
+" 				\ 'csv.vim', 
+" 				\ 'deoplete-tabnine', 
+" 				\ 'fern.vim', 
+" 				\ 'fzf.vim', 
+" 				\ 'gina.vim', 
+" 				\ 'indentpython.vim', 
+" 				\ 'limelight.vim', 
+" 				\ 'nerdtree', 
+" 				\ 'NrrwRgn', 
+" 				\ 'poet-v', 
+" 				\ 'promptline.vim', 
+" 				\ 'python-mode', 
+" 				\ 'syntastic', 
+" 				\ 'taboo.vim', 
+" 				\ 'tagbar', 
+" 				\ 'ultisnips', 
+" 				\ 'undotree', 
+" 				\ 'unicode.vim', 
+" 				\ 'vim-battery', 
+" 				\ 'vim-bookmarks', 
+" 				\ 'vim-capslock', 
+" 				\ 'vim-clap', 
+" 				\ 'vim-colors-solarized', 
+" 				\ 'vim-cursormode', 
+" 				\ 'vim-dirvish', 
+" 				\ 'vim-easymotion', 
+" 				\ 'vim-fugitive', 
+" 				\ 'vim-gitgutter', 
+" 				\ 'vim-gutentags', 
+" 				\ 'vim-localsearch', 
+" 				\ 'vim-lsp', 
+" 				\ 'vim-markdown', 
+" 				\ 'vim-markdown-preview', 
+" 				\ 'vim-matlab', 
+" 				\ 'vim-matlab-fold', 
+" 				\ 'vim-obsession', 
+" 				\ 'vim-tabws', 
+" 				\ 'vim-translate', 
+" 				\ 'vim-windowswap', 
+" 				\ 'vimagit', 
+" 				\ 'vimtex', 
+" 				\ 'vista.vim', 
+" 				\ 'YouCompleteMe', 
+" 				\ 'zoomwintab.vim', 
+" 				\ 'vim-slime', 
+" 				\ 'vim-ipython', 
+" 				\ 'vim-ipython-cell', 
+" 				\ 'vim-leader-guide', 
+" 				\ 'pynvim', 
+" 				\ 'ctrlp.vim', 
+" 				\ 'julia-vim', 
+" 'tibabit/vim-templates'
 " <https://github.com/lambdalisue/battery.vim>
 " <https://github.com/MattesGroeger/vim-bookmarks>
 " fugitive.vim <https://github.com/tpope/vim-fugitive>
@@ -368,6 +372,7 @@ let g:plugins_disabled = [
  				\   , 'LeaderF'
 				\   , 'ultisnips'
 				\ 	, 'coc.nvim'
+				\ 	, 'coc-snippets' 
  				\ 	, 'vim-ipython-cell' 
 				\ ] 
  				" \ 	, 'Shougo/neoyank.vim'
