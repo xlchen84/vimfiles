@@ -140,8 +140,14 @@ let g:plugins = ['vim-plug'
 			\ , 'vim-snippets'
 			\ , 'ctrlp.vim'
 			\ , 'vim-templates'
+			\ , 'vim-cmake'
+			\	, 'coc.nvim'
+			\	, 'coc-snippets' 
+			\ , 'coc-git'
+			\ , 'coc-tabnine'
 			\ ]
 
+" https://github.com/iamcco/coc-vimlsp
 " 				\ 'deoplete.nvim', 
 " 				\ 'context_filetype.vim', 
 " 				\ 'ale', 
@@ -149,9 +155,7 @@ let g:plugins = ['vim-plug'
 " 				\ 'asyncrun.vim', 
 " 				\ 'asynctasks.vim', 
 " 				\ 'AutoComplPop', 
-" 				\ 'coc-git', 
 " 				\ 'coc-snippets', 
-" 				\ 'coc-tabnine', 
 " 				\ 'coc.nvim', 
 " 				\ 'consolas-powerline-vim', 
 " 				\ 'csv.vim', 
@@ -371,8 +375,6 @@ let g:plugins_disabled = [
  				\  	, 'junegunn/fzf.vim'
  				\   , 'LeaderF'
 				\   , 'ultisnips'
-				\ 	, 'coc.nvim'
-				\ 	, 'coc-snippets' 
  				\ 	, 'vim-ipython-cell' 
 				\ ] 
  				" \ 	, 'Shougo/neoyank.vim'

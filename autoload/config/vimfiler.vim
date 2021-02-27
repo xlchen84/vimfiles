@@ -6,10 +6,10 @@ function! config#vimfiler#init() abort
 
 	 " Enable file operation commands.
 	 " Edit file by tabedit.
-	 call vimfiler#custom#profile('default', 'context', {
-					 \ 'safe' : 0,
-					 \ 'edit_action' : 'tabopen',
-					 \ })
+	 " call vimfiler#custom#profile('default', 'context', {
+					 " \ 'safe' : 0,
+					 " \ 'edit_action' : 'tabopen',
+					 " \ })
 	 let g:unite_kind_file_delete_file_command = 'del'
 	 let g:unite_kind_file_delete_directory_command = 'deltree'
 	 let g:vimfiler_enable_auto_cd = 1
