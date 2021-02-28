@@ -10,7 +10,6 @@ function! config#python() abort
 endfunction
 
 function! config#logging() abort
-	return v:false
 	if !(exists('g:logging_conf') && filereadable(g:logging_conf))
 		let g:logging_conf = s:logging_conf
 	endif

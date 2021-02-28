@@ -49,3 +49,7 @@ function! config#complete#coc() abort
 	 call s:key_binding()
 endfunction
 
+function! config#complete#init() abort
+	 return config#complete#coc() 
+endfunction
+

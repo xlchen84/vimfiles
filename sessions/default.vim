@@ -4,14 +4,14 @@ let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-
 let v:this_session=expand("<sfile>:p")
 silent only
 silent tabonly
-cd D:\Programs\Vim\vimfiles\pythonx
+cd D:\Projects\MATLAB\SDRV3\BIT
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
 argglobal
 %argdel
-edit \Projects\MATLAB\SDRV3\BIT\runSimulationData.m
+edit \Programs\Vim\vimfiles\bundle\unite-outline\autoload\unite\sources\outline.vim
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -21,33 +21,43 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 argglobal
-balt \Programs\Rime\User\user.yaml
-setlocal fdm=expr
-setlocal fde=MatlabFoldExpr()
+balt \Programs\Vim\vimfiles\bundle\unite.vim\autoload\unite\init.vim
+setlocal fdm=syntax
+setlocal fde=0
 setlocal fmr={{{,}}}
 setlocal fdi=#
-setlocal fdl=20
+setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 19 - ((9 * winheight(0) + 11) / 22)
+let s:l = 1 - ((0 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 19
-normal! 04|
-lcd D:\Programs\Rime\User
+keepjumps 1
+normal! 0
+lcd D:\Programs\Vim\vimfiles\bundle\unite-outline\autoload\unite\sources\outline\modules
 tabnext 1
-badd +2 D:\Programs\Rime\User\weasel.custom.yaml
-badd +5 D:\Programs\Vim\vimfiles\pythonx\ml_terminal.py
-badd +47 D:\Programs\Vim\mine\autoload\config\complete.vim
-badd +1 D:\Programs\Vim\mine\bundle\coc.nvim\autoload\[BufExplorer]
-badd +396 D:\Programs\Vim\mine\init.vim
-badd +4 D:\Projects\MATLAB\SDRV3\BIT\[BufExplorer]
-badd +14 D:\Projects\MATLAB\SDRV3\BIT\runSimulationData.m
-badd +1 D:\Programs\Vim\mine\autoload\run_command\matlab.vim
-badd +42 D:\Programs\Vim\mine\autoload\run_command.vim
-badd +36 D:\Programs\Rime\User\clover.schema.yaml
+badd +93 D:\Projects\MATLAB\SDRV3\BIT\runSimulationData.m
+badd +2 D:\Projects\MATLAB\SDRV3\回波数据2021年2月27日\RealParamters.m
+badd +12 D:\Programs\Vim\vimfiles\autoload\config\plug.vim
+badd +53 D:\Programs\Vim\mine\autoload\config\complete.vim
+badd +54 d:\Projects\MATLAB\SDRV3\BIT\Spectrum.m
+badd +7 D:\Projects\MATLAB\SDRV3\BIT\[BufExplorer]
+badd +32 D:\Projects\MATLAB\SDRV3\BIT\PulseCompression.m
+badd +26 D:\Projects\MATLAB\SDRV3\BIT\runData.m
+badd +1 D:\Projects\MATLAB\SDRV3\BIT\Correlation.m
+badd +137 D:\Programs\Vim\vimfiles\autoload\config.vim
+badd +12 D:\Programs\Vim\vimfiles\pythonx\config.py
+badd +167 D:\Programs\Vim\vimfiles\pythonx\debug.log
+badd +2 D:\Programs\Vim\vimfiles\bundle\unite-outline\autoload\unite\sources\outline.vim
+badd +1 D:\Programs\Vim\vimfiles\bundle\unite.vim\autoload\unite\sources\line.vim
+badd +4 D:\Programs\Vim\vimfiles\pythonx\vimfiler:default@11
+badd +35 D:\Programs\Vim\vimfiles\bundle\unite.vim\autoload\unite\sources\source.vim
+badd +136 D:\Programs\Vim\vimfiles\bundle\unite.vim\autoload\unite.vim
+badd +54 D:\Programs\Vim\vimfiles\bundle\unite.vim\autoload\unite\variables.vim
+badd +2 D:\Programs\Vim\vimfiles\bundle\unite.vim\autoload\unite\init.vim
+badd +60 D:\Programs\Vim\vimfiles\bundle\unite-outline\autoload\unite\sources\outline\modules\file_cache.vim
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
 endif
