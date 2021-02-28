@@ -197,11 +197,15 @@ function! s:meta_keys()
 endfunction
 
 function! s:shift_meta_keys()
+	 nnoremap  	<M-S-c> 						<C-w>c
 	 nnoremap  	<M-S-h> 						<C-w>h
 	 nnoremap  	<M-S-l> 						<C-w>l
 	 nnoremap  	<M-S-j> 						<C-w>j
 	 nnoremap  	<M-S-k> 						<C-w>k
 	 nnoremap  	<M-S-o> 						<C-w>o
+	 nnoremap  	<M-S-s> 						<C-w>s
+	 nnoremap  	<M-S-v> 						<C-w>v
+	 nnoremap  	<M-S-w> 						<C-w>w
 endfunction
 
 function! s:control_keys()

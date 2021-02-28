@@ -10,6 +10,9 @@ function! config#vimfiler#init() abort
 					 " \ 'safe' : 0,
 					 " \ 'edit_action' : 'tabopen',
 					 " \ })
+	 let g:unite_kind_file_copy_file_command = 'copy $srcs $dest'
+	 let g:unite_kind_file_copy_directory_command = 'xcopy /e $srcs $dest'
+	 let g:unite_kind_file_move_command = 'move'
 	 let g:unite_kind_file_delete_file_command = 'del'
 	 let g:unite_kind_file_delete_directory_command = 'deltree'
 	 let g:vimfiler_enable_auto_cd = 1

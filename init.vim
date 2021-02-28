@@ -40,7 +40,7 @@ elseif has('mac')
 	set guifont=Monaco:h18
 endif
 if !has('nvim')
-	set guifont=Inziu_IosevkaCC_SC:h12
+	set guifont=Inziu_IosevkaCC_SC:h16
 	set pyxversion=3
 endif
 "}}}
@@ -393,6 +393,7 @@ let g:modules = [ 'plug'
 			\	, 'snippet'
 			\	, 'python'
 			\	, 'denite'
+			\ , 'complete'
 			\	]
 
 let g:modules_disabled = [
