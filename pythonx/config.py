@@ -7,7 +7,8 @@ def debug(*args, **kwargs):
     rootLogger = logging.getLogger('root')
     if rootLogger:
         rootLogger.debug(*args, **kwargs)
-    print(*args, **kwargs)
+    else:
+        print(*args, **kwargs)
 
     #fileHandler.setLevel(log_level)
     #formatter = logging.Formatter("[%(levelname)s][%(funcName)s][%(asctime)s]%(message)s")

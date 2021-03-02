@@ -197,6 +197,7 @@ function! s:meta_keys()
 endfunction
 
 function! s:shift_meta_keys()
+	 nnoremap  	<M-S-b> 						:ToggleBufExplorer<CR>
 	 nnoremap  	<M-S-c> 						<C-w>c
 	 nnoremap  	<M-S-h> 						<C-w>h
 	 nnoremap  	<M-S-l> 						<C-w>l
@@ -219,8 +220,9 @@ function! s:function_keys()
 	 noremap 	<Plug>(init)  		:call config#init()<CR>
 	 noremap 	<Plug>(reload-keymap) 	<Esc>:call config#keybindings()<CR>
 	 noremap 	<Plug>(chdir) 				<Esc>:cd %:p:h<CR>
-	 nmap 					<F5> 				<Plug>(init)
-	 nmap 		<silent> <F2> 				<Esc>:call config#show_debug()<CR>
+	 noremap 	<Plug>(open-log-file) 	<Esc>:call config#show_debug()<CR>
+	 " nmap 					<F5> 				<Plug>(init)
+	 nmap 		<silent> <F2> 				<Plug>(open-log-file)
 	 nmap 					<F3> 				<Plug>(reload-keymap)
 	 nmap 					<F4> 				<Plug>(chdir)
 	 nmap 					<F11> 			<Plug>(toggle-fullscreen)

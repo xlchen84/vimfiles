@@ -53,9 +53,9 @@ function! config#plug#list_plugins() abort
   call config#debug('list_plugins')
   let plug_home = config#plug#home()
   let repos = glob(plug_home . '\*\.git', v:true, v:true)
-  let s:plugin_list = map(repos, {_, val -> config#plug#new_plugin(val)})
+  let g:plugin_list = map(repos, {_, val -> config#plug#new_plugin(val)})
   call config#debug('list_plugins sucess.')
-  return s:plugin_list
+  return g:plugin_list
 endfunction
 
 function! config#plug#init() abort

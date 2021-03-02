@@ -15,7 +15,8 @@ function! s:denite_my_settings() abort
 endfunction
 
 function! s:denite_filter_my_settings() abort
-	 imap <silent><buffer> <C-o> <Plug>(denite_filter_quit)
+	 imap <silent><buffer> <M-q> <Plug>(denite_filter_quit)
+	 inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
 endfunction
 
 " Denite init{{{

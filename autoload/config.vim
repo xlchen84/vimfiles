@@ -38,6 +38,7 @@ function! config#edit_logging_config() abort
 endfunction
 
 function! config#init() abort
+	nnoremap <silent> <F2> :call config#show_debug()<CR>
 	let modules = config#list_modules()
 	if !exists('s:modules')
 		let s:modules = {}

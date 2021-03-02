@@ -153,7 +153,7 @@ function! config#python#init()
 	 " command! -nargs=1 PymodePython python3 <args>
 	 call config#python#virthenv()
 
-	 call run_command#init()
+	 " call run_command#init()
 	 " call s:ipython()
 endfunction
 

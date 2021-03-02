@@ -145,6 +145,7 @@ let g:plugins = ['vim-plug'
 			\	, 'coc-snippets' 
 			\ , 'coc-git'
 			\ , 'coc-tabnine'
+			\ , 'vim-fugitive'
 			\ ]
 
 " https://github.com/iamcco/coc-vimlsp
@@ -394,11 +395,14 @@ let g:modules = [ 'plug'
 			\	, 'python'
 			\	, 'denite'
 			\ , 'complete'
+			\ , 'pandoc'
+			\ , 'tex'
 			\	]
 
 let g:modules_disabled = [
 			\	  'context_filetype'
 			\	, 'dein'
 			\	, 'julia'
+			\ , 'python-mode'
 			\ ]
 

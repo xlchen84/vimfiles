@@ -16,27 +16,43 @@ function! unite#sources#outline#matlab#outline_info() abort
   return s:outline_info
 endfunction
 
+
+let s:pattern = {}
+let s:pattern['class'] = '^\s*classdef\s*\%(\S\+\)\(\s*<\s*\%(\S\+\)\)\='
+let s:pattern['function'] = '^\s*function\s\+\S\+(.*)'
+let s:pattern['property'] = '^\s*properties\s\*\%((\%(\S\+\s*\)\+)\)\='
+let s:pattern['method'] = '^\s*methods\s\*\%((\%(\S\+\s*\)\+)\)\='
+let s:pattern['section'] = '^\s*%%\s\S\+.*'
+let s:pattern['comment'] = '^\s*%\s*\S\+.*'
+
 "-----------------------------------------------------------------------------
 " Outline Info
-
 let s:outline_info = {
-			\ 'heading-1': '^classdef\|.*',
-      \ 'heading'  : '^\s*%\|^function\s\+\S\+\|^\s*%%\s\S\+\|.*',
-			\ 'heading+1': '^\s*properties\|^\s*function\|^\s*methods\|.*',
-      \ 'highlight_rules': [
-      \   { 'name'     : 'comment',
-      \     'pattern'  : '/%.*/' },
-      \   { 'name'     : 'function',
-      \     'pattern'  : '/\S\+\ze\s*(/' },
-      \   { 'name'     : 'parameter_list',
-      \     'pattern'  : '/(.*)/' },
-      \ ],
-      \ }
-      " \   { 'name'     : 'augroup',
-      " \     'pattern'  : '/\S\+\ze : augroup/',
-      " \     'highlight': unite#sources#outline#get_highlight('type') },
+			\ 'heading'  : s:pattern['section']
+			\								. '\|' . s:pattern['class']
+			\ 							. '\|' . s:pattern['function']
+			\ 							. '\|' . s:pattern['property']
+			\ 							. '\|' . s:pattern['method']
+			\  							. '\|' . s:pattern['comment'],
+			\ }
 
-function! s:outline_info.create_heading(which, heading_line, matched_line, context) abort
+let s:outline_info['heading-1'] = s:pattern['class']
+let s:outline_info['heading+1'] = s:pattern['class'] . '\|' . s:pattern['function'] . '\|'
+			\      				. s:pattern['property'] . '\|' . s:pattern['method']
+
+let s:outline_info.highlight_rules = [
+				\   			{ 'name'     : 'comment',
+				\   			  'pattern'  : '/%.*/' },
+				\   			{ 'name'     : 'function',
+				\   			  'pattern'  : '/\S\+\ze\s*(/' },
+				\   			{ 'name'     : 'parameter_list',
+				\   			  'pattern'  : '/(.*)/' },
+				\ 				]
+" \   { 'name'     : 'augroup',
+" \     'pattern'  : '/\S\+\ze : augroup/',
+" \     'highlight': unite#sources#outline#get_highlight('type') },
+
+function! s:outline_info.create_heading(which, heading_line, matched_line, context) 
 	call config#debug('call outline_info.create_heading')
 	call config#debug('which = {}', a:which)
 	call config#debug('heading_line = {}', a:heading_line)
@@ -48,21 +64,51 @@ function! s:outline_info.create_heading(which, heading_line, matched_line, conte
 					\ 'type' : 'generic',
 					\ }
 		if a:which ==# 'heading'
-			call config#debug('which is "heading"')
-			if match(a:heading_line, '^function\s\+\S\+') >= 0
-				let function_expression = '^function\s\+\(\(\[\s*\i\+\(,\s*\i\+\s*\)*\]\|\s*\i\+\s*\)=\)\=\s*\i\+(.*)'
-				let heading.word = matchstr(a:heading_line, function_expression)
-				call config#debug('matching {} with expression {} gives {}', a:heading_line, function_expression, heading.word)
-				let heading.level = 2
-			else
-				let heading.word = matchstr(a:heading_line, '^\s*%%\s\S\+.*')
+			" section
+			if match(a:heading_line, s:pattern['section']) >= 0        "'^\s*%%\s\S\+.*'
+				let heading.word = matchstr(a:heading_line, s:pattern['section'])
 				let heading.level = 1
+				let heading.type = 'section'
+			endif
+			" class
+			if match(a:heading_line, s:pattern['class']) >= 0          " '^\s*classdef\s\+\S\+'
+				let heading.word = matchstr(a:heading_line, s:pattern['class']) 
+				let heading.level = 1
+				let heading.type = 'class'
+			endif
+			" function
+			if match(a:heading_line, s:pattern['function']) >= 0
+				let heading.word = matchstr(a:heading_line, s:pattern['function'])
+				let heading.level = 1
+				let heading.type = 'function'
+			endif
+			" properties
+			if match(a:heading_line, s:pattern['property']) >= 0
+				let heading.word = matchstr(a:heading_line, '^\s*properties\s\+\S\+')
+				let heading.level = 2
+				let heading.type = 'property'
+			endif
+			" methods
+			if match(a:heading_line, s:pattern['method']) >= 0
+				let heading.word = matchstr(a:heading_line, s:pattern['method'])
+				let heading.level = 2
+				let heading.type = 'method'
+			endif
+			" comment
+			if match(a:heading_line, s:pattern['comment']) >= 0
+				let heading.word = matchstr(a:heading_line, s:pattern['comment'])
+				let heading.type = 'comment'
+				let heading.level = 3
 			endif
 		elseif a:which ==# 'heading+1'
 			call config#debug('which is "heading+1"')
 		endif
-		call config#debug('return heading = {}', heading)
-		return heading
+		call config#debug('heading = {}', heading)
+		if heading.level > 0 
+			return heading
+		else
+			return {}
+		endif
 	catch
 		call config#debug('exception {}', v:exception)
 		echo v:exception
