@@ -125,6 +125,29 @@ function! s:which_key_plugin()
 					 \ }
 endfunction
 
+" Search:
+function! s:which_key_search()
+	 let g:which_key_map.s = { 'name': '+search',
+					 \					's' 	: ['<Plug>(easymotion-prefix)', 'easymotion'],
+					 \					'f' 	: ['<Plug>(easymotion-f)'		, ''],
+					 \					'F' 	: ['<Plug>(easymotion-F)'		, ''],
+					 \					't' 	: ['<Plug>(easymotion-t)'		, ''],
+					 \					'T' 	: ['<Plug>(easymotion-T)'		, ''],
+					 \					'w' 	: ['<Plug>(easymotion-w)'		, ''],
+					 \					'W' 	: ['<Plug>(easymotion-W)'		, ''],
+					 \					'b' 	: ['<Plug>(easymotion-b)'		, ''],
+					 \					'B' 	: ['<Plug>(easymotion-B)'		, ''],
+					 \					'e' 	: ['<Plug>(easymotion-e)'		, ''],
+					 \					'E' 	: ['<Plug>(easymotion-E)'		, ''],
+					 \					'ge' 	: ['<Plug>(easymotion-ge'		, ''],
+					 \					'gE' 	: ['<Plug>(easymotion-gE'		, ''],
+					 \					'j' 	: ['<Plug>(easymotion-j)'		, ''],
+					 \					'k' 	: ['<Plug>(easymotion-k)'		, ''],
+					 \					'n' 	: ['<Plug>(easymotion-n)'		, ''],
+					 \					'N' 	: ['<Plug>(easymotion-N)'		, ''],
+					 \ }
+endfunction
+
 " Toggle:
 function! s:which_key_toggle()
 	 let g:which_key_map.t = { 'name': '+toggle'
@@ -169,10 +192,10 @@ endfunction
 function! s:which_key()
 	 " default 1000
 	 set timeoutlen=500
-	 let g:mapleader = "\<Space>"
+	 let g:mapleader = '\<space>'
 	 let g:maplocalleader = ','
 	 let g:which_key_map = {}
-	 call which_key#register('<Space>', "g:which_key_map")
+	 call which_key#register('<Leader>', "g:which_key_map")
 	 nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
 	 vnoremap <silent> <leader>      :<c-u>WhichKeyVisual '<Space>'<CR>
 	 nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
@@ -188,6 +211,7 @@ function! s:which_key()
 	 call s:which_key_open()
 	 call s:which_key_plugin()
 	 call s:which_key_run()
+	 call s:which_key_search()
 	 call s:which_key_toggle()
 	 call s:which_key_window()
 	 call s:which_key_leaderf()
@@ -207,7 +231,7 @@ function! s:meta_keys()
 	 else
 		  nnoremap  	<M-f> 						:Unite -start-insert file_rec<CR>
 	 endif 
-	 nnoremap  	<M-g> 						:MagitOnly<CR>
+	 nnoremap  	<M-g> 						:Leaderf rg<CR>
 	 nnoremap  	<M-h> 						:Unite -start-insert help<CR>
 	 nnoremap  	<M-j> 						:Unite -start-insert jump<CR>
 	 nnoremap  	<M-k> 						:Unite -start-insert mapping<CR>

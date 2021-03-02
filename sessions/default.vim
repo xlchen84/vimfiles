@@ -2,18 +2,19 @@ let SessionLoad = 1
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 silent only
-cd D:\Programs\Vim\vimfiles
+cd D:\Projects\MATLAB\SDRV3\BIT
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +1 D:\Projects\MATLAB\SDRV3\BIT\DataProcessing.m
-badd +62 autoload\config\key.vim
-badd +1 D:\Projects\MATLAB\SDRV3\BIT\runSimulationData.m
+badd +77 runSimulationData.m
+badd +210 D:\Programs\Vim\vimfiles\autoload\config\key.vim
+badd +84 DataProcessing.m
+badd +1 SignalProcessing.m
+badd +0 term://.//10084:C:\Windows\System32\WindowsPowerShell\v1.0\powershell.EXE
 argglobal
 %argdel
-$argadd D:\Projects\MATLAB\SDRV3\BIT\runSimulationData.m
-edit autoload\config\key.vim
+$argadd runSimulationData.m
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -23,6 +24,7 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 argglobal
+if bufexists("term://.//10084:C:\Windows\System32\WindowsPowerShell\v1.0\powershell.EXE") | buffer term://.//10084:C:\Windows\System32\WindowsPowerShell\v1.0\powershell.EXE | else | edit term://.//10084:C:\Windows\System32\WindowsPowerShell\v1.0\powershell.EXE | endif
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -31,14 +33,12 @@ setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-silent! normal! zE
-let s:l = 272 - ((38 * winheight(0) + 23) / 46)
+let s:l = 128 - ((45 * winheight(0) + 23) / 46)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-272
-normal! 0
-lcd D:\Projects\MATLAB\SDRV3\BIT
+128
+normal! 018|
 tabnext 1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
