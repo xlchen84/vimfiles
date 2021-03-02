@@ -215,7 +215,7 @@ function! s:meta_keys()
 	 nnoremap  	<M-m> 						:Unite bookmark menu<CR>
 	 nnoremap  	<M-n> 						:Unite -start-insert file/new<CR>
 	 nnoremap  	<M-o> 						:Unite outline<CR>
-	 nnoremap  	<M-q> 						:bd<CR>
+	 nnoremap  	<M-q> 						:bd!<CR>
 	 tnoremap 	<M-q> 						<C-\><C-n>
 	 nnoremap  	<M-r> 						:Unite -start-insert neomru/file<CR>
 	 nnoremap  	<M-t> 						:NERDTreeToggle<CR>
@@ -226,7 +226,7 @@ function! s:meta_keys()
 	 endif 
 	 nnoremap  	<M-v> 						:VimFilerExplorer -auto-cd -force-quit<CR>
 	 nnoremap  	<M-w> 						:Unite window<CR>
-	 nnoremap 	<M-=> 						:cd %:p:h<CR>:terminal powershell<CR>
+	 nnoremap 	<M-=> 						:cd %:p:h<CR>:terminal <CR>
 	 nnoremap  	<M-;> 						:Commentary<CR>
 	 vnoremap  	<M-;> 						:Commentary<CR>
 	 nnoremap  	<M-`> 						:call term_start(&shell, { 'cwd': expand('%:p:h')})<CR>
