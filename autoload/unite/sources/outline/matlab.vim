@@ -18,12 +18,12 @@ endfunction
 
 
 let s:pattern = {}
-let s:pattern['class'] = '^\s*classdef\s*\%(\S\+\)\(\s*<\s*\%(\S\+\)\)\='
-let s:pattern['function'] = '^\s*function\s\+\S\+(.*)'
-let s:pattern['property'] = '^\s*properties\s\*\%((\%(\S\+\s*\)\+)\)\='
-let s:pattern['method'] = '^\s*methods\s\*\%((\%(\S\+\s*\)\+)\)\='
-let s:pattern['section'] = '^\s*%%\s\S\+.*'
-let s:pattern['comment'] = '^\s*%\s*\S\+.*'
+let s:pattern['class'] = '^\s*classdef\s\+'
+let s:pattern['function'] = '^\s*function\s\+'
+let s:pattern['properties'] = '^\s*properties\s*'
+let s:pattern['methods'] = '^\s*methods\s*'
+let s:pattern['section'] = '^\s*%%\s\S\+'
+let s:pattern['comment'] = '^\s*%\s*\S\+'
 
 "-----------------------------------------------------------------------------
 " Outline Info
@@ -31,14 +31,14 @@ let s:outline_info = {
 			\ 'heading'  : s:pattern['section']
 			\								. '\|' . s:pattern['class']
 			\ 							. '\|' . s:pattern['function']
-			\ 							. '\|' . s:pattern['property']
-			\ 							. '\|' . s:pattern['method']
-			\  							. '\|' . s:pattern['comment'],
+			\ 							. '\|' . s:pattern['properties']
+			\ 							. '\|' . s:pattern['methods'] 			
 			\ }
+" . '\|' . s:pattern['comment'],
 
-let s:outline_info['heading-1'] = s:pattern['class']
-let s:outline_info['heading+1'] = s:pattern['class'] . '\|' . s:pattern['function'] . '\|'
-			\      				. s:pattern['property'] . '\|' . s:pattern['method']
+" let s:outline_info['heading-1'] = s:pattern['class']
+" let s:outline_info['heading+1'] = s:pattern['class'] . '\|' . s:pattern['function'] . '\|'
+" 			\      				. s:pattern['properties'] . '\|' . s:pattern['methods']
 
 let s:outline_info.highlight_rules = [
 				\   			{ 'name'     : 'comment',
@@ -64,35 +64,42 @@ function! s:outline_info.create_heading(which, heading_line, matched_line, conte
 					\ 'type' : 'generic',
 					\ }
 		if a:which ==# 'heading'
+			" class
+			if match(a:heading_line, s:pattern['class']) >= 0          
+				let heading.word = matchstr(a:heading_line, s:pattern['class'] . '\S\+\s*\%(<\s*\%(\S\+\s\+\%(\s*&\s*\S\+\s*\)*\)\+\)\=') 
+				let heading.level = 1
+				let heading.type = 'class'
+			endif
+			" properties
+			if match(a:heading_line, s:pattern['properties']) >= 0
+				let extra = '\s*\%((\S\+\s*\%(,\s*\S\+\)*)\)\='
+				let heading.word = matchstr(a:heading_line, s:pattern['properties'] . extra)
+				let heading.level = 2
+				let heading.type = 'properties'
+				echom 'properties matched'
+			endif
+			" methods
+			if match(a:heading_line, s:pattern['methods']) >= 0
+				let extra = '\s*\%((\S\+\s*\%(,\s*\S\+\)*)\)\='
+				let heading.word = matchstr(a:heading_line, s:pattern['methods'] . extra)
+				let heading.level = 2
+				let heading.type = 'methods'
+			endif
+			" function
+			if match(a:heading_line, s:pattern['function']) >= 0
+				let retval = '\%(\%(\S\+\s*\|\[\s*\S\+\s*\%(,\s*\S\+\s*\)*\]\)\s*=\s*\)\='
+				let args = '\s*\S\+\s*\%(,\s*\S\+\s*\)*'
+				let funcall = '\S\+\s*(' . args . ')\s*'
+				let pattern = s:pattern['function'] . retval . funcall
+				let heading.word = matchstr(a:heading_line,  pattern )
+				let heading.level = 3
+				let heading.type = 'function'
+			endif
 			" section
 			if match(a:heading_line, s:pattern['section']) >= 0        "'^\s*%%\s\S\+.*'
 				let heading.word = matchstr(a:heading_line, s:pattern['section'])
 				let heading.level = 1
 				let heading.type = 'section'
-			endif
-			" class
-			if match(a:heading_line, s:pattern['class']) >= 0          " '^\s*classdef\s\+\S\+'
-				let heading.word = matchstr(a:heading_line, s:pattern['class']) 
-				let heading.level = 1
-				let heading.type = 'class'
-			endif
-			" function
-			if match(a:heading_line, s:pattern['function']) >= 0
-				let heading.word = matchstr(a:heading_line, s:pattern['function'])
-				let heading.level = 1
-				let heading.type = 'function'
-			endif
-			" properties
-			if match(a:heading_line, s:pattern['property']) >= 0
-				let heading.word = matchstr(a:heading_line, '^\s*properties\s\+\S\+')
-				let heading.level = 2
-				let heading.type = 'property'
-			endif
-			" methods
-			if match(a:heading_line, s:pattern['method']) >= 0
-				let heading.word = matchstr(a:heading_line, s:pattern['method'])
-				let heading.level = 2
-				let heading.type = 'method'
 			endif
 			" comment
 			if match(a:heading_line, s:pattern['comment']) >= 0

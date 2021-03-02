@@ -58,6 +58,41 @@ function! s:which_key_file()
 					 \ }
 endfunction
 
+" Leaderf:
+function! s:which_key_leaderf() abort
+	 let g:Lf_RgConfig = [
+					 \ "--max-columns=150",
+					 \ "--type-add web:*.{html,css,js}*",
+					 \ "--glob=!git/*",
+					 \ "--hidden"
+					 \ ]
+	 let g:which_key_map.l = { 'name': '+leader',
+					 \ 				  't'   : [':Leaderf tag'				, 'tag'					]  ,
+					 \ 				  'l'   : [':Leaderf line'				, 'line'					]  ,
+					 \ 				  'c'   : [':Leaderf command'			, 'command'				]  ,
+					 \ 				  'f'   : [':Leaderf file'				, 'file'					]  ,
+					 \ 				  'j'   : [':Leaderf jumps'			, 'jump'					]  ,
+					 \ 				  'm'   : [':Leaderf mru'				, 'mru'					]  ,
+					 \ 				  'w'   : [':Leaderf window'			, 'window'				]  ,
+					 \ 				  '&'   : [':Leaderf filetype'		, 'filetype'			]  ,
+					 \ 				  'B'   : [':Leaderf bufTag'			, 'bufTag'				]  ,
+					 \ 				  'r'   : [':Leaderf rg'	 			, 'rg'					]  ,
+					 \ 				  'F'   : [':Leaderf function'		, 'function'			]  ,
+					 \ 				  'q'   : [':Leaderf quickfix'		, 'quickfix'			]  ,
+					 \ 				  's'   : [':Leaderf self'				, 'self'					]  ,
+					 \ 				  'H'   : [':Leaderf cmdHistory'		, 'cmdHistory'			]  ,
+					 \ 				  'S'   : [':Leaderf searchHistory'	, 'searchHistory'		]  ,
+					 \ 				  'g'   : [':Leaderf gtags'			, 'gtags'				]  ,
+					 \ 				  'h'   : [':Leaderf help'				, 'help'					]  ,
+					 \ 				  'C'   : [':Leaderf colorscheme'	, 'colorscheme'		]  ,
+					 \ 				  'L'   : [':Leaderf loclist'			, 'locationlist'		]  ,
+					 \ 				  'b'   : [':Leaderf buffer'			, 'buffer'				]  ,
+					 \ 				  '.'   : [':Leaderf --recall'		, 'repeat'				]  ,
+					 \ 				  ']'   : [':Leaderf --next'			, 'next'					]  ,
+					 \ 				  '['   : [':Leaderf --previous'		, 'previous'			]  ,
+					 \ }
+endfunction
+
 " Open:
 function! s:which_key_open()
 	 let g:which_key_map.o = { 'name' : '+open',
@@ -155,6 +190,7 @@ function! s:which_key()
 	 call s:which_key_run()
 	 call s:which_key_toggle()
 	 call s:which_key_window()
+	 call s:which_key_leaderf()
 endfunction
 
 function! s:meta_keys()

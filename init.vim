@@ -146,6 +146,10 @@ let g:plugins = ['vim-plug'
 			\ , 'coc-git'
 			\ , 'coc-tabnine'
 			\ , 'vim-fugitive'
+			\ , 'vim-easymotion' 
+			\ , 'vim-gitgutter' 
+			\ , 'vim-gutentags' 
+			\ , 'LeaderF'
 			\ ]
 
 " https://github.com/iamcco/coc-vimlsp
@@ -374,7 +378,6 @@ let g:plugins_disabled = [
 				\		, 'petobens/poet-v'
 				\ 	, 'vim-scripts/AutoComplPop'
  				\  	, 'junegunn/fzf.vim'
- 				\   , 'LeaderF'
 				\   , 'ultisnips'
  				\ 	, 'vim-ipython-cell' 
 				\ ] 
@@ -397,6 +400,8 @@ let g:modules = [ 'plug'
 			\ , 'complete'
 			\ , 'pandoc'
 			\ , 'tex'
+			\ , 'git'
+			\ , 'gutentags'
 			\	]
 
 let g:modules_disabled = [
