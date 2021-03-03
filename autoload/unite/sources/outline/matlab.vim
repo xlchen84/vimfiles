@@ -33,6 +33,7 @@ let s:outline_info = {
 			\ 							. '\|' . s:pattern['function']
 			\ 							. '\|' . s:pattern['properties']
 			\ 							. '\|' . s:pattern['methods'] 			
+			\ 							. '\|' . '^\s*end\s*%\S*$'
 			\ }
 " . '\|' . s:pattern['comment'],
 
@@ -97,6 +98,11 @@ function! unite#sources#outline#matlab#parse_classdef(heading, heading_line, mat
 		let heading.level = 1
 		let heading.type = 'class'
 	endif
+	if match(a:heading_line, '^\s*end %classdef') >= 0          
+		let heading.word = matchstr(a:heading_line, '^\s*end %classdef')
+		let heading.level = 1
+		let heading.type = 'class'
+	endif
 	return heading
 endfunction
 
@@ -109,18 +115,28 @@ function! unite#sources#outline#matlab#parse_properties(heading, heading_line, m
 		let heading.level = 2
 		let heading.type = 'properties'
 	endif
+	if match(a:heading_line, '^\s*end %properties') >= 0          
+		let heading.word = matchstr(a:heading_line, '^\s*end %properties')
+		let heading.level = 2
+		let heading.type = 'properties'
+	endif
 	return heading
 endfunction
 
 " methods
 function! unite#sources#outline#matlab#parse_methods(heading, heading_line, matched_line, context) abort
 	let heading = a:heading
-			if match(a:heading_line, s:pattern['methods']) >= 0
-				let extra = '\s*\%((\S\+\s*\%(,\s*\S\+\)*)\)\='
-				let heading.word = matchstr(a:heading_line, s:pattern['methods'] . extra)
-				let heading.level = 2
-				let heading.type = 'methods'
-			endif
+	if match(a:heading_line, s:pattern['methods']) >= 0
+		let extra = '\s*\%((\S\+\s*\%(,\s*\S\+\)*)\)\='
+		let heading.word = matchstr(a:heading_line, s:pattern['methods'] . extra)
+		let heading.level = 2
+		let heading.type = 'methods'
+	endif
+	if match(a:heading_line, '^\s*end %methods') >= 0          
+		let heading.word = matchstr(a:heading_line, '^\s*end %methods')
+		let heading.level = 2
+		let heading.type = 'methods'
+	endif
 	return heading
 endfunction
 
@@ -133,6 +149,11 @@ function! unite#sources#outline#matlab#parse_function(heading, heading_line, mat
 		let funcall = '\S\+\s*(' . args . ')\s*'
 		let pattern = s:pattern['function'] . retval . funcall
 		let heading.word = matchstr(a:heading_line,  pattern )
+		let heading.level = 3
+		let heading.type = 'function'
+	endif
+	if match(a:heading_line, '^\s*end %function') >= 0          
+		let heading.word = matchstr(a:heading_line, '^\s*end %function')
 		let heading.level = 3
 		let heading.type = 'function'
 	endif
