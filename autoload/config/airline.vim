@@ -1,35 +1,11 @@
 " vim: ft=vim fdm=marker
 
-"load airline extension {{{
-let s:ext = {}
-let s:ext._theme_funcrefs = []
-
-function! s:ext.add_statusline_func(name) dict
-  call airline#add_statusline_func(a:name)
-endfunction
-
-function! s:ext.add_statusline_funcref(function) dict
-  call airline#add_statusline_funcref(a:function)
-endfunction
-
-function! s:ext.add_inactive_statusline_func(name) dict
-  call airline#add_inactive_statusline_func(a:name)
-endfunction
-
-function! s:ext.add_theme_func(name) dict
-  call add(self._theme_funcrefs, function(a:name))
-endfunction
-
-function! s:load_airline_extension(ext) abort
-	 return airline#extensions#{a:ext}#init(s:ext)
-endfunction
-"}}}
-
 " init airline {{{
 function! config#airline#init()
 	 " call config#message('initalizing airline')
 	 call s:init_variables()
-	 call config#airline#extensions()
+	 call config#airline#tabline()
+	 call airline#extensions#load()
 	 autocmd User AirlineAfterTheme call s:update_highlights()
 endfunction
 "}}}
@@ -93,6 +69,7 @@ function! s:init_variables()
 	 if !exists('g:airline_symbols')
 		  let g:airline_symbols = {}
 	 endif
+	 let g:airline#extensions#tabline#enabled = 1
 endfunction
 "}}}
 
@@ -226,12 +203,12 @@ function! config#airline#extensions() abort
 					 \]
 
 	 try
-		  call airline#extensions#load()
 		  call config#airline#ale()
 		  call config#airline#bufferline()
 		  call config#airline#default()
 		  call config#airline#tabline()
 		  call config#airline#timer()
+		  call airline#extensions#load()
 		  for ext in g:airline_extensions
 				call s:load_airline_extension(ext)
 		  endfor
@@ -266,8 +243,24 @@ endfunction
 function! config#airline#tabline()
 	 let g:airline#extensions#tabline#enabled = 1
 	 let g:airline#extensions#tabline#show_tabs = 1
+	 let g:airline#extensions#tabline#show_tab_type = 1
 	 let g:airline#extensions#tabline#show_buffers = 1
 	 let g:airline#extensions#tabline#buffer_nr_show = 1
+	 let g:airline#extensions#tabline#buffers_label = 'B'
+	 let g:airline#extensions#tabline#tabs_label = 'T'
+	 let g:airline#extensions#tabline#buffer_idx_mode = 1
+	 nmap <leader>1 <Plug>AirlineSelectTab1
+	 nmap <leader>2 <Plug>AirlineSelectTab2
+	 nmap <leader>3 <Plug>AirlineSelectTab3
+	 nmap <leader>4 <Plug>AirlineSelectTab4
+	 nmap <leader>5 <Plug>AirlineSelectTab5
+	 nmap <leader>6 <Plug>AirlineSelectTab6
+	 nmap <leader>7 <Plug>AirlineSelectTab7
+	 nmap <leader>8 <Plug>AirlineSelectTab8
+	 nmap <leader>9 <Plug>AirlineSelectTab9
+	 nmap <leader>0 <Plug>AirlineSelectTab0
+	 nmap <leader>- <Plug>AirlineSelectPrevTab
+	 nmap <leader>+ <Plug>AirlineSelectNextTab
 endfunction
 "}}}
 
