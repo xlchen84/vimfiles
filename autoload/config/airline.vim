@@ -29,8 +29,8 @@ endfunction
 function! config#airline#init()
 	 " call config#message('initalizing airline')
 	 call s:init_variables()
-	 " call config#airline#extensions()
-	 " autocmd User AirlineAfterTheme call s:update_highlights()
+	 call config#airline#extensions()
+	 autocmd User AirlineAfterTheme call s:update_highlights()
 endfunction
 "}}}
 
@@ -96,10 +96,12 @@ function! s:init_variables()
 endfunction
 "}}}
 
-function! s:update_highlights()
+" update_highlights{{{
+function! s:update_highlights() abort
 	 hi CursorLine ctermbg=none guibg=none
 	 hi VertSplit ctermbg=none guibg=none
 endfunction
+"}}}
 
 " unicode symbols{{{
 function! config#airline#unicode_symbols()
@@ -155,18 +157,88 @@ function! config#airline#old_powerline_symbols()
 endfunction
 "}}}
 
-function! config#airline#extensions()
-	 let g:airline_extensions = ['branch', 'tabline', 'bufferline'] 
-	 call airline#extensions#load()
-	 call config#airline#ale()
-	 call config#airline#bufferline()
-	 call config#airline#default()
-	 call config#airline#tabline()
-	 call config#airline#timer()
-	 for ext in g:airline_extensions
-		  call s:load_airline_extension(ext)
-	 endfor
+"extensions {{{
+function! config#airline#extensions() abort
+	 "	 Extension      	Extern	Status
+	 let g:airline_extensions = [
+					 \ 'battery',
+					 \ 'bookmark',
+					 \ 'branch',
+					 \ 'bufferline',
+					 \ 'capslock',
+					 \ 'coc',
+					 \ 'csv',
+					 \ 'ctrlp',
+					 \ 'ctrlspace',
+					 \ 'cursormode',
+					 \ 'denite',
+					 \ 'dirvish',
+					 \ 'fern',
+					 \ 'fzf',
+					 \ 'gina',
+					 \ 'gutentags',
+					 \ 'hunks',
+					 \ 'keymap',
+					 \ 'languageclient',
+					 \ 'localsearch',
+					 \ 'lsp',
+					 \ 'neomake',
+					 \ 'netrw',
+					 \ 'nrrwrgn',
+					 \ 'obsession',
+					 \ 'po',
+					 \ 'poetv',
+					 \ 'quickfix',
+					 \ 'syntastic',
+					 \ 'tabline',
+					 \ 'tagbar',
+					 \ 'term',
+					 \ 'undotree',
+					 \ 'unicode',
+					 \ 'unite',
+					 \ 'vimagit',
+					 \ 'vimcmake',
+					 \ 'vimtex',
+					 \ 'virtualenv',
+					 \ 'vista',
+					 \ 'whitespace',
+					 \ 'windowswap',
+					 \ 'wordcount',
+					 \ 'zoomwintab',
+					 \]
+
+	 let g:airline_extensions_not_installed = [
+					 \ 'ale',
+					 \ 'commandt',
+					 \ 'default',
+					 \ 'eclim',
+					 \ 'example',
+					 \ 'fugitiveline',
+					 \ 'gen_tags',
+					 \ 'grepper',
+					 \ 'nvimlsp',
+					 \ 'omnisharp',
+					 \ 'promptline',
+					 \ 'searchcount',
+					 \ 'tmuxline',
+					 \ 'xkblayout',
+					 \ 'ycm',
+					 \]
+
+	 try
+		  call airline#extensions#load()
+		  call config#airline#ale()
+		  call config#airline#bufferline()
+		  call config#airline#default()
+		  call config#airline#tabline()
+		  call config#airline#timer()
+		  for ext in g:airline_extensions
+				call s:load_airline_extension(ext)
+		  endfor
+	 catch 
+	 endtry
 endfunction
+"}}}
 
 " ale{{{
 function! config#airline#ale()

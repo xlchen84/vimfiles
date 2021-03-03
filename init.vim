@@ -7,15 +7,12 @@ set rnu
 set nu
 set cmdheight=3
 set laststatus=2
+set colorcolumn=120
 set cursorline
+set cursorcolumn
 " set rulerformat=%55(%{strftime('%a\ %b\ %e\ %I:%M\ %p')}\ %5l,%-6(%c%V%)\ %P%)
 set ruler
 set rulerformat=%55(%{strftime('%a\ %b\ %e\ %I:%M\ %p')}\ %5l,%-6(%c%V%)\ %P%)
-try
-	colorscheme gruvbox
-catch 
-	colorscheme desert
-endtry
 "}}}
 
 " 设置 {{{

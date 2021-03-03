@@ -1,6 +1,126 @@
 "vim:ft=vim:fdm=indent:ts=4:sw=4:noet
+function! config#key#init() abort
+	 try
+		  call config#key#ascii_keys()
+		  call config#key#meta_keys()
+		  call config#key#control_keys()
+		  call config#key#function_keys()
+		  call config#key#shift_meta_keys()
+		  call config#key#which_key()
+	 catch
+		  call config#debug('error: {}', v:exception)
+	 endtry
+endfunction
+
+function! config#key#ascii_keys() abort
+	 nnoremap 	]b 							:bnext<CR>
+	 nnoremap 	[b 							:bprev<CR>
+endfunction
+
+function! config#key#meta_keys()
+	 if has('nvim')
+		  nnoremap  	<M-b> 						:Denite buffer<CR>
+	 else
+		  nnoremap  	<M-b> 						:Unite -start-insert buffer<CR>
+	 endif 
+	 nnoremap  	<M-c> 						:Unite -start-insert command<CR>
+	 nnoremap  	<M-d> 						:Unite -start-insert neomru/directory directory_rec<CR>
+	 nnoremap  	<M-e> 						:VimFilerBufferDir<CR>
+	 nnoremap  	<M-f> 						:Unite -start-insert file_rec -direction=botright<CR>
+	 nnoremap  	<M-g> 						:Leaderf rg<CR>
+	 nnoremap  	<M-h> 						:Unite -start-insert help<CR>
+	 nnoremap  	<M-j> 						:Unite -start-insert jump<CR>
+	 nnoremap  	<M-k> 						:Unite -start-insert mapping<CR>
+	 nnoremap  	<M-l> 						:WhichKey 'l'<CR>
+	 nnoremap  	<M-m> 						:Unite bookmark menu<CR>
+	 nnoremap  	<M-n> 						:Unite -start-insert file/new<CR>
+	 nnoremap  	<M-o> 						:Unite outline<CR>
+	 nmap  		<M-s> 						<Plug>(easymotion-prefix)
+	 nnoremap  	<M-q> 						:bd!<CR>
+	 tnoremap 	<M-q> 						<C-\><C-n>
+	 nnoremap  	<M-r> 						:Unite -start-insert neomru/file<CR>
+	 nnoremap  	<M-t> 						:NERDTreeToggle<CR>
+	 if has('nvim')
+		  nnoremap  	<M-u> 						:Denite source<CR>
+	 else
+		  nnoremap  	<M-u> 						:Unite -start-insert source<CR>
+	 endif 
+	 nnoremap  	<M-v> 						:VimFilerExplorer -auto-cd -force-quit<CR>
+	 nnoremap  	<M-w> 						:Unite window<CR>
+	 nnoremap 	<M-=> 						:cd %:p:h<CR>:terminal <CR>
+	 nnoremap  	<M-;> 						:Commentary<CR>
+	 vnoremap  	<M-;> 						:Commentary<CR>
+	 nnoremap  	<M-`> 						:call term_start(&shell, { 'cwd': expand('%:p:h')})<CR>
+endfunction
+
+function! config#key#control_keys() abort
+	 nnoremap 	<C-h> 						<C-w>h
+	 nnoremap 	<C-l> 						<C-w>l
+	 inoremap 	<C-s> 						<Esc>:w<CR>
+	 nnoremap 	<C-s> 						:w<CR>
+endfunction
+
+function! config#key#function_keys() abort
+	 noremap 	<Plug>(init)  		:call config#init()<CR>
+	 noremap 	<Plug>(reload-keymap) 	<Esc>:call config#keybindings()<CR>
+	 noremap 	<Plug>(chdir) 				<Esc>:cd %:p:h<CR>
+	 noremap 	<Plug>(open-log-file) 	<Esc>:call config#show_debug()<CR>
+	 " nmap 					<F5> 				<Plug>(init)
+	 nmap 		<silent> <F2> 				<Plug>(open-log-file)
+	 nmap 					<F3> 				<Plug>(reload-keymap)
+	 nmap 					<F4> 				<Plug>(chdir)
+	 nmap 					<F11> 			<Plug>(toggle-fullscreen)
+endfunction
+
+function! config#key#shift_meta_keys() abort
+	 nnoremap  	<M-S-b> 						:ToggleBufExplorer<CR>
+	 nnoremap  	<M-S-c> 						<C-w>c
+	 nnoremap  	<M-S-h> 						<C-w>h
+	 nnoremap  	<M-S-l> 						<C-w>l
+	 nnoremap  	<M-S-j> 						<C-w>j
+	 nnoremap  	<M-S-k> 						<C-w>k
+	 nnoremap  	<M-S-o> 						<C-w>o
+	 nnoremap  	<M-S-s> 						<C-w>s
+	 nnoremap  	<M-S-v> 						<C-w>v
+	 nnoremap  	<M-S-w> 						<C-w>w
+endfunction
+
+function! config#key#which_key() abort
+	 " default 1000
+	 set timeoutlen=500
+	 let g:mapleader = '\<Space>'
+	 let g:maplocalleader = ','
+	 map <Space> <leader>
+
+	 " Define which_key_map
+	 let g:which_key_map = {}
+	 " define keymap
+	 call config#key#which_key_buffer()
+	 call config#key#which_key_config()
+	 call config#key#which_key_file()
+	 call config#key#which_key_open()
+	 call config#key#which_key_plugin()
+	 call config#key#which_key_run()
+	 call config#key#which_key_search()
+	 call config#key#which_key_toggle()
+	 call config#key#which_key_window()
+	 call config#key#which_key_leaderf()
+
+	 " Register
+	 call which_key#register('<Space>', "g:which_key_map")
+
+	 nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+	 vnoremap <silent> <leader>      :<c-u>WhichKeyVisual '<Space>'<CR>
+	 nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
+	 " Hide statusline
+	 autocmd! FileType which_key
+	 autocmd  FileType which_key set laststatus=0 noshowmode noruler
+					 \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
+endfunction
+
 " Buffer:
-function! s:which_key_buffer() abort
+function! config#key#which_key_buffer() abort
 	 let g:which_key_map.b = {
 					 \ 				'name' 	: '+buffer' ,
 					 \ 				'1' 		: ['b1'        			, 'buffer 1']        ,
@@ -18,7 +138,7 @@ function! s:which_key_buffer() abort
 endfunction
 
 " Config:
-function! s:which_key_config() abort
+function! config#key#which_key_config() abort
 	 let g:which_key_map.c = { 'name' 	: '+config' 
 					 \ , 				'a' 		: ['config#airline#init()' 	, 'airline' ]
 					 \ , 				'i' 		: ['config#init()'						, 'init'    ] 
@@ -39,7 +159,7 @@ function! s:which_key_config() abort
 endfunction
 
 " File:
-function! s:which_key_file() abort
+function! config#key#which_key_file() abort
 	 nmap <silent> <Plug>(recent-files) :Unite -start-insert neomru/file<CR>
 	 nmap <silent> <Plug>(open-files)  	:Unite -start-insert file_rec<CR>
 	 nmap <silent> <Plug>(edit-vimrc)  	:e $MYVIMRC<CR>
@@ -59,7 +179,7 @@ function! s:which_key_file() abort
 endfunction
 
 " Leaderf:
-function! s:which_key_leaderf() abort
+function! config#key#which_key_leaderf() abort
 	 let g:Lf_RgConfig = [
 					 \ "--max-columns=150",
 					 \ "--type-add web:*.{html,css,js}*",
@@ -94,7 +214,7 @@ function! s:which_key_leaderf() abort
 endfunction
 
 " Open:
-function! s:which_key_open() abort
+function! config#key#which_key_open() abort
 	 let g:which_key_map.o = { 'name' : '+open',
 					 \ 				'q' : ['copen', 'quickfix']    ,
 					 \ 				'l' : ['lopen', 'locationlist'],
@@ -102,7 +222,7 @@ function! s:which_key_open() abort
 endfunction
 
 " Slime:
-function! s:which_key_run() abort
+function! config#key#which_key_run() abort
 	 let g:which_key_map.r = { 'name' : '+run'
 					 \,				'c' : ['<Plug>SlimeConfig'				, 'config']
 					 \,				'l' : ['<Plug>SlimeLineSend'			, 'line']
@@ -116,7 +236,7 @@ endfunction
 
 
 " Plugin:
-function! s:which_key_plugin() abort
+function! config#key#which_key_plugin() abort
 	 let g:which_key_map.p = { 'name': '+plugin',
 					 \ 				'd':  ['config#dein()', 'dein'],
 					 \ 			   'p':  ['config#plug()', 'plug'],
@@ -126,7 +246,7 @@ function! s:which_key_plugin() abort
 endfunction
 
 " Search:
-function! s:which_key_search() abort
+function! config#key#which_key_search() abort
 	 let g:which_key_map.s = { 'name': '+search',
 					 \					's' 	: ['<Plug>(easymotion-prefix)', 'easymotion'],
 					 \					'f' 	: ['<Plug>(easymotion-f)'		, ''],
@@ -149,7 +269,7 @@ function! s:which_key_search() abort
 endfunction
 
 " Toggle:
-function! s:which_key_toggle() abort
+function! config#key#which_key_toggle() abort
 	 let g:which_key_map.t = { 'name': '+toggle'
 					 \,				'a'   : ['AirlineToggle'    			, 'airline' ]
 					 \,				'b'   : ['BookmarkToggle'    			, 'bookmark' ]
@@ -163,7 +283,7 @@ function! s:which_key_toggle() abort
 endfunction
 
 " Window:
-function! s:which_key_window() abort
+function! config#key#which_key_window() abort
 	 let g:which_key_map.w = {
 					 \ 'name' : '+windows' ,
 					 \ 'w' : ['<C-W>w'     , 'other-window']          ,
@@ -187,123 +307,6 @@ function! s:which_key_window() abort
 	 " 1:
 	 nnoremap <leader>1 :1wincmd w<CR>
 	 let g:which_key_map.1 = 'which_key_ignore'
-endfunction
-
-function! s:which_key() abort
-	 " default 1000
-	 set timeoutlen=500
-	 let g:mapleader = '\<Space>'
-	 let g:maplocalleader = ','
-	 let g:which_key_map = {}
-	 call which_key#register('<Space>', "g:which_key_map")
-	 nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
-	 vnoremap <silent> <leader>      :<c-u>WhichKeyVisual '<Space>'<CR>
-	 nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
-	 " Hide statusline
-	 autocmd! FileType which_key
-	 autocmd  FileType which_key set laststatus=0 noshowmode noruler
-					 \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-
-	 " define keymap
-	 call s:which_key_buffer()
-	 call s:which_key_config()
-	 call s:which_key_file()
-	 call s:which_key_open()
-	 call s:which_key_plugin()
-	 call s:which_key_run()
-	 call s:which_key_search()
-	 call s:which_key_toggle()
-	 call s:which_key_window()
-	 call s:which_key_leaderf()
-endfunction
-
-function! s:meta_keys()
-	 if has('nvim')
-		  nnoremap  	<M-b> 						:Denite buffer<CR>
-	 else
-		  nnoremap  	<M-b> 						:Unite -start-insert buffer<CR>
-	 endif 
-	 nnoremap  	<M-c> 						:Unite -start-insert command<CR>
-	 nnoremap  	<M-d> 						:Unite -start-insert neomru/directory directory_rec<CR>
-	 nnoremap  	<M-e> 						:VimFilerBufferDir<CR>
-	 if has('nvim')
-		  nnoremap  	<M-f> 						:Denite file/rec<CR>
-	 else
-		  nnoremap  	<M-f> 						:Unite -start-insert file_rec<CR>
-	 endif 
-	 nnoremap  	<M-g> 						:Leaderf rg<CR>
-	 nnoremap  	<M-h> 						:Unite -start-insert help<CR>
-	 nnoremap  	<M-j> 						:Unite -start-insert jump<CR>
-	 nnoremap  	<M-k> 						:Unite -start-insert mapping<CR>
-	 nnoremap  	<M-l> 						:Unite -start-insert line<CR>
-	 nnoremap  	<M-m> 						:Unite bookmark menu<CR>
-	 nnoremap  	<M-n> 						:Unite -start-insert file/new<CR>
-	 nnoremap  	<M-o> 						:Unite outline<CR>
-	 nnoremap  	<M-q> 						:bd!<CR>
-	 tnoremap 	<M-q> 						<C-\><C-n>
-	 nnoremap  	<M-r> 						:Unite -start-insert neomru/file<CR>
-	 nnoremap  	<M-t> 						:NERDTreeToggle<CR>
-	 if has('nvim')
-		  nnoremap  	<M-u> 						:Denite source<CR>
-	 else
-		  nnoremap  	<M-u> 						:Unite -start-insert source<CR>
-	 endif 
-	 nnoremap  	<M-v> 						:VimFilerExplorer -auto-cd -force-quit<CR>
-	 nnoremap  	<M-w> 						:Unite window<CR>
-	 nnoremap 	<M-=> 						:cd %:p:h<CR>:terminal <CR>
-	 nnoremap  	<M-;> 						:Commentary<CR>
-	 vnoremap  	<M-;> 						:Commentary<CR>
-	 nnoremap  	<M-`> 						:call term_start(&shell, { 'cwd': expand('%:p:h')})<CR>
-endfunction
-
-function! s:shift_meta_keys() abort
-	 nnoremap  	<M-S-b> 						:ToggleBufExplorer<CR>
-	 nnoremap  	<M-S-c> 						<C-w>c
-	 nnoremap  	<M-S-h> 						<C-w>h
-	 nnoremap  	<M-S-l> 						<C-w>l
-	 nnoremap  	<M-S-j> 						<C-w>j
-	 nnoremap  	<M-S-k> 						<C-w>k
-	 nnoremap  	<M-S-o> 						<C-w>o
-	 nnoremap  	<M-S-s> 						<C-w>s
-	 nnoremap  	<M-S-v> 						<C-w>v
-	 nnoremap  	<M-S-w> 						<C-w>w
-endfunction
-
-function! s:control_keys() abort
-	 nnoremap 	<C-h> 						<C-w>h
-	 nnoremap 	<C-l> 						<C-w>l
-	 inoremap 	<C-s> 						<Esc>:w<CR>
-	 nnoremap 	<C-s> 						:w<CR>
-endfunction
-
-function! s:function_keys() abort
-	 noremap 	<Plug>(init)  		:call config#init()<CR>
-	 noremap 	<Plug>(reload-keymap) 	<Esc>:call config#keybindings()<CR>
-	 noremap 	<Plug>(chdir) 				<Esc>:cd %:p:h<CR>
-	 noremap 	<Plug>(open-log-file) 	<Esc>:call config#show_debug()<CR>
-	 " nmap 					<F5> 				<Plug>(init)
-	 nmap 		<silent> <F2> 				<Plug>(open-log-file)
-	 nmap 					<F3> 				<Plug>(reload-keymap)
-	 nmap 					<F4> 				<Plug>(chdir)
-	 nmap 					<F11> 			<Plug>(toggle-fullscreen)
-endfunction
-
-function! s:ascii_keys() abort
-	 nnoremap 	]b 							:bnext<CR>
-	 nnoremap 	[b 							:bprev<CR>
-endfunction
-
-function! config#key#init() abort
-	 try
-		  call s:ascii_keys()
-		  call s:meta_keys()
-		  call s:control_keys()
-		  call s:function_keys()
-		  call s:shift_meta_keys()
-		  call s:which_key()
-	 catch
-		  call config#debug('error: {}', v:exception)
-	 endtry
 endfunction
 
 "vim: set ft=vim fdm=indent
