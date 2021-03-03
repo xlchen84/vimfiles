@@ -11,11 +11,11 @@ set cursorline
 " set rulerformat=%55(%{strftime('%a\ %b\ %e\ %I:%M\ %p')}\ %5l,%-6(%c%V%)\ %P%)
 set ruler
 set rulerformat=%55(%{strftime('%a\ %b\ %e\ %I:%M\ %p')}\ %5l,%-6(%c%V%)\ %P%)
-if exists('g:gruvbox_bold')
+try
 	colorscheme gruvbox
-else
+catch 
 	colorscheme desert
-endif
+endtry
 "}}}
 
 " 设置 {{{

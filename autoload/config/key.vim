@@ -1,6 +1,6 @@
-
+"vim:ft=vim:fdm=indent:ts=4:sw=4:noet
 " Buffer:
-function! s:which_key_buffer()
+function! s:which_key_buffer() abort
 	 let g:which_key_map.b = {
 					 \ 				'name' 	: '+buffer' ,
 					 \ 				'1' 		: ['b1'        			, 'buffer 1']        ,
@@ -18,7 +18,7 @@ function! s:which_key_buffer()
 endfunction
 
 " Config:
-function! s:which_key_config()
+function! s:which_key_config() abort
 	 let g:which_key_map.c = { 'name' 	: '+config' 
 					 \ , 				'a' 		: ['config#airline#init()' 	, 'airline' ]
 					 \ , 				'i' 		: ['config#init()'						, 'init'    ] 
@@ -39,7 +39,7 @@ function! s:which_key_config()
 endfunction
 
 " File:
-function! s:which_key_file()
+function! s:which_key_file() abort
 	 nmap <silent> <Plug>(recent-files) :Unite -start-insert neomru/file<CR>
 	 nmap <silent> <Plug>(open-files)  	:Unite -start-insert file_rec<CR>
 	 nmap <silent> <Plug>(edit-vimrc)  	:e $MYVIMRC<CR>
@@ -94,7 +94,7 @@ function! s:which_key_leaderf() abort
 endfunction
 
 " Open:
-function! s:which_key_open()
+function! s:which_key_open() abort
 	 let g:which_key_map.o = { 'name' : '+open',
 					 \ 				'q' : ['copen', 'quickfix']    ,
 					 \ 				'l' : ['lopen', 'locationlist'],
@@ -102,7 +102,7 @@ function! s:which_key_open()
 endfunction
 
 " Slime:
-function! s:which_key_run()
+function! s:which_key_run() abort
 	 let g:which_key_map.r = { 'name' : '+run'
 					 \,				'c' : ['<Plug>SlimeConfig'				, 'config']
 					 \,				'l' : ['<Plug>SlimeLineSend'			, 'line']
@@ -116,7 +116,7 @@ endfunction
 
 
 " Plugin:
-function! s:which_key_plugin()
+function! s:which_key_plugin() abort
 	 let g:which_key_map.p = { 'name': '+plugin',
 					 \ 				'd':  ['config#dein()', 'dein'],
 					 \ 			   'p':  ['config#plug()', 'plug'],
@@ -126,7 +126,7 @@ function! s:which_key_plugin()
 endfunction
 
 " Search:
-function! s:which_key_search()
+function! s:which_key_search() abort
 	 let g:which_key_map.s = { 'name': '+search',
 					 \					's' 	: ['<Plug>(easymotion-prefix)', 'easymotion'],
 					 \					'f' 	: ['<Plug>(easymotion-f)'		, ''],
@@ -149,7 +149,7 @@ function! s:which_key_search()
 endfunction
 
 " Toggle:
-function! s:which_key_toggle()
+function! s:which_key_toggle() abort
 	 let g:which_key_map.t = { 'name': '+toggle'
 					 \,				'a'   : ['AirlineToggle'    			, 'airline' ]
 					 \,				'b'   : ['BookmarkToggle'    			, 'bookmark' ]
@@ -163,7 +163,7 @@ function! s:which_key_toggle()
 endfunction
 
 " Window:
-function! s:which_key_window()
+function! s:which_key_window() abort
 	 let g:which_key_map.w = {
 					 \ 'name' : '+windows' ,
 					 \ 'w' : ['<C-W>w'     , 'other-window']          ,
@@ -189,13 +189,13 @@ function! s:which_key_window()
 	 let g:which_key_map.1 = 'which_key_ignore'
 endfunction
 
-function! s:which_key()
+function! s:which_key() abort
 	 " default 1000
 	 set timeoutlen=500
-	 let g:mapleader = '\<space>'
+	 let g:mapleader = '\<Space>'
 	 let g:maplocalleader = ','
 	 let g:which_key_map = {}
-	 call which_key#register('<Leader>', "g:which_key_map")
+	 call which_key#register('<Space>', "g:which_key_map")
 	 nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
 	 vnoremap <silent> <leader>      :<c-u>WhichKeyVisual '<Space>'<CR>
 	 nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
@@ -256,7 +256,7 @@ function! s:meta_keys()
 	 nnoremap  	<M-`> 						:call term_start(&shell, { 'cwd': expand('%:p:h')})<CR>
 endfunction
 
-function! s:shift_meta_keys()
+function! s:shift_meta_keys() abort
 	 nnoremap  	<M-S-b> 						:ToggleBufExplorer<CR>
 	 nnoremap  	<M-S-c> 						<C-w>c
 	 nnoremap  	<M-S-h> 						<C-w>h
@@ -269,14 +269,14 @@ function! s:shift_meta_keys()
 	 nnoremap  	<M-S-w> 						<C-w>w
 endfunction
 
-function! s:control_keys()
+function! s:control_keys() abort
 	 nnoremap 	<C-h> 						<C-w>h
 	 nnoremap 	<C-l> 						<C-w>l
 	 inoremap 	<C-s> 						<Esc>:w<CR>
 	 nnoremap 	<C-s> 						:w<CR>
 endfunction
 
-function! s:function_keys()
+function! s:function_keys() abort
 	 noremap 	<Plug>(init)  		:call config#init()<CR>
 	 noremap 	<Plug>(reload-keymap) 	<Esc>:call config#keybindings()<CR>
 	 noremap 	<Plug>(chdir) 				<Esc>:cd %:p:h<CR>
@@ -288,12 +288,12 @@ function! s:function_keys()
 	 nmap 					<F11> 			<Plug>(toggle-fullscreen)
 endfunction
 
-function! s:ascii_keys()
+function! s:ascii_keys() abort
 	 nnoremap 	]b 							:bnext<CR>
 	 nnoremap 	[b 							:bprev<CR>
 endfunction
 
-function! config#key#init()
+function! config#key#init() abort
 	 try
 		  call s:ascii_keys()
 		  call s:meta_keys()
