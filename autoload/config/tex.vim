@@ -4,14 +4,17 @@ let s:SumatraPDF = 'd:/Programs/SumatraPDF/SumatraPDF.exe'
 
 function! config#tex#init() abort
   let g:vimtex_compiler_latexmk = {
+        \ 'hooks' : [],
         \	'options' : [
-          \ '-xelatex',
-          \ '-verbose',
-          \ '-file-line-error',
-          \ '-synctex=1',
-          \ '-interaction=nonstopmode',
-          \ ] ,
-          \}
+        \   '-xelatex',
+        \   '-verbose',
+        \   '-file-line-error',
+        \   '-synctex=1',
+        \   '-interaction=nonstopmode',
+        \   '-auxdir=pdf',
+        \   '-outdir=pdf',
+        \ ] ,
+        \}
   let g:vimtex_view_general_viewer = s:SumatraPDF
   " let g:vimtex_view_general_options
   "       \ = '-reuse-instance -forward-search @tex @line @pdf'

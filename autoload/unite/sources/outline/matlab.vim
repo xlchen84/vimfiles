@@ -76,7 +76,6 @@ function! s:outline_info.create_heading(which, heading_line, matched_line, conte
 				let heading.word = matchstr(a:heading_line, s:pattern['properties'] . extra)
 				let heading.level = 2
 				let heading.type = 'properties'
-				echom 'properties matched'
 			endif
 			" methods
 			if match(a:heading_line, s:pattern['methods']) >= 0
