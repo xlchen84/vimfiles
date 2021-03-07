@@ -38,7 +38,7 @@ function! config#plug#new_plugin(repo) abort
 endfunction
 
 function! config#plug#load_plugin() dict
-  call config#debug('load plugin {}', self.short)
+  " call config#debug('load plugin {}', self.short)
   if index(g:plugins_disabled, self.short) < 0
     call plug#(self.short)
     let self.loaded = v:true
@@ -50,11 +50,11 @@ endfunction
 
 
 function! config#plug#list_plugins() abort
-  call config#debug('list_plugins')
+  " call config#debug('list_plugins')
   let plug_home = config#plug#home()
   let repos = glob(plug_home . '\*\.git', v:true, v:true)
   let g:plugin_list = map(repos, {_, val -> config#plug#new_plugin(val)})
-  call config#debug('list_plugins sucess.')
+  " call config#debug('list_plugins sucess.')
   return g:plugin_list
 endfunction
 

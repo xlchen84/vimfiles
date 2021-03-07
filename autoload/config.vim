@@ -56,7 +56,7 @@ function! config#init() abort
 		if has_key(s:modules, name)
 			let module = s:modules[name]
 			call module.load()
-			call config#debug('module {} loaded.', name)
+			" call config#debug('module {} loaded.', name)
 		endif
 	endfor
 endfunction
@@ -96,7 +96,7 @@ function! config#load_module() dict
 		  return v:false
 	 endif
 	 try
-		  call config#debug('loading module: {}', self.name)
+		  " call config#debug('loading module: {}', self.name)
 		  return config#{self.name}#init()
 	 catch /^Vim\%((\a\+)\)\=:E/	 " catch all Vim errors
 		  let self.error = v:exception

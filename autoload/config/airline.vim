@@ -4,8 +4,8 @@
 function! config#airline#init()
 	 " call config#message('initalizing airline')
 	 call s:init_variables()
-	 call config#airline#tabline()
-	 call airline#extensions#load()
+	 " call config#airline#tabline()
+	 " call config#airline#extensions()
 	 autocmd User AirlineAfterTheme call s:update_highlights()
 endfunction
 "}}}

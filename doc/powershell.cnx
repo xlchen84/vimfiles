@@ -1,0 +1,107 @@
+*powershell.cnx*  			Powershell 学习笔记 			Last Change: 2021-03
+
+====================================================================================================
+
+如何下载文件?~
+
+
+1. 使用 |Invoke-WebRequest| 命令
+
+ Invoke-WebRequest 命令有 3 个别名，分别是 "iwr"、"wget"、"curl"。
+
+ >
+ >$url = "http://123.206.200.87/Password2.txt"
+ >$output = "D:\test\Password2.txt"
+ >$start_time = Get-Date
+ >Write-Output "开始时间: $start_time"
+ >Invoke-WebRequest -Uri $url -OutFile $output
+ >$finish_time = Get-Date
+ >Write-Output "结束时间: $finish_time"
+ >Read-Host
+
+优点
+这个方法非常容易上手。如果你知道文件总的大小的话，结合 Write-Progress 命令你可以很方便得看到脚本的运行进度。
+Cookie 也可以通过使用 -Session 和 -WebSession 参数在多个请求之间保留。
+
+缺点
+使用这个命令下载文件的速度很慢。我观察到 HTTP 响应流先全部缓存到了内存中，一旦文件全部传输完毕，文件就会从内存中一下子转移到磁盘中。
+如果你要下载一个大文件，那么这种方式会造成巨大的性能问题和内存的损耗。
+如果有人知道这个命令的具体操作细节，请告诉我！我们可以一起讨论一下。
+
+这种方法的另一个潜在的严重缺点是依赖 Internet Explorer 。
+比如，这个命令不能运行在 Windows Server core 版本的服务器上，因为它默认不包含 Internet Explorer 二进制文件。
+在这种情况下，你可以使用 -UseBasicParsing 参数，但它并不是在所有情况下都起作用。另外我在这里给出两个让 Invoke-WebResquest 提速的方法。
+
+第一，使用 $ProgressPreference='silentlycontinue' 语句来隐藏滚动条，减小了资源的占用。
+
+第二，就是使用上面提到的 -UseBasicParsing 参数，这样在 Invoke-WebRequest 请求完数据后，就不会调用 IE 去进行 DOM 树结果的解析，效率会提高不少。
+
+结论: 当你需要在多个请求时保留 Cookie（例如下载文件之前的 HTTP 表单验证），那么这个命令会很有用。
+这种方法很适合用来下载小文件，但是如果你对下载速度有要求，那肯定会有更好的选择。如果这个脚本要运行在 Windows Server Core 版本的服务器上，那这个命令就不适用了。
+
+2. |System.Net.WebClient|
+
+.NET 框架中的 System.Net.WebClient 类就是一个用于下载文件的 .NET 类。
+
+ >
+ >$url = "http://123.206.200.87/Password2.txt"
+ >$output = "D:\test\Password2.txt"
+ >$start_time = Get-Date
+ >Write-Output "开始时间: $start_time"
+ >$wc = New-Object System.Net.WebClient
+ >$wc.DownloadFile($url, $output)
+ ># 或者
+ >(New-Object System.Net.WebClient).DownloadFile($url, $output)
+ >$finish_time = Get-Date
+ >Write-Output "结束时间: $finish_time"
+ >Read-Host
+
+优点
+这个方法用起来也很简单。这种方法的下载速度跟上一种差不多，在整个下载过程中 HTTP 响应流被直接缓存到了磁盘中。
+
+你还可以用 System.Net.WebClient.DownloadFileAsync() 这个函数。可以很方便地在文件并行下载的同时继续运行脚本。
+
+缺点
+没有一个下载进度条（或者任何能查询下载进度的东西），也就是说你无法知道到底还要多久才能下载完成，也不知道目前到底下载了多少。
+并且这个命令是单线程的，所以会造成线程阻塞，只能一个下载任务完成了才能进行下一个任务。
+
+结论
+当需要下载文件时，System.Net.WebClient 是我的最佳选择。这个方法也是完全兼容 Windows Server Core 版本的服务器。 
+
+
+3. |Start-BitsTransfer|
+如果你在之前没听说过后台智能传输服务（BITS） 参考文档:
+
+https://msdn.microsoft.com/en-us/library/aa362708.aspx
+
+BITS 主要用于 Windows 系统的升级、自动更新等工作。工作方式为异步下载文件，并且用于同步下载文件时也有十分优异的表现。还有一个BitsAdmin 工具使用的也是这个后台智能传输服务。
+ >
+ >$url = "http://123.206.200.87/Password2.txt"
+ >$output = "D:\test\Password2.txt"
+ >$start_time = Get-Date
+ >Write-Output "开始时间: $start_time"
+ >Import-Module BitsTransfer
+ >Start-BitsTransfer -Source $url -Destination $output
+ ># 或者
+ >Start-BitsTransfer -Source $url -Destination $output -Asynchronous
+ >$finish_time = Get-Date
+ >Write-Output "结束时间: $finish_time"
+ >Read-Host
+
+
+
+可以用 |Suspend-BitsTransfer| 和 |Resume-BitsTransfer| 两个命令来暂停和恢复下载
+
+为了测试资源是否支持断点续传，可以使用如下函数:
+ >
+ >Function Test-ResumableDownload {
+ >    param (
+ >       [String]$url
+ >    )
+ >    $request = [System.Net.WebRequest]::Create($url)
+ >    $request.Method = "GET"
+ >    $result = $request.GetResponse()
+ >    $result.Headers["Accept-Ranges"] -ne "none"
+ >} 
+
+vim:tw=78:ts=8:noet:ft=help:norl:

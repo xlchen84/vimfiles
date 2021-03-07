@@ -15,6 +15,7 @@ endfunction
 function! config#key#ascii_keys() abort
 	 nnoremap 	]b 							:bnext<CR>
 	 nnoremap 	[b 							:bprev<CR>
+	 inoremap 	jk 							<Esc>
 endfunction
 
 function! config#key#meta_keys()
