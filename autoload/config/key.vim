@@ -16,6 +16,7 @@ function! config#key#ascii_keys() abort
 	 nnoremap 	]b 							:bnext<CR>
 	 nnoremap 	[b 							:bprev<CR>
 	 inoremap 	jk 							<Esc>
+	 nnoremap 	<Esc> 						<Esc>:noh<CR>
 endfunction
 
 function! config#key#meta_keys()
@@ -32,7 +33,7 @@ function! config#key#meta_keys()
 	 nnoremap  	<M-h> 						:Unite -start-insert help<CR>
 	 nnoremap  	<M-j> 						:Unite -start-insert jump<CR>
 	 nnoremap  	<M-k> 						:Unite -start-insert mapping<CR>
-	 nnoremap  	<M-l> 						:WhichKey 'l'<CR>
+	 nnoremap  	<M-l> 						:CocList<CR>
 	 nnoremap  	<M-m> 						:Unite bookmark menu<CR>
 	 nnoremap  	<M-n> 						:Unite -start-insert file/new<CR>
 	 nnoremap  	<M-o> 						:Unite outline<CR>

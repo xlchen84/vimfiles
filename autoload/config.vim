@@ -39,11 +39,6 @@ endfunction
 
 function! config#init() abort
 	nnoremap <silent> <F2> :call config#show_debug()<CR>
-	try 
-		colorscheme gruvbox
-	catch
-		colorscheme desert
-	endtry
 	let modules = config#list_modules()
 	if !exists('s:modules')
 		let s:modules = {}
@@ -59,6 +54,11 @@ function! config#init() abort
 			" call config#debug('module {} loaded.', name)
 		endif
 	endfor
+	try 
+		colorscheme gruvbox
+	catch
+		colorscheme desert
+	endtry
 endfunction
 
 function! config#home() abort

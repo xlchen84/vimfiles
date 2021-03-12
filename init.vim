@@ -26,6 +26,7 @@ set fencs=utf-8,ucs-bom,cp936
 set helplang=cn
 set ambiwidth=double
 set backupdir=$VIM/vimfiles/temp,$TEMP
+set autoread
 syntax on
 language messages zh_CN.UTF-8
 
@@ -36,7 +37,9 @@ if has('win32')
 elseif has('mac')
 	set guifont=Monaco:h18
 endif
-if !has('nvim')
+if has('nvim')
+	let g:python3_host_prog='D:/Programs/Python/3.9.1/python.exe'
+else
 	set guifont=Inziu_IosevkaCC_SC:h16
 	set pyxversion=3
 endif
@@ -397,10 +400,10 @@ let g:modules = [ 'plug'
 			\ , 'tex'
 			\ , 'git'
 			\ , 'gutentags'
+			\ , 'complete'
+			\	, 'python'
+			\	, 'snippet'
 			\	]
-			" \	, 'snippet'
-			" \	, 'python'
-			" \ , 'complete'
 
 let g:modules_disabled = [
 			\	  'context_filetype'
