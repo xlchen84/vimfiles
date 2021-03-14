@@ -1,169 +1,85 @@
-" vim: ft=vim fdm=marker sw=2 ts=2
+" vim: ft=vim fdm=indent ts=2 sw=2
 
-let s:file = expand('<sfile>')
-let s:directory = fnamemodify(s:file, ':p:h:h')
-let s:logging_logfile = get(g:, 'logging_logfile', expand(s:directory . '/debug.log'))
-let s:logging_conf = get(g:, 'logging_conf', expand(s:directory . '/logging.conf'))
-
-function! config#python() abort
-	return has('python3')
+function! config#debug(msg, ...) abort
+	let pwd = getcwd()
+	if exists('g:vimfiles')
+		call chdir(g:vimfiles)
+	endif
+	pyx import config
+	pyx import vim
+	pyx config.debug(vim.eval('a:msg'), *vim.eval('a:000'))
+	call chdir(pwd)
 endfunction
 
-function! config#logging() abort
-	if !(exists('g:logging_conf') && filereadable(g:logging_conf))
-		let g:logging_conf = s:logging_conf
-	endif
-	if !(exists('g:logging_logfile') && filereadable(g:logging_logfile))
-		let g:logging_logfile = s:logging_logfile
-	endif
-	if config#python()
-		try
-			py3 import config
-			return filereadable(g:logging_logfile)
-		catch
-			echoerr v:exception
-		endtry
+function! config#reload_config() abort
+	pyx from importlib import reload
+	pyx reload(config)
+	call config#debug('reloading config')
+endfunction
+
+function! config#open_log() abort
+	if filereadable(g:logfile)
+		exe 'edit ' . g:logfile
 	endif
 endfunction
 
-function! config#show_debug() abort
-	if config#logging()
-		exe 'edit ' . g:logging_logfile 
-	endif
+function! config#list_plugins(bundle) abort
+  return glob(a:bundle . '/*/.git', v:true, v:true)
 endfunction
 
-function! config#edit_logging_config() abort
-	let logging_conf = get(g:, 'logging_conf', s:logging_conf)
-	exe 'edit ' . logging_conf 
-endfunction
-
-function! config#init() abort
-	nnoremap <silent> <F2> :call config#show_debug()<CR>
-	let modules = config#list_modules()
-	if !exists('s:modules')
-		let s:modules = {}
-		for module in modules
-			let s:modules[module.name] = module
-		endfor
-	endif
-	let orderd_module_names = get(g:, 'modules', [])
-	for name in orderd_module_names 
-		if has_key(s:modules, name)
-			let module = s:modules[name]
-			call module.load()
-			" call config#debug('module {} loaded.', name)
-		endif
-	endfor
-	try 
-		colorscheme gruvbox
+function! config#get_repo_url(config_file) abort
+	try
+		let lines = readfile(a:config_file)
+		let origin_section = match(lines, '\[remote "origin"\]')
+		let url = lines[origin_section + 1][7:]
+		return url
 	catch
-		colorscheme desert
+		echoerr 'file ' . a:config_file . ' not found.'
 	endtry
 endfunction
 
-function! config#home() abort
-	 return fnamemodify(s:file, ':p:h:h')
+function! config#get_author(url) 
+	return substitute(a:url, '.*github.com/\([^/]\+\)/[^/]\+\%(\.git\)\?', '\1', '')
 endfunction
 
-
-function! config#list_modules() abort
-	let modules = glob(config#home() . '/autoload/config/*.vim', v:true, v:true)
-	return map(modules, {_, val -> {
-					\ 'name': fnamemodify(val, ':p:t:r'),
-					\ 'path': val,
-					\ 'load': function('config#load_module')
-					\}})
+function! config#get_basename(path) 
+	let name = fnamemodify(a:path, ':p:h:h:t')
+	return name
 endfunction
 
-function! config#find_module(name) abort
-	let path = glob(config#home() . '/autoload/config/' . a:name . '.vim', v:true, v:true)
-	return path->map({_, val -> config#new_module(val)})
+function! config#new_plugin(repo) abort
+	let plugin = {}
+	try
+		let config_file = glob(a:repo . '/config')
+		if filereadable(config_file)
+			let plugin.path = fnamemodify(a:repo, ':p:h')
+			let plugin.url = config#get_repo_url(config_file)
+			let plugin.author = config#get_author(plugin.url)
+			let plugin.name = config#get_basename(plugin.path)
+			let plugin.short = plugin.author . '/' . plugin.name 
+			return plugin
+		else
+			call config#debug('config file {} for {} is not readable ', config_file, a:repo)
+			return {}
+		endif 
+	catch
+		return {}
+	endtry
 endfunction
 
-function! config#new_module(path) abort
-	return {
-				\ 'name': fnamemodify(a:path, ':p:t:r'),
-				\ 'path': a:path,
-				\ 'load': function('config#load_module')
-				\}
-endfunction
-
-function! config#load_module() dict
-	 if has_key(self, 'is_loaded') && self.is_loaded
-		  return v:true
-	 endif
-	 if has_key(self, 'disabled') && self.disabled
-		  return v:false
-	 endif
-	 try
-		  " call config#debug('loading module: {}', self.name)
-		  return config#{self.name}#init()
-	 catch /^Vim\%((\a\+)\)\=:E/	 " catch all Vim errors
-		  let self.error = v:exception
-			call config#debug('loading module {} failed: {}', self.name, self.error)
-	 endtry
-endfunction
-
-
-function! config#os()
-	if has('win32')
-		return 'windows'
+function! config#init() abort
+	let plugins_available = []
+	if !exists('g:bundle') || empty(g:bundle)
+		let g:bundle = g:vimfiles . '/bundle'
 	endif
-	if has('mac')
-		return 'mac'
+	let plugins_list = config#list_plugins(g:bundle)
+	if empty(plugins_list)
+		call config#debug('no plugin was found in ' . g:bundle)
 	endif
+	for repo in plugins_list 
+		let plugin = config#new_plugin(repo)
+		call add(plugins_available, plugin)
+	endfor
+	let g:plugins_available = plugins_available
 endfunction
 
-function! config#message(template, args) abort
-	if config#python()
-		try
-			let g:_msg = ''
-			py3 import vim
-			py3 vim.vars['_msg'] = vim.eval('a:template').format(*vim.eval('a:args'))
-			return g:_msg
-		catch
-			echom 'config#message: ' . v:exception
-		endtry
-	endif
-endfunction
-
-" info{{{
-function! config#info(template, ...)
-	let msg = config#message(a:template, a:000)
-	if config#logging()
-		py3 config.rootLogger.info(vim.eval('msg'))
-	endif
-endfunction
-"}}}
-
-function! config#debug(template, ...)
-	let msg = config#message(a:template, a:000)
-	if config#logging()
-		py3 config.debug(vim.eval('msg'))
-	endif
-endfunction
-
-
-" error {{{
-function! config#error(template, ...)
-	let msg = config#message(a:template, a:000)
-	if config#logging()
-		py3 import logging
-		py3 logging.debug(vim.eval('msg'))
-	else
-		echohl ErrorMsg
-		echoerr msg
-		echohl None
-	endif
-endfunction
-"}}}
-
-" download{{{
-function! config#download(location, url)
-	call config#message('downloading to {} from {}', a:location, a:url)
-endfunction
-"}}}
-
-
-
-" vim: ft=vim fdm=indent ts=2 sw=2
