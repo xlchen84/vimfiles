@@ -1,0 +1,3 @@
+[submodule "bundle/defx.nvim"]
+	path = bundle/defx.nvim
+	url = https://github.com/Shougo/defx.nvim
