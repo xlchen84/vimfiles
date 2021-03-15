@@ -34,3 +34,6 @@
 [submodule "bundle/unite-quickfix"]
 	path = bundle/unite-quickfix
 	url = https://git::@github.com/osyo-manga/unite-quickfix.git
+[submodule "bundle/dein.vim"]
+	path = bundle/dein.vim
+	url = https://github.com/Shougo/dein.vim

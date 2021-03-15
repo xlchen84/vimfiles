@@ -1,15 +1,11 @@
-
+" vim: ts=2:sw=2
 " dein{{{
 function! config#dein#init()
-	 if dein#load_state($VIM)
-		  call dein#begin($VIM)
-		  call dein#add('Shougo/deoplete.nvim')
-		  call dein#add('wsdjeg/dein-ui.vim')
-		  " My plugins here:
-		  " ...
-		  call dein#end()
-		  call dein#save_state()
-	 endif
+	set rtp+=~/vimfiles/bundle/dein.vim
+	call dein#begin('~/vimfiles/bundle')
+	call dein#add('Shougo/deoplete.nvim')
+	call dein#add('wsdjeg/dein-ui.vim')
+	call dein#end()
 endfunction
 "}}}
 

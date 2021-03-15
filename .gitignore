@@ -9,3 +9,7 @@ __pycache__
 *.log
 *.pdf
 nvim-python.log*
+.netrwhist
+.cache/
+bundle/repos/
+bundle/add_submodules.cmd
