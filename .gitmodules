@@ -37,3 +37,6 @@
 [submodule "bundle/dein.vim"]
 	path = bundle/dein.vim
 	url = https://github.com/Shougo/dein.vim
+[submodule "bundle/vim-plug"]
+	path = bundle/vim-plug
+	url = https://github.com/junegunn/vim-plug
