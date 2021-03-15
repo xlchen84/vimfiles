@@ -118,6 +118,16 @@ function! config#new_plugin(repo) abort
 	return plugin
 endfunction
 
+function! config#list_modules() abort
+	let module_files = glob(g:vimfiles . '/autoload/config/*.vim', v:true, v:true)
+	let modules = map(module_files, {_, val -> fnamemodify(val, ':t:r')})
+	call config#debug('found modules {} ', modules)
+	return modules
+endfunction
+
 function! config#init() abort
+	for module in config#list_modules()
+		call config#{module}#init()
+	endfor
 endfunction
 
