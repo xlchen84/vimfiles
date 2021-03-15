@@ -1,24 +1,25 @@
+" vim:ts=2:sw=2
 function! config#defx#init() abort
-	" 使用 ;e 切换显示文件浏览，使用 ;a 查找到当前文件位置
-	let g:maplocalleader=';'
-	nnoremap <silent> <LocalLeader>e
-				\ :<C-u>Defx -resume -toggle -buffer-name=tab`tabpagenr()` <CR>
-	nnoremap <silent> <LocalLeader>a
-				\ :<C-u>Defx -resume -buffer-name=tab`tabpagenr()` -search=`expand('%:p')`<CR>
-
-	call defx#custom#option('_', {
-				\ 'columns': 'indent:git:icons:filename',
-				\ 'winwidth': 35,
-				\ 'split': 'vertical',
-				\ 'direction': 'topleft',
-				\ 'show_ignored_files': 0,
-				\ 'root_marker': '≡ ',
-				\ 'ignored_files':
-				\     '.mypy_cache,.pytest_cache,.git,.hg,.svn,.stversions'
-				\   . ',__pycache__,.sass-cache,*.egg-info,.DS_Store,*.pyc,*.swp'
-				\ })
-
-	autocmd FileType defx call s:defx_my_settings()
+	if exists(':Defx')
+		" 使用 ;e 切换显示文件浏览，使用 ;a 查找到当前文件位置
+		let g:maplocalleader=';'
+		nnoremap <silent> <LocalLeader>e
+					\ :<C-u>Defx -resume -toggle -buffer-name=tab`tabpagenr()` <CR>
+		nnoremap <silent> <LocalLeader>a
+					\ :<C-u>Defx -resume -buffer-name=tab`tabpagenr()` -search=`expand('%:p')`<CR>
+		call defx#custom#option('_', {
+					\ 'columns': 'indent:git:icons:filename',
+					\ 'winwidth': 35,
+					\ 'split': 'vertical',
+					\ 'direction': 'topleft',
+					\ 'show_ignored_files': 0,
+					\ 'root_marker': '≡ ',
+					\ 'ignored_files':
+					\     '.mypy_cache,.pytest_cache,.git,.hg,.svn,.stversions'
+					\   . ',__pycache__,.sass-cache,*.egg-info,.DS_Store,*.pyc,*.swp'
+					\ })
+		autocmd FileType defx call s:defx_my_settings()
+	endif
 endfunction
 
 function! s:defx_my_settings() abort

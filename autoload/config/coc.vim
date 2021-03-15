@@ -1,40 +1,37 @@
-function! config#complete#init() abort
-	 return config#complete#coc() 
-endfunction
-
-function! config#complete#coc() abort
-	 let g:coc_global_extensions = [
-					 \ "coc-clangd",
-					 \ "coc-cmake",
-					 \ "coc-css",
-					 \ "coc-emmet",
-					 \ "coc-explorer",
-					 \ "coc-git",
-					 \ "coc-html",
-					 \ "coc-highlight",
-					 \ "coc-jedi",
-					 \ "coc-json",
-					 \ "coc-lists",
-					 \ "coc-pairs",
-					 \ "coc-python",
-					 \ "coc-sh",
-					 \ "coc-snippets",
-					 \ "coc-syntax",
-					 \ "coc-tasks",
-					 \ "coc-tsserver",
-					 \ "coc-vimlsp",
-					 \ "coc-vimtex",
-					 \ "coc-yaml",
-					 \ "coc-yank",
-					 \ ]
-	 autocmd FileType cpp,hpp,h,c 		let b:coc_suggest_disable=1
-	 autocmd FileType cpp,hpp,h,c 		:call coc#config("suggest.autoTrigger", "none")
-	 autocmd FileType vim,python,tex 	:call coc#config("suggest.autoTrigger", "always")
-	 " call s:key_binding()
-	 call config#complete#options()
-	 call config#complete#key()
-	 call config#complete#autocmd()
-	 call config#complete#command()
+" vim: ts=2 : sw=2
+function! config#coc#init() abort
+	let g:coc_disable_startup_warning = 0
+	let g:coc_global_extensions = [
+				\ "coc-clangd",
+				\ "coc-cmake",
+				\ "coc-css",
+				\ "coc-emmet",
+				\ "coc-explorer",
+				\ "coc-git",
+				\ "coc-html",
+				\ "coc-highlight",
+				\ "coc-jedi",
+				\ "coc-json",
+				\ "coc-lists",
+				\ "coc-pairs",
+				\ "coc-python",
+				\ "coc-sh",
+				\ "coc-snippets",
+				\ "coc-syntax",
+				\ "coc-tasks",
+				\ "coc-tsserver",
+				\ "coc-vimlsp",
+				\ "coc-vimtex",
+				\ "coc-yaml",
+				\ "coc-yank",
+				\ ]
+	if exists(':CocAction')
+		" call s:key_binding()
+		call s:options()
+		call s:key()
+		call s:autocmd()
+		call s:command()
+	endif
 endfunction
 
 function! s:check_back_space() abort
@@ -42,7 +39,7 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
 
-function! config#complete#options() abort
+function! s:options() abort
 	 " if hidden is not set, TextEdit might fail.
 	 set hidden
 	 " Some servers have issues with backup files, see #649
@@ -94,7 +91,7 @@ endfunction
 " 	 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 " 	 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " endfunction
-function! config#complete#key() abort
+function! s:key() abort
 	 " Use tab for trigger completion with characters ahead and navigate.
 	 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 	 inoremap <silent><expr> <TAB>
@@ -124,9 +121,6 @@ function! config#complete#key() abort
 	 " Use K to show documentation in preview window
 	 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-	 " Highlight symbol under cursor on CursorHold
-	 autocmd CursorHold * silent call CocActionAsync('highlight')
-
 	 " Remap for rename current word
 	 nmap <leader>rn <Plug>(coc-rename)
 
@@ -152,17 +146,22 @@ endfunction
 
 
 
-function! config#complete#autocmd() abort
-	 augroup mygroup
+function! s:autocmd() abort
+	 augroup coc
 		  autocmd!
+			autocmd FileType cpp,hpp,h,c 		let b:coc_suggest_disable=1
+			autocmd FileType cpp,hpp,h,c 		:call coc#config("suggest.autoTrigger", "none")
+			autocmd FileType vim,python,tex 	:call coc#config("suggest.autoTrigger", "always")
 		  " Setup formatexpr specified filetype(s).
 		  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
 		  " Update signature help on jump placeholder
 		  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-	 augroup end
-endfunction
+			" Highlight symbol under cursor on CursorHold
+			autocmd CursorHold * silent call CocActionAsync('highlight')
+		augroup END
+	endfunction
 
-function! config#complete#command() abort
+function! s:command() abort
 	 " Use `:Format` to format current buffer
 	 command! -nargs=0 Format :call CocAction('format')
 
