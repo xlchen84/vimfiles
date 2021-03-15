@@ -39,7 +39,12 @@ elseif has('mac')
 	set guifont=Monaco:h18
 endif
 if has('nvim')
-	let g:python3_host_prog='D:/Programs/Python/3.9.1/python.exe'
+	if executable('python.exe')
+		let g:python3_host_prog = exepath('python.exe')
+	else
+		"fallback
+		let g:python3_host_prog='D:/Programs/Python/3.9.1/python.exe'
+	endif
 else
 	set guifont=更纱黑体_Mono_SC_Nerd:h16:cGB2312:qDRAFT
 	"set guifont=Inziu_IosevkaCC_SC:h16

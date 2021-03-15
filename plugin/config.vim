@@ -10,6 +10,11 @@ call config#init()
 
 command! OpenLog :call config#open_log()
 
+augroup vim_start
+  autocmd!
+  autocmd VimEnter *  :call config#init()
+augroup END
+
 augroup config
   autocmd!
   autocmd BufWritePost config.py  :call config#reload_config()

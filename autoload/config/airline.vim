@@ -1,17 +1,18 @@
-" vim: ft=vim fdm=marker
+" vim: ft=vim fdm=marker ts=2 sw=2
 
 " init airline {{{
 function! config#airline#init()
-	 " call config#message('initalizing airline')
-	 call s:init_variables()
-	 " call config#airline#tabline()
-	 " call config#airline#extensions()
-	 autocmd User AirlineAfterTheme call s:update_highlights()
+	if exists('g:loaded_airline') && g:loaded_airline 
+		" call config#message('initalizing airline')
+		call config#airline#init_variables()
+		call config#airline#extensions()
+		autocmd User AirlineAfterTheme call <SID>update_highlights()
+	endif
 endfunction
 "}}}
 
 "airline variables{{{
-function! s:init_variables()
+function! config#airline#init_variables()
 	 let g:airline_left_sep='>'
 	 let g:airline_right_sep='<'
 	 let g:airline_detect_modified=1
@@ -70,6 +71,89 @@ function! s:init_variables()
 		  let g:airline_symbols = {}
 	 endif
 	 let g:airline#extensions#tabline#enabled = 1
+endfunction
+"}}}
+
+"extensions {{{
+function! config#airline#extensions() abort
+	 "	 Extension      	Extern	Status
+	 let g:airline_extensions = [
+					 \ 'bufferline',
+					 \]
+
+	 let g:airline_extensions_not_installed = [
+					 \ 'battery',
+					 \ 'bookmark',
+					 \ 'branch',
+					 \ 'capslock',
+					 \ 'coc',
+					 \ 'csv',
+					 \ 'ctrlp',
+					 \ 'ctrlspace',
+					 \ 'cursormode',
+					 \ 'denite',
+					 \ 'dirvish',
+					 \ 'fern',
+					 \ 'fzf',
+					 \ 'gina',
+					 \ 'gutentags',
+					 \ 'hunks',
+					 \ 'keymap',
+					 \ 'languageclient',
+					 \ 'localsearch',
+					 \ 'lsp',
+					 \ 'neomake',
+					 \ 'netrw',
+					 \ 'nrrwrgn',
+					 \ 'obsession',
+					 \ 'po',
+					 \ 'poetv',
+					 \ 'quickfix',
+					 \ 'syntastic',
+					 \ 'tabline',
+					 \ 'tagbar',
+					 \ 'term',
+					 \ 'undotree',
+					 \ 'unicode',
+					 \ 'unite',
+					 \ 'vimagit',
+					 \ 'vimcmake',
+					 \ 'vimtex',
+					 \ 'virtualenv',
+					 \ 'vista',
+					 \ 'whitespace',
+					 \ 'windowswap',
+					 \ 'wordcount',
+					 \ 'zoomwintab',
+					 \ 'ale',
+					 \ 'commandt',
+					 \ 'default',
+					 \ 'eclim',
+					 \ 'example',
+					 \ 'fugitiveline',
+					 \ 'gen_tags',
+					 \ 'grepper',
+					 \ 'nvimlsp',
+					 \ 'omnisharp',
+					 \ 'promptline',
+					 \ 'searchcount',
+					 \ 'tmuxline',
+					 \ 'xkblayout',
+					 \ 'ycm',
+					 \]
+
+	 try
+		  call config#airline#default()
+		  " call config#airline#ale()
+		  " call config#airline#bufferline()
+		  " call config#airline#tabline()
+		  " call config#airline#timer()
+		  call airline#extensions#load()
+		  for ext in g:airline_extensions
+				" call s:load_airline_extension(ext)
+		  endfor
+	 catch 
+	 endtry
 endfunction
 "}}}
 
@@ -134,89 +218,6 @@ function! config#airline#old_powerline_symbols()
 endfunction
 "}}}
 
-"extensions {{{
-function! config#airline#extensions() abort
-	 "	 Extension      	Extern	Status
-	 let g:airline_extensions = [
-					 \ 'battery',
-					 \ 'bookmark',
-					 \ 'branch',
-					 \ 'bufferline',
-					 \ 'capslock',
-					 \ 'coc',
-					 \ 'csv',
-					 \ 'ctrlp',
-					 \ 'ctrlspace',
-					 \ 'cursormode',
-					 \ 'denite',
-					 \ 'dirvish',
-					 \ 'fern',
-					 \ 'fzf',
-					 \ 'gina',
-					 \ 'gutentags',
-					 \ 'hunks',
-					 \ 'keymap',
-					 \ 'languageclient',
-					 \ 'localsearch',
-					 \ 'lsp',
-					 \ 'neomake',
-					 \ 'netrw',
-					 \ 'nrrwrgn',
-					 \ 'obsession',
-					 \ 'po',
-					 \ 'poetv',
-					 \ 'quickfix',
-					 \ 'syntastic',
-					 \ 'tabline',
-					 \ 'tagbar',
-					 \ 'term',
-					 \ 'undotree',
-					 \ 'unicode',
-					 \ 'unite',
-					 \ 'vimagit',
-					 \ 'vimcmake',
-					 \ 'vimtex',
-					 \ 'virtualenv',
-					 \ 'vista',
-					 \ 'whitespace',
-					 \ 'windowswap',
-					 \ 'wordcount',
-					 \ 'zoomwintab',
-					 \]
-
-	 let g:airline_extensions_not_installed = [
-					 \ 'ale',
-					 \ 'commandt',
-					 \ 'default',
-					 \ 'eclim',
-					 \ 'example',
-					 \ 'fugitiveline',
-					 \ 'gen_tags',
-					 \ 'grepper',
-					 \ 'nvimlsp',
-					 \ 'omnisharp',
-					 \ 'promptline',
-					 \ 'searchcount',
-					 \ 'tmuxline',
-					 \ 'xkblayout',
-					 \ 'ycm',
-					 \]
-
-	 try
-		  call config#airline#ale()
-		  call config#airline#bufferline()
-		  call config#airline#default()
-		  call config#airline#tabline()
-		  call config#airline#timer()
-		  call airline#extensions#load()
-		  for ext in g:airline_extensions
-				call s:load_airline_extension(ext)
-		  endfor
-	 catch 
-	 endtry
-endfunction
-"}}}
-
 " ale{{{
 function! config#airline#ale()
 	 let g:airline#extensions#ale#enabled = 1
@@ -230,12 +231,14 @@ endfunction
 
 " bufferline{{{
 function! config#airline#bufferline()
+	if exists('g:loaded_bufferline') && g:loaded_bufferline
 	 let g:airline#extensions#bufferline#enabled = 1
 	 let g:bufferline_echo = 1
 	 let g:bufferline_active_highlight = 'StatusLine'
 	 let g:bufferline_inactive_highlight = 'StatusLineNC'
 	 let g:bufferline_show_bufnr = 1
 	 autocmd VimEnter * let &statusline='%{bufferline#refresh_status()}'.bufferline#get_status_string()
+ endif
 endfunction
 "}}}
 

@@ -1,6 +1,7 @@
+" vim: ts=2:sw=2
 if has('nvim')
 	call GuiWindowMaximized(1)
-	GuiFont! Inziu IosevkaCC SC:h12
+	GuiFont! Consolas:h16
 else
 	try
 		colorscheme gruvbox

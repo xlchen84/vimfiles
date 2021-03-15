@@ -3,12 +3,12 @@
 function! config#debug(msg, ...) abort
 	let pwd = getcwd()
 	if exists('g:vimfiles')
-		call chdir(g:vimfiles)
+		exe 'chdir ' . g:vimfiles
 	endif
 	pyx import config
 	pyx import vim
 	pyx config.debug(vim.eval('a:msg'), *vim.eval('a:000'))
-	call chdir(pwd)
+	exe 'chdir ' . pwd
 endfunction
 
 function! config#reload_config() abort
@@ -126,6 +126,7 @@ function! config#list_modules() abort
 endfunction
 
 function! config#init() abort
+	call config#plug#init()
 	for module in config#list_modules()
 		call config#{module}#init()
 	endfor
