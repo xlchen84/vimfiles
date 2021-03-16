@@ -145,7 +145,7 @@ function! config#airline#extensions() abort
 	 try
 		  call config#airline#default()
 		  " call config#airline#ale()
-		  " call config#airline#bufferline()
+		  call config#airline#bufferline()
 		  " call config#airline#tabline()
 		  " call config#airline#timer()
 		  call airline#extensions#load()
@@ -232,13 +232,13 @@ endfunction
 " bufferline{{{
 function! config#airline#bufferline()
 	if exists('g:loaded_bufferline') && g:loaded_bufferline
-	 let g:airline#extensions#bufferline#enabled = 1
-	 let g:bufferline_echo = 1
-	 let g:bufferline_active_highlight = 'StatusLine'
-	 let g:bufferline_inactive_highlight = 'StatusLineNC'
-	 let g:bufferline_show_bufnr = 1
-	 autocmd VimEnter * let &statusline='%{bufferline#refresh_status()}'.bufferline#get_status_string()
- endif
+		let g:airline#extensions#bufferline#enabled = 1
+		let g:bufferline_echo = 1
+		let g:bufferline_active_highlight = 'StatusLine'
+		let g:bufferline_inactive_highlight = 'StatusLineNC'
+		let g:bufferline_show_bufnr = 1
+		autocmd VimEnter * let &statusline='%{bufferline#refresh_status()}'.bufferline#get_status_string()
+	endif
 endfunction
 "}}}
 
