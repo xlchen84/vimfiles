@@ -1,8 +1,8 @@
-"vim:ts=2:sw=2:et
+"vim: ts=2 sw=2 
 " -------------------------------------                      *airline-tabline*
 " Note: If you're using the ctrlspace tabline only the option marked with (c) are supported!
 function! config#airline#tabline#init() abort
-	add(g:airline_extensions, 'tabline')
+				call add(g:airline_extensions, 'tabline')
 endfunction
 
 "* enable/disable enhanced tabline. (c) >
@@ -13,10 +13,10 @@ let g:airline#extensions#tabline#show_splits = 1
 
 "* switch position of buffers and tabs on splited tabline (c)
 "  (only supported for ctrlspace plugin). >
-  let g:airline#extensions#tabline#switch_buffers_and_tabs = 0
+let g:airline#extensions#tabline#switch_buffers_and_tabs = 0
 "<
 "* enable/disable displaying buffers with a single tab. (c) >
-  let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_buffers = 1
 
 "Note: If you are using neovim (has('tablineat') = 1), then you can click
 "on the tabline with the left mouse button to switch to that buffer, and
@@ -26,7 +26,7 @@ let g:airline#extensions#tabline#show_splits = 1
 "  ----------------------
 "  buffer <buffer> buffer `
 ">
- let g:airline#extensions#tabline#alt_sep = 1
+let g:airline#extensions#tabline#alt_sep = 1
 "< Only makes sense, if g:airline_right_sep is not empty.  default: 0
 
 "* enable/disable displaying tabs, regardless of number. (c) >
@@ -69,22 +69,22 @@ let g:airline#extensions#tabline#show_tab_nr = 1
 let g:airline#extensions#tabline#ctrlspace_show_tab_nr = 0
 
 "* enable/disable displaying tab type (e.g. [buffers]/[tabs]) >
-  let g:airline#extensions#tabline#show_tab_type = 1
+let g:airline#extensions#tabline#show_tab_type = 1
 
 "* show buffer label at first position: >
-  let g:airline#extensions#tabline#buf_label_first = 1
+let g:airline#extensions#tabline#buf_label_first = 1
 
 "* rename label for buffers (default: 'buffers') (c) >
-  let g:airline#extensions#tabline#buffers_label = 'b'
+let g:airline#extensions#tabline#buffers_label = 'b'
 
 "* rename label for tabs (default: 'tabs') (c) >
-  let g:airline#extensions#tabline#tabs_label = 't'
+let g:airline#extensions#tabline#tabs_label = 't'
 
 "* change the symbol for skipped tabs/buffers (default '...') >
-  let g:airline#extensions#tabline#overflow_marker = '…'
+let g:airline#extensions#tabline#overflow_marker = '…'
 
 "* always show current tabpage/buffer first >
-  let airline#extensions#tabline#current_first = 1
+let airline#extensions#tabline#current_first = 1
 "<  default: 0
 
 "* enable/disable displaying index of the buffer.
@@ -155,24 +155,24 @@ let g:airline#extensions#tabline#buffer_idx_mode = 3
 " * define the set of filetypes which are ignored for the selectTab
 "   keymappings: >
 let g:airline#extensions#tabline#keymap_ignored_filetypes =
-        \ ['vimfiler', 'nerdtree']
+												\ ['vimfiler', 'nerdtree']
 
 " * change the display format of the buffer index >
-  let g:airline#extensions#tabline#buffer_idx_format = {
-        \ '0': '0 ',
-        \ '1': '1 ',
-        \ '2': '2 ',
-        \ '3': '3 ',
-        \ '4': '4 ',
-        \ '5': '5 ',
-        \ '6': '6 ',
-        \ '7': '7 ',
-        \ '8': '8 ',
-        \ '9': '9 '
-        \}
+let g:airline#extensions#tabline#buffer_idx_format = {
+												\ '0': '0 ',
+												\ '1': '1 ',
+												\ '2': '2 ',
+												\ '3': '3 ',
+												\ '4': '4 ',
+												\ '5': '5 ',
+												\ '6': '6 ',
+												\ '7': '7 ',
+												\ '8': '8 ',
+												\ '9': '9 '
+												\}
 " <
 " * defines the name of a formatter for how buffer names are displayed. (c) >
-  let g:airline#extensions#tabline#formatter = 'default'
+let g:airline#extensions#tabline#formatter = 'default'
 
 "   " here is how you can define a 'foo' formatter:
 "   " create a file in the dir autoload/airline/extensions/tabline/formatters/

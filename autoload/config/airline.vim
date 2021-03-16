@@ -79,6 +79,8 @@ function! config#airline#extensions() abort
 	 "	 Extension      	Extern	Status
 	 let g:airline_extensions = [
 					 \ 'bufferline',
+					 \ 'coc',
+					 \ 'tabline',
 					 \]
 
 	 let g:airline_extensions_not_installed = [
@@ -86,7 +88,6 @@ function! config#airline#extensions() abort
 					 \ 'bookmark',
 					 \ 'branch',
 					 \ 'capslock',
-					 \ 'coc',
 					 \ 'csv',
 					 \ 'ctrlp',
 					 \ 'ctrlspace',
@@ -110,7 +111,6 @@ function! config#airline#extensions() abort
 					 \ 'poetv',
 					 \ 'quickfix',
 					 \ 'syntastic',
-					 \ 'tabline',
 					 \ 'tagbar',
 					 \ 'term',
 					 \ 'undotree',
@@ -146,7 +146,7 @@ function! config#airline#extensions() abort
 		  call config#airline#default()
 		  " call config#airline#ale()
 		  call config#airline#bufferline()
-		  " call config#airline#tabline()
+		  call config#airline#tabline()
 		  " call config#airline#timer()
 		  call airline#extensions#load()
 		  for ext in g:airline_extensions

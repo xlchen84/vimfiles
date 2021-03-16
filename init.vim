@@ -29,7 +29,6 @@ set autoread
 syntax on
 filetype plugin indent on
 language messages zh_CN.UTF-8
-colorscheme desert
 
 if has('win32')
 	language messages zh_CN.utf-8
@@ -53,6 +52,7 @@ endif
 
 
 " 按键(不依赖于任何插件)
+let mapleader = '\<Space>'
 nnoremap <C-s> :w<CR>
 inoremap <C-s> <Esc>:w<CR>
 inoremap jk 	<Esc>
