@@ -1,0 +1,53 @@
+
+今天在github上使用 git clone 某个项目代码的时， git clone https://github.com/XXXX/xxx-blog.git 下载速度很慢，然后下载一段时间后，总是提示下面的错误信息：
+
+remote: Enumerating objects: 33, done.
+remote: Counting objects: 100% (33/33), done.
+remote: Compressing objects: 100% (8/8), done.
+error: RPC failed; curl 56 OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 10054
+fatal: the remote end hung up unexpectedly
+fatal: early EOF
+fatal: index-pack failed
+回到顶部
+错误原因
+由于Http协议错误，当 pull 或者 clone 的时候，或者是 github 某个CDN被伟大的墙屏蔽所致。
+
+回到顶部
+解决办法1
+协议错误
+
+先执行下列命令
+
+git config --global http.postBuffer 5242880000
+再执行git pull或者 git clone 命令
+
+回到顶部
+解决办法2
+墙屏蔽
+访问 http://github.global.ssl.fast...获取cdn域名以及IP地址
+
+
+访问 http://github.com.ipaddress.c... 获取cdn域名以及IP地址
+
+
+或者直接访问https://www.ipaddress.com/网址查询下面所需的地址对应的IP
+
+修改hosts文件
+将上述获取的IP地址添加到hosts文件中
+Mac在/etc/hosts中；
+windows在C:\Windows\System32\drivers\etc\hosts中；
+
+# fix git clone github project failed
+140.82.113.3 github.com
+199.232.5.194 github.global.ssl.fastly.net
+192.30.253.120  codeload.github.com
+刷新DNS缓存
+Mac刷新DNS缓存
+
+sudo killall -HUP mDNSResponder
+sudo dscacheutil -flushcache
+Windows更新DNS缓存
+cmd命令窗口执行：
+
+ipconfig /flushdns
+使增加的映射生效。
