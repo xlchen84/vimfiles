@@ -237,7 +237,7 @@ function! config#airline#bufferline()
 		let g:bufferline_echo = 1
 		let g:bufferline_active_highlight = 'StatusLine'
 		let g:bufferline_inactive_highlight = 'StatusLineNC'
-		let g:bufferline_show_bufnr = 1
+		let g:bufferline_show_bufnr = 0
 		autocmd VimEnter * let &statusline='%{bufferline#refresh_status()}'.bufferline#get_status_string()
 	endif
 endfunction

@@ -54,9 +54,9 @@ function! config#airline#tabline#variables() abort
 	"  For an example, have a look at the default tabline/formatter/tabnr.vim
 	"<
 	"* enable/disable displaying tab number in tabs mode. >
-	let g:airline#extensions#tabline#show_tab_nr = 1
+	let g:airline#extensions#tabline#show_tab_nr = 0
 	"* enable/disable displaying tab number in tabs mode for ctrlspace. (c) >
-	let g:airline#extensions#tabline#ctrlspace_show_tab_nr = 0
+	let g:airline#extensions#tabline#ctrlspace_show_tab_nr = 1
 	"* enable/disable displaying tab type (e.g. [buffers]/[tabs]) >
 	let g:airline#extensions#tabline#show_tab_type = 1
 	"* show buffer label at first position: >
