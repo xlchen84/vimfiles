@@ -1,11 +1,13 @@
 " vim:ft=vim:ts=2:sw=2:et
 
-
-function! config#tex#init() abort
-  let g:tex_flavor = 'latex'
+function! config#vimtex#init() abort
   set conceallevel=1
+  call config#vimtex#variables()
+endfunction
+
+function! config#vimtex#variables() abort
+  let g:tex_flavor = 'latex'
   let g:tex_conceal='abdmg'
-  " let g:vimtex_compiler_latexmk_engines = { }
   let g:vimtex_compiler_latexmk = {
         \ 'build_dir': 'pdf',
         \ 'callback': 1,
@@ -22,16 +24,7 @@ function! config#tex#init() abort
         \   '-outdir=pdf',
         \ ] ,
         \}
-
-  let s:SumatraPDF = 'd:/Programs/SumatraPDF/SumatraPDF.exe'
-  if !executable('SumatraPDF.exe')
-    let $PATH = fnamemodify(s:SumatraPDF, ':p:h') . ';' . $PATH
-  endif 
-  if executable('SumatraPDF.exe')
-    let g:vimtex_view_general_viewer = 'SumatraPDF.exe'
-  else
-    let g:vimtex_view_general_viewer = 'd:\Programs\SumatraPDF\SumatraPDF.exe'
-  endif
+  let g:vimtex_compiler_latexmk_engines = { }
   let g:vimtex_view_general_options_latexmk = '-reuse-instance'
   let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
         \ . ' -inverse-search "' . exepath(v:progpath)
@@ -40,5 +33,19 @@ function! config#tex#init() abort
         \ . ':execute ''drop '' . fnameescape(''\%f'')^<CR^>'
         \ . ':\%l^<CR^>:normal\! zzzv^<CR^>'
         \ . ':call remote_foreground('''.v:servername.''')^<CR^>^<CR^>\""'
-   " let g:vimtex_quickfix_open_on_warning=0
+   let g:vimtex_quickfix_open_on_warning=1
+   let g:vimtex_view_general_viewer = s:viewer()
+endfunction
+
+function! s:viewer()
+  if has('win32') || has('win64')
+    if !executable('SumatraPDF.exe')
+      let SumatraPDF = 'd:/Programs/SumatraPDF/SumatraPDF.exe'
+      if filereadable(SumatraPDF)
+        return SumatraPDF
+      endif
+    else
+      return 'SumatraPDF.exe'
+    endif 
+  endif
 endfunction
