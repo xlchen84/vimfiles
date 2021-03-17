@@ -4,8 +4,8 @@ if has('nvim')
 	GuiFont! Consolas:h16
 else
 	try
+		colorscheme desert
 		colorscheme gruvbox
 	catch
-		colorscheme desert
 	endtry
 endif
