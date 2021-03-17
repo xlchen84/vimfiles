@@ -144,12 +144,13 @@ function! config#airline#extensions() abort
 
 	 try
 		  call config#airline#default()
+		  call airline#extensions#load()
 		  " call config#airline#ale()
 		  call config#airline#bufferline()
-		  call config#airline#tabline()
+		  call config#airline#tabline#init()
 		  " call config#airline#timer()
-		  call airline#extensions#load()
 		  for ext in g:airline_extensions
+				call config#airline#{ext}#init()
 				" call s:load_airline_extension(ext)
 		  endfor
 	 catch 
