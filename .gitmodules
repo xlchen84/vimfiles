@@ -58,3 +58,6 @@
 [submodule "bundle/vimtex"]
 	path = bundle/vimtex
 	url = https://github.com/lervag/vimtex
+[submodule "bundle/vim-quickui"]
+	path = bundle/vim-quickui
+	url = https://github.com/skywind3000/vim-quickui
