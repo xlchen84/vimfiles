@@ -26,6 +26,7 @@ set helplang=cn
 set ambiwidth=double
 set backupdir=$VIM/vimfiles/temp,$TEMP
 set autoread
+set pyxversion=3
 syntax on
 filetype plugin indent on
 language messages zh_CN.UTF-8
@@ -37,22 +38,16 @@ if has('win32')
 elseif has('mac')
 	set guifont=Monaco:h18
 endif
-if has('nvim')
+
+let g:python3_host_prog='D:/Programs/Python/3.9.1/python.exe'
+if !filereadable(g:python3_host_prog)
 	if executable('python.exe')
 		let g:python3_host_prog = exepath('python.exe')
-	else
-		"fallback
-		let g:python3_host_prog='D:/Programs/Python/3.9.1/python.exe'
 	endif
-else
-	set guifont=更纱黑体_Mono_SC_Nerd:h16:cGB2312:qDRAFT
-	"set guifont=Inziu_IosevkaCC_SC:h16
-	set pyxversion=3
 endif
 
-
 " 按键(不依赖于任何插件)
-let mapleader = '\<Space>'
+let mapleader = ' '
 nnoremap <C-s> :w<CR>
 inoremap <C-s> <Esc>:w<CR>
 inoremap jk 	<Esc>

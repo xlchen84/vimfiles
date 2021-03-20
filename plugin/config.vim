@@ -6,6 +6,7 @@ endif
 
 let g:vimfiles = expand('<sfile>:h:h')
 let g:logfile = g:vimfiles . '\debug.log'
+call delete(g:logfile)
 call config#init()
 
 command! OpenLog :call config#open_log()

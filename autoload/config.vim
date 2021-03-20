@@ -34,14 +34,13 @@ function! config#list_plugins(...) abort
 		endif
 	endif
 	let repo_list = glob(bundle . '/*', v:true, v:true)
-	call config#debug('repo_list = {}', repo_list)
 	if empty(repo_list)
 		call config#debug('no plugin was found in {}', bundle)
 		return []
 	endif
 	let plugins_available = []
 	for repo in repo_list 
-		call config#debug('create plugin from {}', repo)
+		" call config#debug('create plugin from {}', repo)
 		let plugin = config#new_plugin(repo)
 		if empty(plugin)
 			call config#debug('create plugin failed for {}', repo)
@@ -95,7 +94,7 @@ endfunction
 
 function! config#get_basename(path) 
 	let name = fnamemodify(a:path, ':t')
-	call config#debug('get basename {} from {}', name, a:path)
+	" call config#debug('get basename {} from {}', name, a:path)
 	return name
 endfunction
 
